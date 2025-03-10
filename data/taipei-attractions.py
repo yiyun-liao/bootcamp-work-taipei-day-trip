@@ -22,13 +22,17 @@ def get_db_connection():
 #             cursor.execute("""CREATE TABLE attractions(
 #                 id INT PRIMARY KEY AUTO_INCREMENT,
 #                 name VARCHAR(255) NOT NULL,
-#                 rate INT NOT NULL DEFAULT 0 ,
+#                 rate INT NOT NULL DEFAULT 0,
+#                 serial_no BIGINT NOT NULL,
+#                 category VARCHAR(255) NOT NULL,
+#                 description TEXT NOT NULL,
+#                 address VARCHAR(255) NOT NULL,
+#                 transport TEXT NOT NULL,
 #                 mrt VARCHAR(255) NOT NULL,
-#                 serial_no BIGINT NOT NULL
-#                 image_url TEXT NOT NULL,
-#                 description TEXT NOT NULL)
+#                 latitude FLOAT NOT NULL DEFAULT 0,
+#                 longitude FLOAT NOT NULL DEFAULT 0,                                  
+#                 image_url TEXT)
 #             """)
-#             cursor.execute("INSERT INTO attractions(name, mrt, serial_no, image_url, description) VALUES ('test','test2',123,'test4','test5'); ")
 #             db.commit()
 
 
@@ -41,23 +45,33 @@ def get_db_connection():
 #         with db.cursor(dictionary=True) as cursor:
               
 #             for attraction in attractions:
-#                 rate = attraction.get("rate", 0)
-#                 SpotTitle = attraction["name"]
+#                 Name = attraction["name"]
+#                 Rate = attraction.get("rate", 0)
+#                 Serial_NO = attraction["SERIAL_NO"]
+#                 Category = attraction["CAT"]
+#                 Description = attraction["description"]
+#                 Address = attraction["address"]
+#                 Transport = attraction["direction"]
 #                 Mrt = attraction.get("MRT", None)
 #                 if Mrt is None:
 #                     Mrt = "Unknown" 
-#                 Serial_NO = attraction["SERIAL_NO"]
-#                 Description = attraction["description"]
+#                 Latitude = attraction["latitude"]
+#                 Longitude = attraction["longitude"]
+
+
 #                 Image_URLs = attraction["file"].split("http")[1:]
 #                 Image_URLs =[ f"http{url}" for url in Image_URLs]
-#                 Image_URLs_str = ",".join(Image_URLs)
+#                 correct_URLS = (".jpg", ".jpeg", ".png", ".JPG", ".JPEG", ".PNG")
+#                 Image_URLs = [url for url in Image_URLs if url.lower().endswith(correct_URLS)]
+#                 Image_URLs_str = json.dumps(Image_URLs)
+#                 # Image_URLs_str = ",".join(Image_URLs)
 #                 # print(Image_URLs_str) 
-#                 # print(SpotTitle, Mrt, Serial_NO)
+#                 # print(Name, Mrt, Serial_NO, Category, Longitude, Latitude)
 
 #                 cursor.execute("""
-#                     INSERT INTO attractions (rate, name, mrt, serial_no, image_url, description)
-#                     VALUES (%s, %s, %s, %s, %s, %s);
-#                 """,(rate, SpotTitle, Mrt, Serial_NO, Image_URLs_str, Description))
+#                     INSERT INTO attractions (name, rate, serial_no, category, description, address, transport, mrt, latitude, longitude, image_url)
+#                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+#                 """,(Name, Rate, Serial_NO, Category, Description, Address, Transport, Mrt, Latitude, Longitude, Image_URLs_str))
 #             db.commit()
 
 
