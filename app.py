@@ -106,7 +106,28 @@ def get_attractions(attractionId=int):
 		return{
 			"error": True,
 			"message": "請按照情境提供對應的錯誤訊息"
-		}	
+		}
+
+@app.get("/api/mrts")
+def get_attractions():
+	try:		
+		db = get_db_connection()
+		cursor = db.cursor(dictionary=True)
+		cursor.execute("SELECT mrt FROM attractions")
+		data = cursor.fetchall()
+		cursor.close()
+		db.close()
+		mrt = set(item['mrt'] for item in data)
+		mrt_list = list(mrt)
+		print(mrt_list)
+		return{
+			"data": mrt_list}
+	except Exception:
+		print("error")
+		return{
+			"error": True,
+			"message": "請按照情境提供對應的錯誤訊息"
+		}		
 
 # Static Pages (Never Modify Code in this Block)
 @app.get("/", include_in_schema=False)
