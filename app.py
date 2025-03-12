@@ -20,6 +20,8 @@ def get_db_connection():
         database="taipei_attractions"
     )
 
+
+
 @app.get("/api/attractions")
 def get_attractions(
 	page: Annotated[int,Query(ge=0)],
@@ -118,12 +120,13 @@ def get_attractions():
 		cursor.close()
 		db.close()
 		mrt = set(item['mrt'] for item in data)
+		mrt.remove('Unknown')
 		mrt_list = list(mrt)
 		print(mrt_list)
 		return{
 			"data": mrt_list}
-	except Exception:
-		print("error")
+	except Exception as e:
+		print(f"Error: {e}")
 		return{
 			"error": True,
 			"message": "請按照情境提供對應的錯誤訊息"

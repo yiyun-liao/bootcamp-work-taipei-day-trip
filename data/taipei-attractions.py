@@ -16,6 +16,7 @@ def get_db_connection():
         database="taipei_attractions"
     )
 
+# 測試 ec2 連線
 db = get_db_connection()
 cursor = db.cursor(dictionary=True)
 cursor.execute(" SELECT id, name, mrt FROM attractions;")
