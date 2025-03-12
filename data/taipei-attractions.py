@@ -12,9 +12,16 @@ def get_db_connection():
     return mysql.connector.connect(
         user="root",
         password=PASSWORD,
-        host="localhost",
+        host="35.75.244.94",
         database="taipei_attractions"
     )
+
+db = get_db_connection()
+cursor = db.cursor(dictionary=True)
+cursor.execute(" SELECT id, name, mrt FROM attractions;")
+data = cursor.fetchall()
+print(data)
+db.close()
 
 # built db structure
 # with get_db_connection() as db:
