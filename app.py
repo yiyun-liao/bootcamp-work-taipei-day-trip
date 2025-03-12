@@ -21,7 +21,6 @@ def get_db_connection():
     )
 
 
-
 @app.get("/api/attractions")
 def get_attractions(
 	page: Annotated[int,Query(ge=0)],
@@ -72,12 +71,15 @@ def get_attractions(
 		return{
 			"nextPage":next_page,
 			"data": data}
-	except Exception:
-		print("error")
-		return{
-			"error": True,
-			"message": "請按照情境提供對應的錯誤訊息"
-		}
+	except Exception as e:
+		print(f"Error: {e}")
+		raise HTTPException(
+            status_code=500,
+            detail={
+                "error": True,
+                "message": "請按照情境提供對應的錯誤訊息"
+            }
+        )
 
 
 @app.get("/api/attraction/{attractionId}")
@@ -103,12 +105,15 @@ def get_attractions(attractionId=int):
 
 		return{
 			"data": data}
-	except Exception:
-		print("error")
-		return{
-			"error": True,
-			"message": "請按照情境提供對應的錯誤訊息"
-		}
+	except Exception as e:
+		print(f"Error: {e}")
+		raise HTTPException(
+            status_code=500,
+            detail={
+                "error": True,
+                "message": "請按照情境提供對應的錯誤訊息"
+            }
+        )
 
 @app.get("/api/mrts")
 def get_attractions():
@@ -127,10 +132,13 @@ def get_attractions():
 			"data": mrt_list}
 	except Exception as e:
 		print(f"Error: {e}")
-		return{
-			"error": True,
-			"message": "請按照情境提供對應的錯誤訊息"
-		}		
+		raise HTTPException(
+            status_code=500,
+            detail={
+                "error": True,
+                "message": "請按照情境提供對應的錯誤訊息"
+            }
+        )	
 
 # Static Pages (Never Modify Code in this Block)
 @app.get("/", include_in_schema=False)
