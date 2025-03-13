@@ -120,13 +120,11 @@ def get_attractions():
 	try:		
 		db = get_db_connection()
 		cursor = db.cursor(dictionary=True)
-		cursor.execute("SELECT mrt FROM attractions")
+		cursor.execute("SELECT DISTINCT mrt FROM attractions WHERE mrt != 'Unknown' ")
 		data = cursor.fetchall()
 		cursor.close()
 		db.close()
-		mrt = set(item['mrt'] for item in data)
-		mrt.remove('Unknown')
-		mrt_list = list(mrt)
+		mrt_list = list(item['mrt'] for item in data)
 		print(mrt_list)
 		return{
 			"data": mrt_list}
