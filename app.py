@@ -90,7 +90,7 @@ def get_attractions(attractionId=int):
 		db = get_db_connection()
 		cursor = db.cursor(dictionary=True)
 		cursor.execute("SELECT * FROM attractions WHERE id = %s",(attractionId,))
-		data = cursor.fetchall()
+		data = cursor.fetchone()
 		cursor.close()
 		db.close()
 
@@ -100,11 +100,11 @@ def get_attractions(attractionId=int):
 				"message": "請按照情境提供對應的錯誤訊息"
 			}, status_code=400)
 
-		for img in data:
-			img["images"] = json.loads(img["images"])
+		data["images"] = json.loads(data["images"])
 
 		return{
-			"data": data}
+			"data":data}
+	
 	except Exception as e:
 		print(f"Error: {e}")
 		raise HTTPException(
