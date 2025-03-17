@@ -1,0 +1,152 @@
+/* design-guideline.css */
+:root {
+    --color-cyan-300: #AADDEE;
+    --color-cyan-400:#66AABB;
+    --color-cyan-500: #448899;
+
+    --color-gray-200: #F8F8F8;
+    --color-gray-300: #E8E8E8;
+    --color-gray-400:#757575;
+    --color-gray-500: #666666;
+
+    --color-neutral-500:#AABBCC;
+
+    --color-black-900: #000000;
+    --color-white-900: #ffffff;
+
+
+    --color-gradient-cyan-400: linear-gradient(0deg, #AADDEE, #66AABB);
+    --color-gradient-cyan-500: linear-gradient(0deg, #66AABB, #337788);
+    
+    --font-weight-500: 500;
+    --font-weight-700: 700;
+    --font-family: 'Noto Sans TC', 'Roboto', sans-serif;
+
+}
+
+h1{
+    font-size: 1.75rem;
+    font-weight: var(--font-weight-700);
+    line-height: 1.75rem;
+    font-family: var(--font-family);
+}
+
+h2{
+    font-size: 1.875rem;
+    font-weight: var(--font-weight-700);
+    line-height: 2.125rem;
+    font-family: var(--font-family);
+}
+
+h3{
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-700);
+    line-height: 1.5rem;
+    font-family: var(--font-family);
+}
+
+.h3-regular{
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-500);
+    line-height: 1.5rem;
+    font-family: var(--font-family);
+}
+
+p{
+    font-size: 1rem;
+    font-weight: var(--font-weight-500);
+    line-height: 1.5rem;
+    font-family: var(--font-family);
+}
+
+.btn-text{
+    font-size: 19px;
+    font-weight: var(--font-weight-700);
+    line-height: 1rem;
+    font-family: var(--font-family);
+}
+
+.btn-text-regular{
+    font-size: 19px;
+    font-weight: var(--font-weight-500);
+    line-height: 1rem;
+    font-family: var(--font-family);
+}
+
+.content-text{
+    font-size: 1rem;
+    font-weight: var(--font-weight-700);
+    line-height: 1.5rem;
+    font-family: var(--font-family);
+}
+
+.content-text-regular{
+    font-size: 1rem;
+    font-weight: var(--font-weight-500);
+    line-height: 1.5rem;
+    font-family: var(--font-family);
+}
+
+.body-text{
+    font-size: 1rem;
+    font-weight: var(--font-weight-700);
+    line-height: 1.5rem;  
+    font-family: var(--font-family);
+}
+
+.body-text-regular{
+    font-size: 1rem;
+    font-weight: var(--font-weight-500);
+    line-height: 1.5rem;
+    font-family: var(--font-family);
+}
+
+.li-text{
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-500);
+    line-height: 1.25rem;
+    font-family: var(--font-family);
+}
+
+/* 
+@media (max-width: 960px) {
+    h2{
+        font-size: var(--font-size-2xl);       
+    }
+
+    h3{
+        font-size: var(--font-size-lg);
+        line-height: var(--font-line-height-lg);
+    }
+
+    p{
+        font-size: var(--font-size-sm);
+        padding: 4px 0 4px 0;
+    }
+
+    ul{
+        font-size: var(--font-size-sm);
+        line-height: var(--font-line-height-sm);
+    }
+
+    .text-lg {
+        font-size: var(--font-size-base);
+        line-height: var(--font-line-height-base);
+    }
+
+    .text-lg-500 {
+        font-size: var(--font-size-base);
+        line-height: var(--font-line-height-base);
+    }
+
+    .text-2xl {
+        font-size: var(--font-size-lg);
+        line-height: var(--font-line-height-lg);
+    }
+
+    .text-2xl-500 {
+        font-size: var(--font-size-lg);
+        line-height: var(--font-line-height-lg);
+    }
+
+} */
