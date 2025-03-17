@@ -1,13 +1,13 @@
 /* design-guideline.css */
 :root {
-    --color-cyan-300: #AADDEE;
-    --color-cyan-400:#66AABB;
-    --color-cyan-500: #448899;
+    --color-cyan-20: #AADDEE;
+    --color-cyan-50:#66AABB;
+    --color-cyan-70: #448899;
 
-    --color-gray-200: #F8F8F8;
-    --color-gray-300: #E8E8E8;
-    --color-gray-400:#757575;
-    --color-gray-500: #666666;
+    --color-gray-10: #F8F8F8;
+    --color-gray-20: #E8E8E8;
+    --color-gray-50:#757575;
+    --color-gray-70: #666666;
 
     --color-neutral-500:#AABBCC;
 
@@ -15,8 +15,8 @@
     --color-white-900: #ffffff;
 
 
-    --color-gradient-cyan-400: linear-gradient(0deg, #AADDEE, #66AABB);
-    --color-gradient-cyan-500: linear-gradient(0deg, #66AABB, #337788);
+    --color-gradient-cyan-400: linear-gradient(135deg, #AADDEE, #66AABB);
+    --color-gradient-cyan-500: linear-gradient(135deg, #66AABB, #337788);
     
     --font-weight-500: 500;
     --font-weight-700: 700;
@@ -29,6 +29,8 @@ h1{
     font-weight: var(--font-weight-700);
     line-height: 1.75rem;
     font-family: var(--font-family);
+    padding: 0;
+    margin: 0;
 }
 
 h2{
@@ -36,6 +38,8 @@ h2{
     font-weight: var(--font-weight-700);
     line-height: 2.125rem;
     font-family: var(--font-family);
+    padding: 0;
+    margin: 0;
 }
 
 h3{
@@ -43,13 +47,17 @@ h3{
     font-weight: var(--font-weight-700);
     line-height: 1.5rem;
     font-family: var(--font-family);
+    padding: 0;
+    margin: 0;
 }
 
-.h3-regular{
+.h3-reg{
     font-size: 1.5rem;
     font-weight: var(--font-weight-500);
     line-height: 1.5rem;
     font-family: var(--font-family);
+    padding: 0;
+    margin: 0;
 }
 
 p{
@@ -59,49 +67,49 @@ p{
     font-family: var(--font-family);
 }
 
-.btn-text{
+.btn-text-bold{
     font-size: 19px;
     font-weight: var(--font-weight-700);
     line-height: 1rem;
     font-family: var(--font-family);
 }
 
-.btn-text-regular{
+.btn-text-med{
     font-size: 19px;
     font-weight: var(--font-weight-500);
     line-height: 1rem;
     font-family: var(--font-family);
 }
 
-.content-text{
+.content-text-bold{
     font-size: 1rem;
     font-weight: var(--font-weight-700);
     line-height: 1.5rem;
     font-family: var(--font-family);
 }
 
-.content-text-regular{
+.content-text-med{
     font-size: 1rem;
     font-weight: var(--font-weight-500);
     line-height: 1.5rem;
     font-family: var(--font-family);
 }
 
-.body-text{
+.body-bold{
     font-size: 1rem;
     font-weight: var(--font-weight-700);
     line-height: 1.5rem;  
     font-family: var(--font-family);
 }
 
-.body-text-regular{
+.body-med{
     font-size: 1rem;
     font-weight: var(--font-weight-500);
     line-height: 1.5rem;
     font-family: var(--font-family);
 }
 
-.li-text{
+.li-text-med{
     font-size: 0.875rem;
     font-weight: var(--font-weight-500);
     line-height: 1.25rem;
