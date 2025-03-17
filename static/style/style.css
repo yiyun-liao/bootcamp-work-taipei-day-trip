@@ -1,0 +1,55 @@
+*, *::before, *::after{
+    box-sizing: border-box;
+}
+
+/* root */
+body{
+    padding: 0;
+    margin: 0;
+}
+
+ul, ol{
+    list-style: none;
+    margin: 0;
+    padding: 0;   
+}
+
+/* header section */
+header{
+    padding: 10px 0 10px 0;
+}
+
+nav{
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px 0 10px;
+}
+
+nav > h2{
+    color: var(--color-cyan-70);
+}
+
+nav div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav button{
+    color: var(--color-gray-70);
+    padding: 10px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff00;
+    border: #ffffff00;
+}
+
+/* main section */
+
+
+/* footer section */
