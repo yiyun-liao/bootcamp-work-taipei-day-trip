@@ -122,3 +122,15 @@ nav button{
 
 
 /* footer section */
+footer{
+    background-color: var(--color-gray-70);
+    padding: 40px 0;
+    margin: 0 auto;
+    color: var(--color-white-900);
+    height: 104px;
+}
+
+footer > div{
+    text-align: center;
+    padding: 5px 0;
+}
