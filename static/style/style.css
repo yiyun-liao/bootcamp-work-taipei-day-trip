@@ -119,6 +119,60 @@ nav button{
     align-items: center;
 }
 
+/* gallery section */
+#gallery{
+    max-width: 1200px;
+    padding: 40px 0;
+    margin: auto;
+}
+
+#carousel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#carousel ol{
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+
+#carousel-right-btn{
+    padding: 9px 0 9px 15px;
+}
+
+#carousel-left-btn{
+    padding: 9px 15px 9px 0;
+}
+
+#carousel button{
+    padding: 0;
+    height: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-white-000);
+    border: var(--color-white-000);
+}
+
+#carousel i.mdi{
+    font-size: 32px; 
+    width: 32px;
+    height: 32px;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid var(--color-gray-50);
+    color: var(--color-gray-50);
+}
+
+.carousel-container{
+    width: 100%;
+    overflow: hidden;
+}
 
 
 /* footer section */
