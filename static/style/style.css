@@ -71,9 +71,19 @@ nav button{
     height: 100%; 
 }
 
-#banner > div > *:not(:last-child) {
-    margin-bottom: 10px;
+.banner-title{
+    height: 78px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between; 
+    padding-top: 4px;
 }
+
+#banner > div > *:not(:last-child) {
+    margin-bottom: 25px;
+}
+
 
 #searchBar{
     width: fit-content;
@@ -123,6 +133,7 @@ nav button{
     margin: auto;
 }
 
+/* carousel */
 #carousel{
     display: flex;
     justify-content: center;
@@ -188,8 +199,74 @@ nav button{
     padding: 5px 15px;
     width: min-content;
     white-space: nowrap;
+    color: var(--color-gray-70);
 }
 
+/* attraction */
+
+#attraction{
+    padding: 15px;
+}
+
+#attraction ol{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+#attraction li{
+    width: 270px;
+    height: 242px;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid var(--color-gray-20);
+}
+
+.attraction-thumbnail{
+    background-image: url(../image/welcome.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    height: calc(100% - 45px);
+}
+
+.attraction-name{
+    color: var(--color-white-900);
+    background-color: var(--color-black-600);
+    height: 40px;
+    width: 100%;
+    padding: 10px;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+
+.mrt-and-category{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 10px;
+    height: 45px !important;
+}
+
+.attraction-mrt{
+    color: var(--color-gray-50);
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+
+.attraction-category{
+    color: var(--color-gray-50);
+    text-align: right;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
 
 /* footer section */
 footer{
@@ -202,5 +279,4 @@ footer{
 
 footer > div{
     text-align: center;
-    padding: 5px 0;
 }
