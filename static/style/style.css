@@ -30,6 +30,9 @@ nav{
 
 nav > h2{
     color: var(--color-cyan-70);
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
 }
 
 nav div{
@@ -47,6 +50,7 @@ nav button{
     align-items: center;
     background-color: var(--color-white-000);
     border: var(--color-white-000);
+    white-space: nowrap; 
 }
 
 /* banner */
@@ -72,7 +76,7 @@ nav button{
 }
 
 .banner-title{
-    height: 78px;
+    min-height: 78px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -209,11 +213,9 @@ nav button{
 }
 
 #attraction ol{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 30px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 30px;
 }
 
 #attraction li{
@@ -222,6 +224,30 @@ nav button{
     border-radius: 5px;
     overflow: hidden;
     border: 1px solid var(--color-gray-20);
+}
+
+@media (min-width: 600px) and (max-width: 1200px) {
+    #attraction ol{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 30px;
+    }  
+    
+    #attraction li{
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px){
+    #attraction ol{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 30px;
+    }  
+    
+    #attraction li{
+        width: 100%;
+    }
 }
 
 .attraction-thumbnail{
@@ -280,3 +306,5 @@ footer{
 footer > div{
     text-align: center;
 }
+
+
