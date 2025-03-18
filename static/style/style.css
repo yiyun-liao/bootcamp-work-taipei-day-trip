@@ -18,6 +18,7 @@ ul, ol{
 header{
     padding: 10px 0 10px 0;
     position: fixed;
+    z-index: 100;
     top: 0;
     background-color: var(--color-white-900);
     height: 54px;
@@ -176,30 +177,24 @@ nav button:active{
 /* carousel */
 #carousel{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
     padding-bottom: 20px;
 }
 
-#carousel-right-btn{
+#carousel-left-btn{
     padding: 9px 0 9px 15px;
     height: 100%;
+    cursor: pointer;
+    display: none;
 }
 
-#carousel-left-btn{
+#carousel-right-btn{
     padding: 9px 15px 9px 0;
     height: 100%;
-}
-
-#carousel button{
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--color-white-000);
-    border: var(--color-white-000);
     cursor: pointer;
+    display: none;
 }
 
 
@@ -244,8 +239,8 @@ nav button:active{
     overflow: hidden;
     position: relative;
     white-space: nowrap; 
-    transition: transform 0.3s ease-in-out;
-    /* transform: translate3d(-153.649px, 0px, 0px);
+    /* transition: transform 0.3s ease-in-out;
+    transform: 0;
     transition-duration: 0ms; */
 }
 
