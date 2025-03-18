@@ -17,6 +17,11 @@ ul, ol{
 /* header section */
 header{
     padding: 10px 0 10px 0;
+    position: fixed;
+    top: 0;
+    background-color: var(--color-white-900);
+    height: 54px;
+    width: 100vw;
 }
 
 nav{
@@ -51,6 +56,15 @@ nav button{
     background-color: var(--color-white-000);
     border: var(--color-white-000);
     white-space: nowrap; 
+}
+
+nav button:hover{
+    color: var(--color-black-900);   
+}
+
+nav button:active{
+    background-color: var(--color-cyan-20);
+    color: var(--color-cyan-70);   
 }
 
 /* banner */
@@ -100,15 +114,29 @@ nav button{
     max-width: 460px;
     border-radius: 5px;
     overflow: hidden;
+    background-color: var(--color-white-900);
 }
 
 #searchBar input{
     width: 100%;
     height: 46px;
     padding: 15px;
-    color: var(--color-gray-50);
-    border-radius: 0;
+    color: var(--color-black-900);
+    border-radius: 5px 0 0 5px;
     border: none;
+    outline: none;
+}
+
+#searchBar input::placeholder{
+    color: var(--color-gray-50);
+}
+
+#searchBar input:hover{
+    border: 1px solid var(--color-black-900);
+}
+
+#searchBar input:focus{
+    border: 1px solid var(--color-black-900);
 }
 
 #searchBar button{
@@ -119,6 +147,14 @@ nav button{
     align-items: center;
     background-color: var(--color-cyan-70);
     border: none;
+}
+
+#searchBar button:hover{
+    background-color: var(--color-cyan-50);
+}
+
+#searchBar button:active{
+    background-color: var(--color-cyan-70);
 }
 
 #searchBar i.mdi{
@@ -163,7 +199,9 @@ nav button{
     align-items: center;
     background-color: var(--color-white-000);
     border: var(--color-white-000);
+    cursor: pointer;
 }
+
 
 #carousel i.mdi{
     font-size: 32px; 
@@ -176,6 +214,18 @@ nav button{
     border: 1px solid var(--color-gray-50);
     color: var(--color-gray-50);
 }
+
+#carousel i.mdi:hover{
+    border: 1px solid var(--color-black-900);
+    color: var(--color-black-900);   
+}
+
+#carousel i.mdi:active{
+    background-color: var(--color-cyan-20);
+    border: 1px solid var(--color-cyan-70);
+    color: var(--color-cyan-70);   
+}
+
 
 .carousel-container{
     width: fit-content; 
@@ -204,6 +254,16 @@ nav button{
     width: min-content;
     white-space: nowrap;
     color: var(--color-gray-70);
+    cursor: pointer;
+}
+
+.carousel-container li:hover{
+    color: var(--color-black-900);   
+}
+
+.carousel-container li:active{
+    background-color: var(--color-cyan-20);
+    color: var(--color-cyan-70);   
 }
 
 /* attraction */
@@ -224,7 +284,25 @@ nav button{
     border-radius: 5px;
     overflow: hidden;
     border: 1px solid var(--color-gray-20);
+    cursor: pointer;
+    position: relative;
 }
+
+#attraction li::after{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: var(--color-white-000);
+    transition: background-color 0.1s ease-in-out;
+}
+
+#attraction li:hover::after{
+    background-color: var(--color-white-200);
+}
+
 
 @media (min-width: 600px) and (max-width: 1200px) {
     #attraction ol{
