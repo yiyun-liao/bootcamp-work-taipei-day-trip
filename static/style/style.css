@@ -71,11 +71,8 @@ nav button{
     height: 100%; 
 }
 
-#banner > div > * {
+#banner > div > *:not(:last-child) {
     margin-bottom: 10px;
-}
-#banner > div > *:last-child {
-    margin-bottom: 0;
 }
 
 #searchBar{
@@ -131,25 +128,21 @@ nav button{
     justify-content: center;
     align-items: center;
     width: 100%;
-}
-
-#carousel ol{
-    display: flex;
-    justify-content: center;
-    align-items: center;   
+    padding-bottom: 20px;
 }
 
 #carousel-right-btn{
     padding: 9px 0 9px 15px;
+    height: 100%;
 }
 
 #carousel-left-btn{
     padding: 9px 15px 9px 0;
+    height: 100%;
 }
 
 #carousel button{
     padding: 0;
-    height: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -170,8 +163,31 @@ nav button{
 }
 
 .carousel-container{
+    width: fit-content; 
+    max-width: 100%; 
+    overflow: hidden; 
+    position: relative;
+}
+
+.carousel-container ol{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 50px; 
+    padding: 13px 10px;  
     width: 100%;
     overflow: hidden;
+    position: relative;
+    white-space: nowrap; 
+    transition: transform 0.3s ease-in-out;
+    /* transform: translate3d(-153.649px, 0px, 0px);
+    transition-duration: 0ms; */
+}
+
+.carousel-container li{
+    padding: 5px 15px;
+    width: min-content;
+    white-space: nowrap;
 }
 
 
