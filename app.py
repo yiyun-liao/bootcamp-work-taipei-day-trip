@@ -11,25 +11,16 @@ app=FastAPI()
 load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
-# PASSWORD = os.getenv("PASSWORD")
-
-# def get_db_connection():
-#     return mysql.connector.connect(
-#         user="root",
-#         password=PASSWORD,
-#         host="35.75.244.94",
-#         database="taipei_attractions"
-#     )
-
-PASSWORD = os.getenv("MYSQL_LOCAL_PASSWORD")
+PASSWORD = os.getenv("PASSWORD")
 
 def get_db_connection():
     return mysql.connector.connect(
         user="root",
         password=PASSWORD,
-        host="localhost",
+        host="35.75.244.94",
         database="taipei_attractions"
     )
+
 
 @app.get("/api/attractions")
 def get_attractions(
