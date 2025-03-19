@@ -162,7 +162,7 @@ def get_attractions():
 		data = cursor.fetchall()
 		cursor.close()
 		db.close()
-		print(data)
+		# print(data)
 		mrt_list = list(item['mrt'] for item in data)
 		print(mrt_list, len(mrt_list))
 		return{
