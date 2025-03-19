@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     carousel();
     getAttractions();
+    // getMetro();
     window.addEventListener('scroll', handleScroll);
 })
 
@@ -50,8 +51,8 @@ function carousel(){
 }
 
 // render attractions ===========================================================================
-let nextPage = 0
-let isLoading = false;
+let nextPage = 0 // 全域變數
+let isLoading = false; //避免重複請求
 
 async function getAttractions(page=0){
     if (isLoading) return;
@@ -92,12 +93,12 @@ function renderAttractions(attractionsData){
 }
 
 function handleScroll(){
-    if (isLoading) return;
+    if (isLoading || nextPage === null) return;
 
     const {scrollTop, scrollHeight, clientHeight} = document.documentElement;
     if (scrollTop + clientHeight >= scrollHeight - 100){ //footer 104px
-        console.log("load next page", `${scrollHeight - (scrollTop + clientHeight)}`)
-        console.log(nextPage)
+        // console.log("load next page", `${scrollHeight - (scrollTop + clientHeight)}`)
+        // console.log(nextPage)
         getAttractions(nextPage);
     }
 }

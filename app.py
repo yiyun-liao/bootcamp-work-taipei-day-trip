@@ -126,7 +126,7 @@ def get_attractions():
 		cursor.close()
 		db.close()
 		mrt_list = list(item['mrt'] for item in data)
-		print(mrt_list)
+		print(mrt_list, len(mrt_list))
 		return{
 			"data": mrt_list}
 	except Exception as e:

@@ -6,25 +6,41 @@ import json
 load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
-PASSWORD = os.getenv("PASSWORD")
+PASSWORD = os.getenv("MYSQL_LOCAL_PASSWORD")
 
 def get_db_connection():
     return mysql.connector.connect(
         user="root",
         password=PASSWORD,
-        host="35.75.244.94",
+        host="localhost",
         database="taipei_attractions"
     )
 
-# 測試 ec2 連線
-db = get_db_connection()
-cursor = db.cursor(dictionary=True)
-cursor.execute(" SELECT id, name, mrt FROM attractions;")
-data = cursor.fetchall()
-print(data)
-db.close()
 
-# built db structure
+# build metros structure/table
+# with get_db_connection() as db:
+#     with db.cursor(dictionary=True) as cursor:
+#         cursor.execute("CREATE TABLE metros (id INT PRIMARY KEY AUTO_INCREMENT, mrt VARCHAR(255) NOT NULL)")
+#         db.commit()
+
+
+# import json into metros
+# with open("data/taipei-attractions.json", mode="r") as file:
+#     data = json.load(file)
+#     attractions = data['result']['results']
+
+#     with get_db_connection() as db:
+#         with db.cursor(dictionary=True) as cursor:
+#             mrt = set(attraction['MRT'] for attraction in attractions)
+#             mrt_list = [m for m in mrt if m is not None]
+#             print(mrt_list, len(mrt_list))
+
+#             for m in mrt_list:
+#                 cursor.execute("INSERT INTO metros (mrt) VALUES (%s)", (m,))
+#                 db.commit()
+
+
+# build attractions structure/table
 # with get_db_connection() as db:
 #         with db.cursor(dictionary=True) as cursor:
 #             cursor.execute("""CREATE TABLE attractions(
@@ -42,7 +58,8 @@ db.close()
 #             db.commit()
 
 
-# import json into db
+
+# import data into attractions
 # with open("data/taipei-attractions.json", mode="r") as file:
 #     data =json.load(file)
 #     attractions = data['result']['results']
