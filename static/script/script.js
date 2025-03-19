@@ -67,11 +67,25 @@ function handleScroll(){
 }
 
 function searchMetro(){
+    const searchMetroInput = document.getElementById("search-metro-input");
+
+
     document.getElementById("search-metro-btn").addEventListener("click", function() {
-        currentKeyword = document.getElementById("search-metro-input").value.trim();
+        currentKeyword = searchMetroInput.value.trim();
+        nextPage = 0;
         getAttractions(0, currentKeyword);
     });
+
+    document.querySelectorAll("#carousel-container ol li").forEach(item => {
+        item.addEventListener('click', function(){
+            currentKeyword = this.textContent.trim();
+            searchMetroInput.value = currentKeyword;
+            nextPage = 0;
+            getAttractions(0, currentKeyword);
+        })
+    })
 }
+
 
 // render metro chip ===========================================================================
 async function getMetro(){
@@ -94,10 +108,11 @@ function renderMetroChip(metroData){
     const attractionList = document.querySelector("#carousel-container ol");
     metroData.forEach(item => {
         const metroItem = document.createElement('li');        
-        metroItem.innerHTML =`<li>${item}</li>`;        
+        metroItem.innerHTML =item;        
         attractionList.appendChild(metroItem);
     });
     carousel();
+    searchMetro();
 }
 
 
