@@ -301,6 +301,10 @@ nav button:active{
     background-color: var(--color-white-200);
 }
 
+#attraction img{
+    width: 60px;
+    height: auto;
+}
 
 @media (min-width: 600px) and (max-width: 1200px) {
     #attraction li{
