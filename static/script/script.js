@@ -1,15 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
-    carousel();
     getAttractions();
-    // getMetro();
+    getMetro();
     window.addEventListener('scroll', handleScroll);
+    carousel();
 })
 
 
 
 // carousel ===========================================================================
 function carousel(){
-    const carouselContainer = document.querySelector('.carousel-container');
+    const carouselContainer = document.querySelector('#carousel-container');
     const carouselList = carouselContainer.querySelector('ol');
     const carouselRightBtn = document.getElementById('carousel-right-btn');
     const carouselLeftBtn = document.getElementById('carousel-left-btn');
@@ -101,4 +101,31 @@ function handleScroll(){
         // console.log(nextPage)
         getAttractions(nextPage);
     }
+}
+
+// render metro chip ===========================================================================
+async function getMetro(){
+    try{
+        const response = await fetch("/api/mrts")
+        if(!response.ok){
+            throw new Error("Could not fetch resource");
+        }
+        const data = await response.json();
+        // console.log(data.data);
+        renderMetroChip(data.data);
+    } catch(error){
+        console.error('Error fetching data:', error);
+    } finally{
+        isLoading = false;
+    }
+}
+
+function renderMetroChip(metroData){
+    const attractionList = document.querySelector("#carousel-container ol");
+    metroData.forEach(item => {
+        const metroItem = document.createElement('li');        
+        metroItem.innerHTML =`<li>${item}</li>`;        
+        attractionList.appendChild(metroItem);
+    });
+    carousel();
 }

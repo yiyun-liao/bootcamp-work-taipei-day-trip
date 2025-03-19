@@ -222,14 +222,14 @@ nav button:active{
 }
 
 
-.carousel-container{
+#carousel-container{
     width: fit-content; 
     max-width: 100%; 
     overflow: hidden; 
     position: relative;
 }
 
-.carousel-container ol{
+#carousel-container ol{
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -244,7 +244,7 @@ nav button:active{
     transition-duration: 0ms; */
 }
 
-.carousel-container li{
+#carousel-container li{
     padding: 5px 15px;
     width: min-content;
     white-space: nowrap;
@@ -252,11 +252,11 @@ nav button:active{
     cursor: pointer;
 }
 
-.carousel-container li:hover{
+#carousel-container li:hover{
     color: var(--color-black-900);   
 }
 
-.carousel-container li:active{
+#carousel-container li:active{
     background-color: var(--color-cyan-20);
     color: var(--color-cyan-70);   
 }
