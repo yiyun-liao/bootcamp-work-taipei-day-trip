@@ -36,6 +36,8 @@ h1{
     font-family: var(--font-family);
     padding: 0;
     margin: 0;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
 }
 
 h2{
@@ -45,6 +47,8 @@ h2{
     font-family: var(--font-family);
     padding: 0;
     margin: 0;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
 }
 
 h3{
@@ -72,6 +76,8 @@ p{
     font-family: var(--font-family);
     padding: 0;
     margin: 0;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
 }
 
 .btn-text-bold{
