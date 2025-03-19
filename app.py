@@ -11,16 +11,25 @@ app=FastAPI()
 load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
-PASSWORD = os.getenv("PASSWORD")
+# PASSWORD = os.getenv("PASSWORD")
+
+# def get_db_connection():
+#     return mysql.connector.connect(
+#         user="root",
+#         password=PASSWORD,
+#         host="35.75.244.94",
+#         database="taipei_attractions"
+#     )
+
+PASSWORD = os.getenv("MYSQL_LOCAL_PASSWORD")
 
 def get_db_connection():
     return mysql.connector.connect(
         user="root",
         password=PASSWORD,
-        host="35.75.244.94",
+        host="localhost",
         database="taipei_attractions"
     )
-
 
 @app.get("/api/attractions")
 def get_attractions(
@@ -28,7 +37,21 @@ def get_attractions(
 	keyword: Optional[str] = None
 	):
 	try:
-		search = "SELECT * FROM attractions"
+		search = """
+			SELECT 
+			attractions.id, 
+			attractions.name, 
+			attractions.category, 
+			attractions.description, 
+			attractions.address, 
+			attractions.transport, 
+			metros.mrt,
+			attractions.lat, 
+			attractions.lng, 
+			attractions.images
+			FROM attractions 
+			LEFT JOIN metros ON attractions.mrt_id = metros.id
+			"""
 
 		# 分頁回傳
 		limit = 12
@@ -49,8 +72,8 @@ def get_attractions(
 			params = (limit, offset)	
 			next_page_params = (limit, next_page_offset)
 		
-		print(f"cursor.execute({search},{params})" )
-		print(f"cursor.execute({search},{next_page_params})" )
+		print(f"cursor.execute({params})" )
+		print(f"cursor.execute({next_page_params})" )
 
 		db = get_db_connection()
 		cursor = db.cursor(dictionary=True)
@@ -88,9 +111,26 @@ def get_attractions(attractionId=int):
 	try:		
 		print(attractionId )
 
+		search = """
+			SELECT 
+			attractions.id, 
+			attractions.name, 
+			attractions.category, 
+			attractions.description, 
+			attractions.address, 
+			attractions.transport, 
+			metros.mrt,
+			attractions.lat, 
+			attractions.lng, 
+			attractions.images
+			FROM attractions 
+			LEFT JOIN metros ON attractions.mrt_id = metros.id
+			WHERE attractions.id = %s
+			"""
+		
 		db = get_db_connection()
 		cursor = db.cursor(dictionary=True)
-		cursor.execute("SELECT * FROM attractions WHERE id = %s",(attractionId,))
+		cursor.execute(search,(attractionId,))
 		data = cursor.fetchone()
 		cursor.close()
 		db.close()
@@ -118,13 +158,20 @@ def get_attractions(attractionId=int):
 
 @app.get("/api/mrts")
 def get_attractions():
-	try:		
+	try:
+		search= """
+			SELECT metros.mrt FROM metros
+			LEFT JOIN attractions ON metros.id = attractions.mrt_id
+			GROUP BY metros.mrt
+			ORDER BY COUNT(attractions.id) DESC;
+			"""
 		db = get_db_connection()
 		cursor = db.cursor(dictionary=True)
-		cursor.execute("SELECT DISTINCT mrt FROM attractions WHERE mrt != 'Unknown' ")
+		cursor.execute(search)
 		data = cursor.fetchall()
 		cursor.close()
 		db.close()
+		print(data)
 		mrt_list = list(item['mrt'] for item in data)
 		print(mrt_list, len(mrt_list))
 		return{
