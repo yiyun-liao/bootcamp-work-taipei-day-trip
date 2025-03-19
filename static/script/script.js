@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function(){
-    // carousel
+    // carousel ===========================================================================
     const carouselContainer = document.querySelector('.carousel-container');
     const carouselList = carouselContainer.querySelector('ol');
     const carouselRightBtn = document.getElementById('carousel-right-btn');
@@ -39,4 +39,7 @@ document.addEventListener('DOMContentLoaded', function(){
     });
     window.addEventListener('resize', carouselBtnState); // 新增只要畫面尺寸不同就改變，不需要整頁 refresh
     carouselBtnState();
+
+    // render attractions ===========================================================================
+
 })
