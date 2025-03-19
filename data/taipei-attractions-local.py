@@ -39,6 +39,26 @@ def get_db_connection():
 #                 cursor.execute("INSERT INTO metros (mrt) VALUES (%s)", (m,))
 #                 db.commit()
 
+# adjust mrt column into attractions table
+# with get_db_connection() as db:
+#     with db.cursor(dictionary=True) as cursor:
+#         cursor.execute("""ALTER TABLE attractions 
+#             ADD COLUMN mrt_id INT NULL AFTER mrt, 
+#             ADD FOREIGN KEY (mrt_id) REFERENCES metros(id) ON DELETE SET NULL;""")
+#         cursor.execute("""UPDATE attractions JOIN metros 
+#             ON attractions.mrt = metros.mrt
+#             SET attractions.mrt_id = metros.id;""")
+#         cursor.execute("ALTER TABLE attractions ADD CONSTRAINT fk_metro_id FOREIGN KEY (mrt_id) REFERENCES metros(id) ON DELETE SET NULL;")        
+#         db.commit()
+
+# after check the mrt_id is right, drop the mrt column and rename mrt_id to mrt
+# SELECT attractions.id, attractions.name, attractions.mrt, metros.mrt FROM attractions LEFT JOIN metros ON attractions.mrt_id = metros.id;
+# with get_db_connection() as db:
+#     with db.cursor(dictionary=True) as cursor:
+#         cursor.execute("ALTER TABLE attractions DROP COLUMN mrt;")
+#         db.commit()
+
+
 
 # build attractions structure/table
 # with get_db_connection() as db:
