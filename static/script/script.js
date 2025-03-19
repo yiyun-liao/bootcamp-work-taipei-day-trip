@@ -1,5 +1,12 @@
-document.addEventListener('DOMContentLoaded', function(){
-    // carousel ===========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+    carousel();
+    getAttractions();
+})
+
+
+
+// carousel ===========================================================================
+function carousel(){
     const carouselContainer = document.querySelector('.carousel-container');
     const carouselList = carouselContainer.querySelector('ol');
     const carouselRightBtn = document.getElementById('carousel-right-btn');
@@ -39,7 +46,41 @@ document.addEventListener('DOMContentLoaded', function(){
     });
     window.addEventListener('resize', carouselBtnState); // 新增只要畫面尺寸不同就改變，不需要整頁 refresh
     carouselBtnState();
+}
 
-    // render attractions ===========================================================================
+// render attractions ===========================================================================
+async function getAttractions(){
+    try{
+        const response = await fetch("/api/attractions?page=0")
+        if(!response.ok){
+            throw new Error("Could not fetch resource");
+        }
+        const data = await response.json();
+        console.log(data.data);
+        renderAttractions(data.data);
+    } catch(error){
+        console.error('Error fetching data:', error);
+    }
+}
 
-})
+function renderAttractions(attractionsData){
+    // const attractionName = document.querySelector('.attraction-name');
+    // const attractionMrt = document.querySelector('.attraction-mrt');
+    // const attractionCategory = document.querySelector('.attraction-category');
+    const attractionList = document.querySelector("#attraction ol");
+    attractionList.innerHTML= "";
+    attractionsData.forEach(item => {
+        const attractionItem = document.createElement('li');        
+        attractionItem.innerHTML =` 
+            <div class="attraction-thumbnail" style="background-image: url('${item.images[0] || "" }');")>
+                <div class="attraction-name body-bold">${item.name}</div>
+            </div>
+            <div class="mrt-and-category">
+                <p class="attraction-mrt">${item.mrt}</p>
+                <p class="attraction-category">${item.category}</p>
+            </div>
+            `;
+        
+        attractionList.appendChild(attractionItem);
+    });
+}
