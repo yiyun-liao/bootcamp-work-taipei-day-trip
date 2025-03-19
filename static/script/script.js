@@ -12,29 +12,21 @@ let isLoading = false; //避免重複請求
 let currentKeyword = ""; //search keyword
 
 async function getAttractions(page=0, keyword=""){
-    if (isLoading) return;
+    if (isLoading || nextPage === null) return;
     isLoading = true;
 
-    try{
-        const url = keyword ? `/api/attractions?page=${page}&keyword=${keyword}` : `/api/attractions?page=${page}` ;
-        const response = await fetch(url)
-        if(!response.ok){
-            throw new Error("Could not fetch resource");
-        }
-        const data = await response.json();
+    const url = keyword ? `/api/attractions?page=${page}&keyword=${keyword}` : `/api/attractions?page=${page}` ;
+    const data = await fetchData(url);
 
-        if (page === 0){
-            document.querySelector("#attraction ol").innerHTML= "";
-        }
-        // console.log(data.data);
-        renderAttractions(data.data);
-        nextPage = data.nextPage; 
-        console.log(nextPage)
-    } catch(error){
-        console.error('Error fetching data:', error);
-    } finally{
-        isLoading = false;
+    if (page === 0){
+        document.querySelector("#attraction ol").innerHTML= "";
     }
+    
+    // console.log(data.data);
+    renderAttractions(data.data);
+    nextPage = data.nextPage; 
+    // console.log(nextPage)
+    isLoading = false;
 }
 
 function renderAttractions(attractionsData){
@@ -68,13 +60,19 @@ function handleScroll(){
 
 function searchMetro(){
     const searchMetroInput = document.getElementById("search-metro-input");
-
-
-    document.getElementById("search-metro-btn").addEventListener("click", function() {
+    const searchMetroBtn = document.getElementById("search-metro-btn");
+    
+    searchMetroBtn.addEventListener("click", function() {
         currentKeyword = searchMetroInput.value.trim();
         nextPage = 0;
         getAttractions(0, currentKeyword);
     });
+
+    searchMetroInput.addEventListener('keydown', function(event){
+        if(event.key === 'Enter'){
+            searchMetroBtn.click(); 
+        }
+    })
 
     document.querySelectorAll("#carousel-container ol li").forEach(item => {
         item.addEventListener('click', function(){
@@ -86,22 +84,11 @@ function searchMetro(){
     })
 }
 
-
 // render metro chip ===========================================================================
 async function getMetro(){
-    try{
-        const response = await fetch("/api/mrts")
-        if(!response.ok){
-            throw new Error("Could not fetch resource");
-        }
-        const data = await response.json();
-        // console.log(data.data);
-        renderMetroChip(data.data);
-    } catch(error){
-        console.error('Error fetching data:', error);
-    } finally{
-        isLoading = false;
-    }
+    const data = await fetchData("/api/mrts");
+    // console.log(data.data);
+    renderMetroChip(data.data);
 }
 
 function renderMetroChip(metroData){
@@ -113,18 +100,22 @@ function renderMetroChip(metroData){
     });
     carousel();
     searchMetro();
+
 }
 
 
-// search keyword ===========================================================================
-function searchKeyword(){
-    document.getElementById('search-metro-btn').addEventListener('click', function(){
-        const searchMetroKeyword = document.getElementById('search-metro-input').value.trim();
-        console.log(searchMetroKeyword)
-        const currentPage = 0;
-    })
+// fetchData ===========================================================================
+async function fetchData(url){
+    try{
+        const response = await fetch(url)
+        if(!response.ok){
+            throw new Error("Could not fetch resource");
+        }
+        return await response.json();
+    } catch(error){
+        console.error('Error fetching data:', error);
+    }
 }
-
 
 
 // carousel ===========================================================================
@@ -144,12 +135,12 @@ function carousel(){
         // console.log("偏移位置", carouselOffsetLeft)
 
         // 修正小數點誤差，確保按鈕顯示正確
-        let carouselRightBtnHide = Math.ceil(carouselOffsetLeft + carouselContainerWidth) >= carouselContainerTotalWidth;
-        let carouselLeftBtnHide = Math.ceil(carouselOffsetLeft) <= 0;
+        const isRightBtnHide = Math.ceil(carouselOffsetLeft + carouselContainerWidth) >= carouselContainerTotalWidth;
+        const isLeftBtnHide = Math.ceil(carouselOffsetLeft) <= 0;
         
         if (carouselContainerTotalWidth > carouselContainerWidth){
-            carouselRightBtn.style.display = carouselRightBtnHide  ? 'none' : 'block' ;
-            carouselLeftBtn.style.display = carouselLeftBtnHide ? 'none' : 'block' ;
+            carouselRightBtn.style.display = isRightBtnHide  ? 'none' : 'block' ;
+            carouselLeftBtn.style.display = isLeftBtnHide ? 'none' : 'block' ;
         }else{
             carouselRightBtn.style.display = "none";
             carouselLeftBtn.style.display = "none";
