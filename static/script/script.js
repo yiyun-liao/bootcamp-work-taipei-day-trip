@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     carousel();
     getAttractions();
+    window.addEventListener('scroll', handleScroll);
 })
 
 
@@ -49,26 +50,32 @@ function carousel(){
 }
 
 // render attractions ===========================================================================
-async function getAttractions(){
+let nextPage = 0
+let isLoading = false;
+
+async function getAttractions(page=0){
+    if (isLoading) return;
+    isLoading = true;
+
     try{
-        const response = await fetch("/api/attractions?page=0")
+        const response = await fetch(`/api/attractions?page=${page}`)
         if(!response.ok){
             throw new Error("Could not fetch resource");
         }
         const data = await response.json();
         console.log(data.data);
         renderAttractions(data.data);
+        nextPage = data.nextPage; 
     } catch(error){
         console.error('Error fetching data:', error);
+    } finally{
+        isLoading = false;
     }
 }
 
 function renderAttractions(attractionsData){
-    // const attractionName = document.querySelector('.attraction-name');
-    // const attractionMrt = document.querySelector('.attraction-mrt');
-    // const attractionCategory = document.querySelector('.attraction-category');
     const attractionList = document.querySelector("#attraction ol");
-    attractionList.innerHTML= "";
+    // attractionList.innerHTML= "";
     attractionsData.forEach(item => {
         const attractionItem = document.createElement('li');        
         attractionItem.innerHTML =` 
@@ -79,8 +86,18 @@ function renderAttractions(attractionsData){
                 <p class="attraction-mrt">${item.mrt}</p>
                 <p class="attraction-category">${item.category}</p>
             </div>
-            `;
-        
+            `;        
         attractionList.appendChild(attractionItem);
     });
+}
+
+function handleScroll(){
+    if (isLoading) return;
+
+    const {scrollTop, scrollHeight, clientHeight} = document.documentElement;
+    if (scrollTop + clientHeight >= scrollHeight - 100){ //footer 104px
+        console.log("load next page", `${scrollHeight - (scrollTop + clientHeight)}`)
+        console.log(nextPage)
+        getAttractions(nextPage);
+    }
 }
