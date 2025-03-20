@@ -18,7 +18,8 @@ def get_db_connection():
         user="root",
         password=PASSWORD,
         host="35.75.244.94",
-        database="taipei_attractions"
+        database="taipei_attractions",
+		connect_timeout=10  # 設定 10 秒超時
     )
 
 
@@ -74,7 +75,6 @@ def get_attractions(
 		next_page_data = cursor.fetchall()
 		cursor.close()
 		db.close()
-
 		for img in data:
 			img["images"] = json.loads(img["images"])
 
