@@ -381,20 +381,29 @@ footer > div{
 
 
 /* loading */
-.carousel-skeleton {
+.carousel-containe-skeleton{
     background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
     background-size: 200% 100%;
     animation: loading 1.5s infinite;
-    min-width: 62px !important;
+    opacity: 0.8;
+    width: 60px !important;    
 }
 
-
-.attraction-skeleton {
+.attraction-thumbnail-skeleton {
     background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
     background-size: 200% 100%;
     animation: loading 1.5s infinite;
-    min-width: 62px !important;
+    opacity: 0.8;
 }
+
+
+.attraction-skeleton-text {
+    width: 80%;
+    height: 100%;
+    border-radius: 0.125rem;
+}
+
+
 
 /* 讓骨架動畫流動 */
 @keyframes loading {

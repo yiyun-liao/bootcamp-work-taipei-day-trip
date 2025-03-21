@@ -2,7 +2,7 @@ import { getAttractions, isLoading, nextPage, currentKeyword } from "../feature/
 
 export function renderAttractions(attractionsData){
     const attractionList = document.querySelector("#attraction ol");
-    // attractionList.innerHTML= "";
+    attractionList.innerHTML= "";
     attractionsData.forEach(item => {
         const attractionItem = document.createElement('li');        
         attractionItem.innerHTML =` 
@@ -28,3 +28,5 @@ export function handleScroll(){
         getAttractions(nextPage, currentKeyword);
     }
 }
+
+
