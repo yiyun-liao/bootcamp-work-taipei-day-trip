@@ -242,18 +242,17 @@ main{
     overflow: hidden;
     position: relative;
     white-space: nowrap; 
-    /* transition: transform 0.3s ease-in-out;
-    transform: 0;
-    transition-duration: 0ms; */
 }
 
 #carousel-container li{
     padding: 5px 15px;
+    min-height: 32.5px;
     width: min-content;
     white-space: nowrap;
     color: var(--color-gray-70);
     cursor: pointer;
 }
+
 
 #carousel-container li:hover{
     color: var(--color-black-900);   
@@ -381,3 +380,28 @@ footer > div{
 }
 
 
+/* loading */
+.carousel-skeleton {
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    min-width: 62px !important;
+}
+
+
+.attraction-skeleton {
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    min-width: 62px !important;
+}
+
+/* 讓骨架動畫流動 */
+@keyframes loading {
+0% {
+    background-position: -100% 0;
+}
+100% {
+    background-position: 100% 0;
+}
+}
