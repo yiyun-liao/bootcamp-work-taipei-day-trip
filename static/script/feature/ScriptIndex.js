@@ -1,5 +1,5 @@
 import { fetchData } from "../components/FetchData.js";
-import { carousel } from "../components/carousel.js";
+import { carousel } from "../components/Carousel.js";
 import { renderAttractions } from "../components/AttractionsList.js";
 
 // render attractions and use input/chip search===========================================================================
