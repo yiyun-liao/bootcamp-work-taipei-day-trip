@@ -1,6 +1,7 @@
 from fastapi import *
 from fastapi.responses import FileResponse, JSONResponse
-import mysql.connector
+from fastapi.staticfiles import StaticFiles
+import mysql.connector 
 from dotenv import load_dotenv
 import os
 import json
@@ -17,9 +18,20 @@ def get_db_connection():
         user="root",
         password=PASSWORD,
         host="35.75.244.94",
-        database="taipei_attractions"
+        database="taipei_attractions",
+		connect_timeout=10  # 設定 10 秒超時
     )
 
+# PASSWORD = os.getenv("MYSQL_LOCAL_PASSWORD")
+
+# def get_db_connection():
+#     return mysql.connector.connect(
+#         user="root",
+#         password=PASSWORD,
+#         host="localhost",
+#         database="taipei_attractions",
+# 		connect_timeout=10 
+#     )
 
 @app.get("/api/attractions")
 def get_attractions(
@@ -27,7 +39,21 @@ def get_attractions(
 	keyword: Optional[str] = None
 	):
 	try:
-		search = "SELECT * FROM attractions"
+		search = """
+			SELECT 
+			attractions.id, 
+			attractions.name, 
+			attractions.category, 
+			attractions.description, 
+			attractions.address, 
+			attractions.transport, 
+			metrosNEW.mrt,
+			attractions.lat, 
+			attractions.lng, 
+			attractions.images
+			FROM attractions 
+			LEFT JOIN metrosNEW ON attractions.mrt_id_new = metrosNEW.mrtID
+			"""
 
 		# 分頁回傳
 		limit = 12
@@ -48,8 +74,8 @@ def get_attractions(
 			params = (limit, offset)	
 			next_page_params = (limit, next_page_offset)
 		
-		print(f"cursor.execute({search},{params})" )
-		print(f"cursor.execute({search},{next_page_params})" )
+		print(f"cursor.execute({params})" )
+		print(f"cursor.execute({next_page_params})" )
 
 		db = get_db_connection()
 		cursor = db.cursor(dictionary=True)
@@ -59,7 +85,6 @@ def get_attractions(
 		next_page_data = cursor.fetchall()
 		cursor.close()
 		db.close()
-
 		for img in data:
 			img["images"] = json.loads(img["images"])
 
@@ -67,7 +92,6 @@ def get_attractions(
 			next_page = page + 1
 		else:
 			next_page = None
-
 		return{
 			"nextPage":next_page,
 			"data": data}
@@ -87,9 +111,26 @@ def get_attractions(attractionId=int):
 	try:		
 		print(attractionId )
 
+		search = """
+			SELECT 
+			attractions.id, 
+			attractions.name, 
+			attractions.category, 
+			attractions.description, 
+			attractions.address, 
+			attractions.transport, 
+			metrosNEW.mrt,
+			attractions.lat, 
+			attractions.lng, 
+			attractions.images
+			FROM attractions 
+			LEFT JOIN metrosNEW ON attractions.mrt_id_new = metrosNEW.mrtID
+			WHERE attractions.id = %s
+			"""
+		
 		db = get_db_connection()
 		cursor = db.cursor(dictionary=True)
-		cursor.execute("SELECT * FROM attractions WHERE id = %s",(attractionId,))
+		cursor.execute(search,(attractionId,))
 		data = cursor.fetchone()
 		cursor.close()
 		db.close()
@@ -117,15 +158,23 @@ def get_attractions(attractionId=int):
 
 @app.get("/api/mrts")
 def get_attractions():
-	try:		
+	try:
+		search= """
+			SELECT metrosNEW.mrt FROM metrosNEW
+			LEFT JOIN attractions ON metrosNEW.mrtID = attractions.mrt_id_new
+			GROUP BY metrosNEW.mrt
+			HAVING COUNT(attractions.id) > 0
+			ORDER BY COUNT(attractions.id) DESC;
+			"""
 		db = get_db_connection()
 		cursor = db.cursor(dictionary=True)
-		cursor.execute("SELECT DISTINCT mrt FROM attractions WHERE mrt != 'Unknown' ")
+		cursor.execute(search)
 		data = cursor.fetchall()
 		cursor.close()
 		db.close()
+		# print(data)
 		mrt_list = list(item['mrt'] for item in data)
-		print(mrt_list)
+		# print(mrt_list, len(mrt_list))
 		return{
 			"data": mrt_list}
 	except Exception as e:
@@ -151,3 +200,5 @@ async def booking(request: Request):
 @app.get("/thankyou", include_in_schema=False)
 async def thankyou(request: Request):
 	return FileResponse("./static/thankyou.html", media_type="text/html")
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
