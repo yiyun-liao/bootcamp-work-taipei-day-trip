@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 import json
 
+
 load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -17,7 +18,70 @@ def get_db_connection():
     )
 
 
-# build metros structure/table
+# build NEW metros structure/table ===========================================================================
+# with get_db_connection() as db:
+#     with db.cursor(dictionary=True) as cursor:
+#         cursor.execute("CREATE TABLE metrosNEW (id INT PRIMARY KEY AUTO_INCREMENT, mrt VARCHAR(255) NOT NULL, mrtID VARCHAR(255) NOT NULL)")
+#         db.commit()
+
+
+
+# import new data into metros
+# import urllib.request as request
+# import ssl
+
+# # ssl problem
+# ssl._create_default_https_context = ssl._create_unverified_context
+
+# url="https://tdx.transportdata.tw/api/basic/v2/Rail/Metro/Station/TRTC?%24format=JSON"
+# header={
+#     "content-type":"application/json; charset=utf-8",
+#     "User-Agent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36"
+# }
+# metro = request.Request(url, headers=header)
+# with request.urlopen(metro) as response:
+#     data= json.loads(response.read().decode("utf-8")) 
+#     # print(data)
+#     with get_db_connection() as db:
+#         with db.cursor(dictionary=True) as cursor:
+#             for a in data:
+#                 StationId = a["StationID"]
+#                 StationName = a["StationName"]["Zh_tw"]
+#                 print(StationId, StationName)
+
+#                 cursor.execute("INSERT INTO metrosNEW (mrt, mrtID) VALUES (%s, %s);",(StationName, StationId))
+#                 db.commit()        
+
+# update metro_id in attractions ===========================================================================
+# step01 刪除外鍵
+
+# with get_db_connection() as db:
+#     with db.cursor(dictionary=True) as cursor:
+
+        # cursor.execute("""ALTER TABLE attractions 
+        #     ADD COLUMN mrt_id_new VARCHAR(255) NULL AFTER mrt_id;""")
+        # cursor.execute("""UPDATE attractions
+        #     JOIN metros ON attractions.mrt_id = metros.id
+        #     JOIN metrosNEW ON metros.mrt = metrosNEW.mrt 
+        #     SET attractions.mrt_id_new = metrosNEW.mrtID;""")
+
+        # after check the mrt_id is right, drop the mrt_id column and rename mrt_id_new to mrt_id
+        # cursor.execute("""SELECT 
+        #     attractions.name, attractions.mrt_id, metros.mrt AS old_metro, attractions.mrt_id_new  AS new_metro, metrosNEW.mrt 
+        #     FROM attractions
+        #     LEFT JOIN metros ON attractions.mrt_id = metros.id
+        #     LEFT JOIN metrosNEW ON attractions.mrt_id_new = metrosNEW.mrtID;""")
+        # data = cursor.fetchall()
+        # print(data)
+        # cursor.execute("ALTER TABLE attractions DROP COLUMN mrt_id;")
+        # cursor.execute("ALTER TABLE attractions CHANGE mrt_id_new mrt_id VARCHAR(255);")
+        # cursor.execute("ALTER TABLE attractions ADD CONSTRAINT fk_metro_new_id FOREIGN KEY (mrt_id_new) REFERENCES metrosNEW(mrtID) ON DELETE SET NULL;")
+        # db.commit()
+
+
+
+
+# build metros structure/table ===========================================================================
 # with get_db_connection() as db:
 #     with db.cursor(dictionary=True) as cursor:
 #         cursor.execute("CREATE TABLE metros (id INT PRIMARY KEY AUTO_INCREMENT, mrt VARCHAR(255) NOT NULL)")
@@ -60,7 +124,7 @@ def get_db_connection():
 
 
 
-# build attractions structure/table
+# build attractions structure/table ===========================================================================
 # with get_db_connection() as db:
 #         with db.cursor(dictionary=True) as cursor:
 #             cursor.execute("""CREATE TABLE attractions(
