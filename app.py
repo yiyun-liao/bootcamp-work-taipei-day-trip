@@ -1,7 +1,7 @@
 from fastapi import *
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
-import mysql.connector
+import mysql.connector 
 from dotenv import load_dotenv
 import os
 import json
@@ -11,17 +11,27 @@ app=FastAPI()
 load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
-PASSWORD = os.getenv("PASSWORD")
+# PASSWORD = os.getenv("PASSWORD")
+
+# def get_db_connection():
+#     return mysql.connector.connect(
+#         user="root",
+#         password=PASSWORD,
+#         host="35.75.244.94",
+#         database="taipei_attractions",
+# 		connect_timeout=10  # 設定 10 秒超時
+#     )
+
+PASSWORD = os.getenv("MYSQL_LOCAL_PASSWORD")
 
 def get_db_connection():
     return mysql.connector.connect(
         user="root",
         password=PASSWORD,
-        host="35.75.244.94",
+        host="localhost",
         database="taipei_attractions",
 		connect_timeout=10  # 設定 10 秒超時
     )
-
 
 @app.get("/api/attractions")
 def get_attractions(
@@ -37,12 +47,12 @@ def get_attractions(
 			attractions.description, 
 			attractions.address, 
 			attractions.transport, 
-			metros.mrt,
+			metrosNEW.mrt,
 			attractions.lat, 
 			attractions.lng, 
 			attractions.images
 			FROM attractions 
-			LEFT JOIN metros ON attractions.mrt_id = metros.id
+			LEFT JOIN metrosNEW ON attractions.mrt_id_new = metrosNEW.mrtID
 			"""
 
 		# 分頁回傳
@@ -82,7 +92,6 @@ def get_attractions(
 			next_page = page + 1
 		else:
 			next_page = None
-
 		return{
 			"nextPage":next_page,
 			"data": data}
@@ -110,12 +119,12 @@ def get_attractions(attractionId=int):
 			attractions.description, 
 			attractions.address, 
 			attractions.transport, 
-			metros.mrt,
+			metrosNEW.mrt,
 			attractions.lat, 
 			attractions.lng, 
 			attractions.images
 			FROM attractions 
-			LEFT JOIN metros ON attractions.mrt_id = metros.id
+			LEFT JOIN metrosNEW ON attractions.mrt_id_new = metrosNEW.mrtID
 			WHERE attractions.id = %s
 			"""
 		
@@ -151,9 +160,10 @@ def get_attractions(attractionId=int):
 def get_attractions():
 	try:
 		search= """
-			SELECT metros.mrt FROM metros
-			LEFT JOIN attractions ON metros.id = attractions.mrt_id
-			GROUP BY metros.mrt
+			SELECT metrosNEW.mrt FROM metrosNEW
+			LEFT JOIN attractions ON metrosNEW.mrtID = attractions.mrt_id_new
+			GROUP BY metrosNEW.mrt
+			HAVING COUNT(attractions.id) > 0
 			ORDER BY COUNT(attractions.id) DESC;
 			"""
 		db = get_db_connection()
