@@ -12,9 +12,9 @@ export async function getAttractions(page=0, keyword=""){
     isLoading = true;
     const url = keyword ? `/api/attractions?page=${page}&keyword=${keyword}` : `/api/attractions?page=${page}` ;
     const data = await fetchData(url);
-    if (page === 0){
-        document.querySelector("#attraction ol").innerHTML= "";
-    }
+    // if (page === 0){
+    //     document.querySelector("#attraction ol").innerHTML= "";
+    // }
     
     renderAttractions(data.data);
     nextPage = data.nextPage; 
