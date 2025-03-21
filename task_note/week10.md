@@ -65,5 +65,36 @@
 ## deploy
 ## others
 - 機會點：查詢 pure html+css 怎麼處理 component，將 component 獨立出來
+	- Components（元件）
+		- `AttractionsList`：負責渲染景點清單
+		- `fetchData.js`：處理 API 請求
+		- `Carousel`：單純 chip 跟左右點擊的需求
+	- Features（功能模組）
+		- `ScriptIndex.js`：index 頁面需要的行為：gallery 渲染及 metroChip 渲染及行為
+	```
+		static
+		∟ script
+		∟∟components
+		∟∟∟AttractionsList.js
+		∟∟∟Carousel.js
+		∟∟∟FetchData.js
+		∟∟feature
+		∟∟∟ScriptIndex.js
+		∟∟main.js
+	```
 - 機會點：mrts table 排序應該可以用[公共運輸的 api](https://www.metro.taipei/cp.aspx?n=BDEB860F2BE3E249) ，而不是從目前 json 中的資料去撈出 mrt 資料
+	- 取得[資料](https://tdx.transportdata.tw/api/basic/v2/Rail/Metro/Station/TRTC?%24format=JSON)
+	- 建立新的 table metroNEW
+	- attractions table 取消外鍵到 metro 上，更新 attractions mrt_id 為 metroNEW 的 mrtID 再外鍵到 metroNEW 上
+
+		```mysql
+		# 找到外鍵
+		SELECT CONSTRAINT_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_NAME = 'attractions' AND COLUMN_NAME = 'mrt_id';
+		# 刪除外鍵
+		ALTER TABLE attractions DROP FOREIGN KEY fk_metro_id;
+		```
+	- 紀錄：api 中的“臺大醫院”是“台大醫院”，改 metroNEW 的資料
+		- `UPDATE metroNEW SET mrt = '臺大醫院'  WHERE id=101;`
+	- 更新三隻 api
+	- 重新上傳 db 到 ec2
 - 機會點：增加等待時的 loading 畫面
