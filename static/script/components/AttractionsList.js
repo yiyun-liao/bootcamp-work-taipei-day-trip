@@ -1,4 +1,4 @@
-import { isLoading } from "../feature/ScriptIndex";
+import { getAttractions, isLoading, nextPage, currentKeyword } from "../feature/ScriptIndex.js";
 
 export function renderAttractions(attractionsData){
     const attractionList = document.querySelector("#attraction ol");

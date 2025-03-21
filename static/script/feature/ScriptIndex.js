@@ -10,16 +10,12 @@ let currentKeyword = ""; //search keyword
 export async function getAttractions(page=0, keyword=""){
     if (isLoading || nextPage === null) return;
     isLoading = true;
-    console.log("run attractions")
     const url = keyword ? `/api/attractions?page=${page}&keyword=${keyword}` : `/api/attractions?page=${page}` ;
-    console.log("fetchData 即將呼叫，URL:", url);
     const data = await fetchData(url);
-    console.log("fetchData 回傳:", data);
     if (page === 0){
         document.querySelector("#attraction ol").innerHTML= "";
     }
     
-    // console.log(data.data);
     renderAttractions(data.data);
     nextPage = data.nextPage; 
     // console.log(nextPage)
@@ -71,4 +67,4 @@ function renderMetroChip(metroData){
     searchMetro();
 }
 
-export {isLoading};
+export {isLoading, nextPage, currentKeyword};
