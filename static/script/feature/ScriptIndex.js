@@ -58,6 +58,7 @@ export async function getMetro(){
 
 function renderMetroChip(metroData){
     const attractionList = document.querySelector("#carousel-container ol");
+    attractionList.innerHTML="";
     metroData.forEach(item => {
         const metroItem = document.createElement('li');        
         metroItem.innerHTML =item;        
