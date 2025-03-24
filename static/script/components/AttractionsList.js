@@ -2,7 +2,6 @@ import { getAttractions, isLoading, nextPage, currentKeyword } from "../feature/
 
 export function renderAttractions(attractionsData){
     const attractionList = document.querySelector("#attraction ol");
-    attractionList.innerHTML= "";
     attractionsData.forEach(item => {
         const attractionItem = document.createElement('li');        
         attractionItem.innerHTML =` 
