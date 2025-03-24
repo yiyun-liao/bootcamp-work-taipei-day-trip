@@ -17,4 +17,8 @@ export function renderHeaderAndFooter(){
     `;
     document.body.prepend(header);
     document.body.appendChild(footer);
+
+    document.querySelector('header nav h2').addEventListener('click', ()=>{
+        window.location.href='/';
+    })
 }
