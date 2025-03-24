@@ -5,8 +5,8 @@ export function renderHeaderAndFooter(){
         <nav>
             <h2>台北一日遊</h2>
             <div>
-                <button class="body-med">預定行程</button>
-                <button class="body-med">登入/註冊</button>
+                <button class="body-med btn-med-plain">預定行程</button>
+                <button class="body-med btn-med-plain">登入/註冊</button>
             </div>
         </nav>
     `;
