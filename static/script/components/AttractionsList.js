@@ -2,8 +2,10 @@ import { getAttractions, isLoading, nextPage, currentKeyword } from "../feature/
 
 export function renderAttractions(attractionsData){
     const attractionList = document.querySelector("#attraction ol");
+    console.log(attractionsData)
     attractionsData.forEach(item => {
-        const attractionItem = document.createElement('li');        
+        const attractionItem = document.createElement('li');      
+  
         attractionItem.innerHTML =` 
             <div class="attraction-thumbnail" style="background-image: url('${item.images[0] || "" }');")>
                 <div class="attraction-name body-bold">${item.name}</div>
@@ -13,6 +15,9 @@ export function renderAttractions(attractionsData){
                 <p class="attraction-category">${item.category}</p>
             </div>
             `;        
+        attractionItem.addEventListener('click', () => {
+            window.location.href = `/attraction/${item.id}`
+        })
         attractionList.appendChild(attractionItem);
     });
 }
