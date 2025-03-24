@@ -21,6 +21,7 @@
     --color-white-000:#ffffff00;
     --color-white-200:#ffffff33;
     --color-white-400:#ffffff66;
+    --color-white-750:#ffffffbf;
     --color-white-900: #ffffff;
 
 
@@ -154,6 +155,7 @@ header{
     background-color: var(--color-white-900);
     height: 54px;
     width: 100vw;
+    border-bottom: 1px solid var(--color-gray-20);
 }
 
 nav{
