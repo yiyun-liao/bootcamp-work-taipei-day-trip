@@ -16,7 +16,7 @@ export function renderAttractions(attractionsData){
             </div>
             `;        
         attractionItem.addEventListener('click', () => {
-            window.location.href = `/attraction/${item.id}`
+            window.location.href = `/attraction/${item.id}`;
         })
         attractionList.appendChild(attractionItem);
     });
