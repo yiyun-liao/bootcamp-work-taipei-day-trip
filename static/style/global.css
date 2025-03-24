@@ -1,3 +1,7 @@
+*, *::before, *::after{
+    box-sizing: border-box;
+}
+
 /* design-guideline.css */
 :root {
     --color-cyan-20: #AADDEE;
@@ -127,4 +131,97 @@ p{
     font-weight: var(--font-weight-500);
     line-height: 1.25rem;
     font-family: var(--font-family);
+}
+
+/* root */
+body{
+    padding: 0;
+    margin: 0;
+}
+
+ul, ol{
+    list-style: none;
+    margin: 0;
+    padding: 0;   
+}
+
+/* header section */
+header{
+    padding: 10px 0 10px 0;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    background-color: var(--color-white-900);
+    height: 54px;
+    width: 100vw;
+}
+
+nav{
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px 0 10px;
+}
+
+nav > h2{
+    color: var(--color-cyan-70);
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+nav > h2:hover{
+    color: var(--color-cyan-50);
+}
+
+nav > h2:focus{
+    color: var(--color-cyan-70);
+}
+
+nav div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav button{
+    color: var(--color-gray-70);
+    padding: 10px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-white-000);
+    border: var(--color-white-000);
+    white-space: nowrap; 
+}
+
+nav button:hover{
+    color: var(--color-black-900);   
+}
+
+nav button:active{
+    background-color: var(--color-cyan-20);
+    color: var(--color-cyan-70);   
+}
+
+main{
+    padding-top: 54px;
+}
+
+
+/* footer section */
+footer{
+    background-color: var(--color-gray-70);
+    padding: 40px 0;
+    margin: 0 auto;
+    color: var(--color-white-900);
+    height: 104px;
+}
+
+footer > div{
+    text-align: center;
 }
