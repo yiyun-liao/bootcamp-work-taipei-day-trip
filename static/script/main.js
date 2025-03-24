@@ -2,6 +2,7 @@ import { handleScroll } from "./components/AttractionsList.js";
 import { getAttractions, searchMetro, getMetro } from "./feature/ScriptIndex.js";
 import { skeletonAttractions, skeletonMetroChip } from "./components/Skeleton.js";
 import { renderHeaderAndFooter } from "./components/HeaderAndFooter.js";
+import { getAttractionDetails } from "./feature/ScriptAttraction.js";
 
 document.addEventListener('DOMContentLoaded',async () => {
     const path = window.location.pathname; 
@@ -20,7 +21,6 @@ document.addEventListener('DOMContentLoaded',async () => {
         const id = attractionPageMatch[1]; // 取得 `id`
         renderHeaderAndFooter();
         console.log(`Attraction ID: ${id}`); // 確保 `id` 有正確取得
-        // 這裡可以加入載入景點詳細資訊的函式，例如：
-        // await getAttractionDetails(id);
+        await getAttractionDetails(id);
     }
 });
