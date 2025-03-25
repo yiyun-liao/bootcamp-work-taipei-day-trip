@@ -5,14 +5,13 @@ export function slide(slideArray, location){
     // console.log('current', currentSlideImg, 'slideTotal', slideTotal)
     // console.log(`#${location} .slide-left-btn`)
 
-    const slideImg = document.getElementById('attraction-slide');
     const leftBtn = document.querySelector(`#${location} .slide-left-btn`)
     const rightBtn = document.querySelector(`#${location} .slide-right-btn`)
     const paginationGroup = document.querySelector(`#${location} ol`);
 
-    for (let i=0 ; i <= slideTotal -1 ; i++){
-        const pagination = document.createElement(`li`);
-        pagination.innerHTML=`<i class="mdi mdi-circle-small"></i>`;
+    for (let i=0 ; i < slideTotal ; i++){
+        const pagination = document.createElement('li');
+        pagination.innerHTML=`<i class="mdi mdi-circle-small">`;
         pagination.addEventListener('click', () => {
             currentSlideImg = i;
             slideImg.style.backgroundImage = `url("${slideArray[currentSlideImg] || ''}")`;
@@ -21,7 +20,7 @@ export function slide(slideArray, location){
         paginationGroup.appendChild(pagination);
     }
 
-    const paginationItems = document.querySelectorAll(`#${location} ol li i`)
+    const paginationItems = document.querySelectorAll(`#${location} .pagination li i`)
 
 
     leftBtn.addEventListener('click', function(){
