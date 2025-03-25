@@ -60,12 +60,12 @@
     width: fit-content;
     height: fit-content;
     margin: 0 6px;
-    gap: 12px;
 }
 
 .pagination li{
     width: 12px;
     height: 12px;
+    padding: 6px;
 }
 
 #attraction-slide i.mdi-chevron-left,

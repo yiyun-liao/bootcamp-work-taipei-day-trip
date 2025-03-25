@@ -12,11 +12,15 @@ export function slide(slideArray, location){
 
     for (let i=0 ; i <= slideTotal -1 ; i++){
         const pagination = document.createElement(`li`);
-        pagination.innerHTML=`
-            <i class="mdi mdi-circle-small"></i>
-        `;
+        pagination.innerHTML=`<i class="mdi mdi-circle-small"></i>`;
+        pagination.addEventListener('click', () => {
+            currentSlideImg = i;
+            slideImg.style.backgroundImage = `url("${slideArray[currentSlideImg] || ''}")`;
+            slideBtnState()
+        })
         paginationGroup.appendChild(pagination);
     }
+
     const paginationItems = document.querySelectorAll(`#${location} ol li i`)
 
 
