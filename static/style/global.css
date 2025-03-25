@@ -220,12 +220,13 @@ footer > div{
     overflow: hidden; 
     text-overflow: ellipsis;
     border: none;
+    cursor: pointer;
 }
 
 .btn-med-solid:hover{
     color: var(--color-white-900);
     background-color: var(--color-cyan-50);
-
+    cursor: pointer;
 }
 
 .btn-med-solid:active{
@@ -246,10 +247,12 @@ footer > div{
     background-color: var(--color-white-000);
     border: var(--color-white-000);
     white-space: nowrap; 
+    cursor: pointer;
 }
 
 .btn-med-plain:hover{
-    color: var(--color-black-900);   
+    color: var(--color-black-900);
+    cursor: pointer;   
 }
 
 .btn-med-plain:active{

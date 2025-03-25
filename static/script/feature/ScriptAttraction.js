@@ -8,6 +8,9 @@ export async function getAttractionDetails(id){
 };
 
 function renderAttractionPage (attractionPage){
+    const slideImg = document.getElementById('attraction-slide');
+    slideImg.style.backgroundImage = `url("${attractionPage.images[0] || ''}")`;
+
     const slideName = document.querySelector('.attraction-simple-intro h3');
     const slideCategory = document.querySelector('.attraction-simple-intro p');
     slideName.textContent = attractionPage.name || '';
@@ -17,5 +20,6 @@ function renderAttractionPage (attractionPage){
     document.querySelectorAll('.attraction-desc-p').forEach((p, index) => { 
         p.textContent = slideDesc[index] || '' ; 
     });
+
     slide(attractionPage.images, 'attraction-slide');
 }
