@@ -8,8 +8,16 @@ export async function getAttractionDetails(id){
 };
 
 function renderAttractionPage (attractionPage){
-    const slideImg = document.getElementById('attraction-slide');
-    slideImg.style.backgroundImage = `url("${attractionPage.images[0] || ''}")`;
+    // const slideImgContainer = document.querySelector('.slide-container');
+    // const slideImg = document.querySelector('.slide-img');
+
+    // for (let i=0 ; i < attractionPage.images.length ; i++){
+    //     const newImg = document.createElement('img');
+    //     newImg.src = attractionPage.images[i] || ''; 
+    //     newImg.alt = `img-${i}`;
+    //     newImg.classList.add('slide-img')
+    //     slideImgContainer.appendChild(newImg);
+    // }
 
     const slideName = document.querySelector('.attraction-simple-intro h3');
     const slideCategory = document.querySelector('.attraction-simple-intro p');
@@ -21,5 +29,6 @@ function renderAttractionPage (attractionPage){
         p.textContent = slideDesc[index] || '' ; 
     });
 
-    slide(attractionPage.images, 'attraction-slide');
+
+    // slide(attractionPage.images, 'attraction-slide');
 }
