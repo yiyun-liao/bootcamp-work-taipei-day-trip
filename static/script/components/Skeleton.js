@@ -8,6 +8,7 @@ export function skeletonAttractions(){
 
 
 export function skeletonMetroChip(){
+    console.log('running')
     const metroChipList = document.querySelector("#carousel-container ol");
     for (let i=0 ; i<=6 ; i++){
         const metroChipItem = document.querySelector("#carousel-container ol li");        
