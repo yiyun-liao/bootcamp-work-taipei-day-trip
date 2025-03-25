@@ -1,20 +1,29 @@
 export function slide(slideArray, location){
-    const slideImg = document.querySelector(`#${location}`);
-    slideImg.style.backgroundImage = `url("${slideArray[0] || ''}")`;
-
     let slideTotal = slideArray.length;
     let currentSlideImg = 0;
-    console.log(slideArray)
-    console.log('current', currentSlideImg, 'slideTotal', slideTotal)
-    console.log(`#${location} .slide-left-btn`)
-    
+    // console.log(slideArray)
+    // console.log('current', currentSlideImg, 'slideTotal', slideTotal)
+    // console.log(`#${location} .slide-left-btn`)
+
+    const slideImg = document.getElementById('attraction-slide');
     const leftBtn = document.querySelector(`#${location} .slide-left-btn`)
     const rightBtn = document.querySelector(`#${location} .slide-right-btn`)
+    const paginationGroup = document.querySelector(`#${location} ol`);
+
+    for (let i=0 ; i <= slideTotal -1 ; i++){
+        const pagination = document.createElement(`li`);
+        pagination.innerHTML=`
+            <i class="mdi mdi-circle-small"></i>
+        `;
+        paginationGroup.appendChild(pagination);
+    }
+    const paginationItems = document.querySelectorAll(`#${location} ol li i`)
+
 
     leftBtn.addEventListener('click', function(){
         if (currentSlideImg > 0){
             currentSlideImg --;
-            console.log('after click left button, current', currentSlideImg, 'slideTotal', slideTotal)
+            // console.log('after click left button, current', currentSlideImg, 'slideTotal', slideTotal)
             slideImg.style.backgroundImage = `url("${slideArray[currentSlideImg] || ''}")`;
             slideBtnState()
         }
@@ -23,12 +32,11 @@ export function slide(slideArray, location){
     rightBtn.addEventListener('click', function () {
         if (currentSlideImg < slideTotal -1) {
             currentSlideImg++;
-            console.log('after click right button, current', currentSlideImg, 'slideTotal', slideTotal)
+            // console.log('after click right button, current', currentSlideImg, 'slideTotal', slideTotal)
             slideImg.style.backgroundImage = `url("${slideArray[currentSlideImg] || ''}")`;
-            slideBtnState(); // 更新按鈕顯示
+            slideBtnState(); 
         }
     });
-
 
 
     function slideBtnState(){
@@ -47,6 +55,13 @@ export function slide(slideArray, location){
             leftBtn.style.display = 'none';
             rightBtn.style.display = 'none';            
         }
+        paginationItems.forEach((item, index) => {
+            if (index === currentSlideImg){
+                item.classList.add('mdi-circle-small-active')
+            }else{
+                item.classList.remove('mdi-circle-small-active')
+            }
+        })
     }
 
     slideBtnState()
