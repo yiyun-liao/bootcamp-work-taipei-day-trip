@@ -1,57 +1,64 @@
-export function slide(slideArray, location){
-    let slideTotal = slideArray.length;
-    let currentSlideImg = 0;
-    // console.log(slideArray)
-    // console.log('current', currentSlideImg, 'slideTotal', slideTotal)
-    // console.log(`#${location} .slide-left-btn`)
+export function slide(slideTotal, containerId){
+    let currentIndex = 0;
+    // console.log('current', currentIndex, 'slideTotal', slideTotal)
+    // console.log(`#${containerId} .slide-left-btn`)
 
-    const leftBtn = document.querySelector(`#${location} .slide-left-btn`)
-    const rightBtn = document.querySelector(`#${location} .slide-right-btn`)
-    const paginationGroup = document.querySelector(`#${location} ol`);
+    const leftBtn = document.querySelector(`#${containerId} .slide-left-btn`)
+    const rightBtn = document.querySelector(`#${containerId} .slide-right-btn`)
+    const paginationGroup = document.querySelector(`#${containerId} .pagination`);
+    const slideContainer = document.querySelector(`#${containerId} .slide-container`);
+    let slideWidth = document.querySelector(`#${containerId} .slide-img-container`).offsetWidth;
+    // const slideImgTotalWidth = 
+    console.log(slideContainer.offsetWidth, slideWidth)
 
     for (let i=0 ; i < slideTotal ; i++){
         const pagination = document.createElement('li');
         pagination.innerHTML=`<i class="mdi mdi-circle-small">`;
         pagination.addEventListener('click', () => {
-            currentSlideImg = i;
-            slideImg.style.backgroundImage = `url("${slideArray[currentSlideImg] || ''}")`;
+            currentIndex = i;
+            changeSlidePosition();
             slideBtnState()
         })
         paginationGroup.appendChild(pagination);
     }
 
-    const paginationItems = document.querySelectorAll(`#${location} .pagination li i`)
+    const paginationItems = document.querySelectorAll(`#${containerId} .pagination li i`)
 
 
     leftBtn.addEventListener('click', function(){
-        if (currentSlideImg > 0){
-            currentSlideImg --;
-            // console.log('after click left button, current', currentSlideImg, 'slideTotal', slideTotal)
-            slideImg.style.backgroundImage = `url("${slideArray[currentSlideImg] || ''}")`;
+        if (currentIndex > 0){
+            currentIndex --;
+            console.log('after click left button, current', currentIndex, 'slideTotal', slideTotal)
+            changeSlidePosition();
             slideBtnState()
         }
     })
 
     rightBtn.addEventListener('click', function () {
-        if (currentSlideImg < slideTotal -1) {
-            currentSlideImg++;
-            // console.log('after click right button, current', currentSlideImg, 'slideTotal', slideTotal)
-            slideImg.style.backgroundImage = `url("${slideArray[currentSlideImg] || ''}")`;
+        if (currentIndex < slideTotal -1) {
+            currentIndex++;
+            console.log('after click right button, current', currentIndex, 'slideTotal', slideTotal)
+            changeSlidePosition();
             slideBtnState(); 
         }
     });
 
+    function changeSlidePosition(){
+        slideContainer.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+        console.log(`translateX(-${currentIndex * slideWidth}px)`)
+    };
+
 
     function slideBtnState(){
-        console.log('slideBtnState', currentSlideImg, 'slideTotal', slideTotal)
+        console.log('slideBtnState', currentIndex, 'slideTotal', slideTotal)
         if (slideTotal <= 0) return;
-        if (currentSlideImg <= 0){
+        if (currentIndex <= 0){
             leftBtn.style.display = 'none';
             rightBtn.style.display = 'block';
-        }else if (0 < currentSlideImg && currentSlideImg < slideTotal - 1){
+        }else if (0 < currentIndex && currentIndex < slideTotal - 1){
             leftBtn.style.display = 'block';
             rightBtn.style.display = 'block';
-        }else if (currentSlideImg === slideTotal - 1){
+        }else if (currentIndex === slideTotal - 1){
             leftBtn.style.display = 'block';
             rightBtn.style.display = 'none';
         }else{
@@ -59,13 +66,19 @@ export function slide(slideArray, location){
             rightBtn.style.display = 'none';            
         }
         paginationItems.forEach((item, index) => {
-            if (index === currentSlideImg){
+            if (index === currentIndex){
                 item.classList.add('mdi-circle-small-active')
             }else{
                 item.classList.remove('mdi-circle-small-active')
             }
         })
-    }
+    };
 
-    slideBtnState()
+    slideBtnState();
+    window.addEventListener('resize',()=>{
+        const newSlideWidth = document.querySelector(`#${containerId} .slide-img-container`).offsetWidth;
+        slideWidth = newSlideWidth;
+        console.log(slideWidth)
+        changeSlidePosition();
+    } )
 }
