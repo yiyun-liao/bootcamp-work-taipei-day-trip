@@ -2,7 +2,7 @@ import { getAttractions, isLoading, nextPage, currentKeyword } from "../feature/
 
 export function renderAttractionsGallery(attractionsData){
     const attractionList = document.querySelector("#attraction ol");
-    console.log(attractionsData)
+    // console.log(attractionsData)
     attractionsData.forEach(item => {
         const attractionItem = document.createElement('li');      
   
