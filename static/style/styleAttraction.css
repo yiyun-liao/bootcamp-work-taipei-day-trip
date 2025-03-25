@@ -34,20 +34,22 @@
     position: relative;
 }
 
-#slide-left-btn{
+.slide-left-btn{
     position: absolute;
     left: 10px;
     top: calc( 50% - 18px );
     height: fit-content;
     cursor: pointer;
+    display: none;
 }
 
-#slide-right-btn{
+.slide-right-btn{
     position: absolute;
     right: 10px;
     top: calc( 50% - 18px );
     height: fit-content;
     cursor: pointer;
+    display: none;
 }
 
 .pagination{
