@@ -41,3 +41,4 @@
 	  </label>
 	  ```
 - add Skeleton Loading Animation
+- 紀錄：手機版本 datepicker 會顯示空白，所以改成預設當日來測試手機是否會至少有顯示內容
