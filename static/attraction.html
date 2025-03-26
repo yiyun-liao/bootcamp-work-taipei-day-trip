@@ -3,9 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300..700&family=Noto+Sans+TC:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  <script type="module" src="/static/script/main.js" defer></script>
+  <link rel="stylesheet" href="/static/style/styleAttraction.css">
+  <link rel="stylesheet" href="/static/style/global.css">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
   <title>Attraction</title>
 </head>
 <body>
-  
+  <!-- <header></header> -->
+  <main>
+    <section id="attraction-intro">
+      <div class="attraction-card">
+        <div id="attraction-slide">
+          <div class="slide-container">
+            <div class="slide-img-container skeleton-slide-img"></div>
+          </div>
+          <div class="slide-controller">
+            <div class="slide-left-btn"><i class="mdi mdi-chevron-left"></i></div>
+            <div class="slide-right-btn"><i class="mdi mdi-chevron-right"></i></div>
+            <ol class="pagination"></ol>
+          </div>
+        </div>
+        <div class="attraction-profile">
+          <div class="attraction-simple-intro">
+            <h3><div class="skeleton skeleton-container"></div></h3>
+            <p><div class="skeleton skeleton-container"></div></p>
+          </div>
+          <div id="attraction-bookSection">
+            <div class="attraction-bookIntro">
+              <p class="body-bold">訂購導覽行程</p>
+              <p>以此景點為中心的一日行程，帶您探索城市角落故事</p>
+            </div>
+            <div class="attraction-bookDetail">
+              <div >
+                <label class="body-bold" for="" >選擇日期：</label>
+                <input type="date" name="" value="" id="attraction-dateInput" />
+              </div>
+              <div>
+                <label class="body-bold" for="">選擇時間：</label>
+                <ol>
+                  <li>
+                    <label for="attraction-morning">
+                      <input type="radio" id="attraction-morning" name="attraction-time-selection" value="morning">
+                      上半天
+                    </label>
+                  </li>
+                  <li>
+                    <label for="attraction-afternoon">
+                      <input type="radio" id="attraction-afternoon" name="attraction-time-selection" value="afternoon">                      
+                      下半天
+                    </label>
+                  </li>
+                </ol>
+              </div>
+              <div>
+                <p class="body-bold">導覽費用：</p>
+                <p id="attraction-price"></p>
+              </div>
+            </div>
+            <button class="btn-text-med btn-med-solid">開始預約行程</button>
+          </div>
+        </div>
+      </div>
+      <div class="attraction-desc">
+        <div>
+          <p class="attraction-desc-p"></p>
+          <div class="skeleton skeleton-container"></div>
+          <div class="skeleton skeleton-container"></div>
+          <div class="skeleton skeleton-container"></div>
+          <div class="skeleton skeleton-container"></div>
+          <div class="skeleton skeleton-container"></div>
+        </div>
+        <div>
+          <p class="body-bold">景點地址：</p>
+          <p class="attraction-desc-p"></p>
+          <div class="skeleton skeleton-container"></div>
+          <div class="skeleton skeleton-container"></div>
+        </div>
+        <div>
+          <p class="body-bold">交通方式：</p>
+          <p class="attraction-desc-p"></p>
+          <div class="skeleton skeleton-container"></div>
+          <div class="skeleton skeleton-container"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- <footer></footer> -->
 </body>
 </html>

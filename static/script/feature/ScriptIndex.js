@@ -1,6 +1,6 @@
 import { fetchData } from "../components/FetchData.js";
 import { carousel } from "../components/Carousel.js";
-import { renderAttractions } from "../components/AttractionsList.js";
+import { renderAttractionsGallery } from "../components/AttractionsList.js";
 
 // render attractions and use input/chip search===========================================================================
 let nextPage = 0 // 全域變數
@@ -16,7 +16,7 @@ export async function getAttractions(page=0, keyword=""){
         document.querySelector("#attraction ol").innerHTML= "";
     }
     
-    renderAttractions(data.data);
+    renderAttractionsGallery(data.data);
     nextPage = data.nextPage; 
     // console.log(nextPage)
     isLoading = false;
@@ -65,7 +65,6 @@ function renderMetroChip(metroData){
         attractionList.appendChild(metroItem);
     });
     carousel();
-    searchMetro();
 }
 
 export {isLoading, nextPage, currentKeyword};
