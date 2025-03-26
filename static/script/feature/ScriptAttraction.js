@@ -36,7 +36,8 @@ function renderAttractionPage (attractionPage){
     document.querySelectorAll('.skeleton-slide-img').forEach(item => item.remove());
 
     slide(slideTotal, 'attraction-slide');
-    checkAttractionPrice()
+    checkAttractionPrice();
+    PresetDate()
 }
 
 function checkAttractionPrice(){
@@ -55,4 +56,11 @@ function checkAttractionPrice(){
         timeRadios[0].checked = true;
         timeRadios[0].dispatchEvent(new Event('change'))
     }
+}
+
+function PresetDate(){
+    const dateInput = document.getElementById("attraction-dateInput");
+    
+    const today = new Date().toISOString().split('T')[0];  // 格式：yyyy-mm-dd
+    dateInput.value = today; 
 }
