@@ -2,75 +2,6 @@
     box-sizing: border-box;
 }
 
-/* root */
-body{
-    padding: 0;
-    margin: 0;
-}
-
-ul, ol{
-    list-style: none;
-    margin: 0;
-    padding: 0;   
-}
-
-/* header section */
-header{
-    padding: 10px 0 10px 0;
-    position: fixed;
-    z-index: 100;
-    top: 0;
-    background-color: var(--color-white-900);
-    height: 54px;
-    width: 100vw;
-}
-
-nav{
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 10px 0 10px;
-}
-
-nav > h2{
-    color: var(--color-cyan-70);
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis;
-}
-
-nav div{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-nav button{
-    color: var(--color-gray-70);
-    padding: 10px;
-    height: 34px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--color-white-000);
-    border: var(--color-white-000);
-    white-space: nowrap; 
-}
-
-nav button:hover{
-    color: var(--color-black-900);   
-}
-
-nav button:active{
-    background-color: var(--color-cyan-20);
-    color: var(--color-cyan-70);   
-}
-
-main{
-    padding-top: 54px;
-}
 /* banner */
 #banner{
     height: 320px;
@@ -239,9 +170,17 @@ main{
     height: 50px; 
     padding: 13px 10px;  
     width: 100%;
-    overflow: hidden;
+    overflow-x: scroll;
+    overflow-y: hidden;
     position: relative;
     white-space: nowrap; 
+    scrollbar-width: none; /* Firefox */
+
+}
+
+
+#carousel-container ol::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
 }
 
 #carousel-container li{
@@ -366,35 +305,30 @@ main{
     text-overflow: ellipsis;
 }
 
-/* footer section */
-footer{
-    background-color: var(--color-gray-70);
-    padding: 40px 0;
-    margin: 0 auto;
-    color: var(--color-white-900);
-    height: 104px;
-}
-
-footer > div{
-    text-align: center;
-}
-
-
 /* loading */
-.carousel-skeleton {
+.carousel-container-skeleton{
     background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
     background-size: 200% 100%;
     animation: loading 1.5s infinite;
-    min-width: 62px !important;
+    opacity: 0.8;
+    width: 60px !important;    
 }
 
-
-.attraction-skeleton {
+.attraction-thumbnail-skeleton {
     background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
     background-size: 200% 100%;
     animation: loading 1.5s infinite;
-    min-width: 62px !important;
+    opacity: 0.8;
 }
+
+
+.attraction-skeleton-text {
+    width: 80%;
+    height: 100%;
+    border-radius: 0.125rem;
+}
+
+
 
 /* 讓骨架動畫流動 */
 @keyframes loading {
