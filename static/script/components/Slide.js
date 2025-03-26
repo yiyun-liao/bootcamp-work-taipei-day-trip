@@ -7,9 +7,10 @@ export function slide(slideTotal, containerId){
     const rightBtn = document.querySelector(`#${containerId} .slide-right-btn`)
     const paginationGroup = document.querySelector(`#${containerId} .pagination`);
     const slideContainer = document.querySelector(`#${containerId} .slide-container`);
-    let slideWidth = document.querySelector(`#${containerId} .slide-img-container`).offsetWidth;
-    // console.log(slideContainer.offsetWidth, slideWidth)
+    let slideSingleWidth = document.querySelector(`#${containerId} .slide-img-container`).offsetWidth;
+    // console.log(slideContainer.offsetWidth, slideSingleWidth)
 
+    // render pagination
     for (let i=0 ; i < slideTotal ; i++){
         const pagination = document.createElement('li');
         pagination.innerHTML=`<i class="mdi mdi-circle-small">`;
@@ -43,8 +44,8 @@ export function slide(slideTotal, containerId){
     });
 
     function changeSlidePosition(){
-        slideContainer.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
-        // console.log(`translateX(-${currentIndex * slideWidth}px)`)
+        slideContainer.style.transform = `translateX(-${currentIndex * slideSingleWidth}px)`;
+        // console.log(`translateX(-${currentIndex * slideSingleWidth}px)`)
     };
 
 
@@ -75,9 +76,9 @@ export function slide(slideTotal, containerId){
 
     slideBtnState();
     window.addEventListener('resize',()=>{
-        const newSlideWidth = document.querySelector(`#${containerId} .slide-img-container`).offsetWidth;
-        slideWidth = newSlideWidth;
-        // console.log(slideWidth)
+        const newSlideSingleWidth = document.querySelector(`#${containerId} .slide-img-container`).offsetWidth;
+        slideSingleWidth = newSlideSingleWidth;
+        // console.log(slideSingleWidth)
         changeSlidePosition();
     } )
 }

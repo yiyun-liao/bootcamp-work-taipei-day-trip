@@ -8,6 +8,7 @@ export async function getAttractionDetails(id){
 };
 
 function renderAttractionPage (attractionPage){
+    // render image
     const slideImgContainer = document.querySelector('.slide-container');
     const slideTotal = attractionPage.images.length;
     attractionPage.images.forEach((item, index) => {
@@ -18,6 +19,7 @@ function renderAttractionPage (attractionPage){
         slideImgContainer.appendChild(newImg);
     })
 
+    // render container
     const slideName = document.querySelector('.attraction-simple-intro h3');
     const slideCategory = document.querySelector('.attraction-simple-intro p');
     slideName.textContent = attractionPage.name || '';
@@ -29,10 +31,15 @@ function renderAttractionPage (attractionPage){
     });
 
 
+    //remove skeleton
+    document.querySelectorAll('.skeleton.skeleton-container').forEach(item => item.remove());
+    document.querySelectorAll('.skeleton-slide-img').forEach(item => item.remove());
+
     slide(slideTotal, 'attraction-slide');
+    checkAttractionPrice()
 }
 
-export function checkAttractionPrice(){
+function checkAttractionPrice(){
     const timeRadios = document.querySelectorAll('input[name="attraction-time-selection"]');
     const attractionPrice = document.getElementById('attraction-price');
     timeRadios.forEach(radio => {
@@ -46,7 +53,6 @@ export function checkAttractionPrice(){
     //預設選擇
     if (timeRadios.length > 0){
         timeRadios[0].checked = true;
-        console.log('work')
         timeRadios[0].dispatchEvent(new Event('change'))
     }
 }

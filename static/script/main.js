@@ -2,7 +2,7 @@ import { handleScroll } from "./components/AttractionsList.js";
 import { getAttractions, searchMetro, getMetro } from "./feature/ScriptIndex.js";
 import { skeletonAttractions, skeletonMetroChip } from "./components/Skeleton.js";
 import { renderHeaderAndFooter } from "./components/HeaderAndFooter.js";
-import { getAttractionDetails, checkAttractionPrice } from "./feature/ScriptAttraction.js";
+import { getAttractionDetails } from "./feature/ScriptAttraction.js";
 
 document.addEventListener('DOMContentLoaded',async () => {
     const path = window.location.pathname; 
@@ -22,6 +22,5 @@ document.addEventListener('DOMContentLoaded',async () => {
         const id = attractionPageMatch[1]; 
         console.log(`Attraction ID: ${id}`); 
         await getAttractionDetails(id);
-        checkAttractionPrice();
     }
 });
