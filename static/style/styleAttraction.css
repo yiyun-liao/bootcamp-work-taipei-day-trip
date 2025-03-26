@@ -234,10 +234,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.attraction-bookDetail ol li label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 0 8px 0 5px;
     margin-left: 5px;
     gap: 4px;
     cursor: pointer;
+}
+
+.attraction-bookDetail ol li:hover{
+    color: var(--color-black-900);
 }
 
 .attraction-bookDetail input[type="radio"]{
