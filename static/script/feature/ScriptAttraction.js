@@ -14,7 +14,7 @@ function renderAttractionPage (attractionPage){
         const newImg = document.createElement('div');
         newImg.innerHTML=`<img src= ${item || ''} alt="image-${index}">`;
         newImg.classList.add('slide-img-container');
-        console.log(index, 'done');
+        // console.log(index, 'done');
         slideImgContainer.appendChild(newImg);
     })
 
@@ -30,4 +30,23 @@ function renderAttractionPage (attractionPage){
 
 
     slide(slideTotal, 'attraction-slide');
+}
+
+export function checkAttractionPrice(){
+    const timeRadios = document.querySelectorAll('input[name="attraction-time-selection"]');
+    const attractionPrice = document.getElementById('attraction-price');
+    timeRadios.forEach(radio => {
+        radio.addEventListener('change', function(){
+            if(this.checked){
+                attractionPrice.textContent = this.value === 'morning' ? '新台幣 2000 元' : '新台幣 2500 元';
+            }
+        })
+    })
+
+    //預設選擇
+    if (timeRadios.length > 0){
+        timeRadios[0].checked = true;
+        console.log('work')
+        timeRadios[0].dispatchEvent(new Event('change'))
+    }
 }
