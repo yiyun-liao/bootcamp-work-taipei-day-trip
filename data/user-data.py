@@ -17,12 +17,12 @@ def get_db_connection():
 
 
 # build user structure/table ===========================================================================
-with get_db_connection() as db:
-    with db.cursor(dictionary=True) as cursor:
-        cursor.execute("""CREATE TABLE userData (
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            userName VARCHAR(255) NOT NULL, 
-            userMail VARCHAR(255) NOT NULL,
-            userPassword VARCHAR(255) NOT NULL, 
-            createTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)""")
-        db.commit()
+# with get_db_connection() as db:
+#     with db.cursor(dictionary=True) as cursor:
+#         cursor.execute("""CREATE TABLE userData (
+#             id INT PRIMARY KEY AUTO_INCREMENT,
+#             userName VARCHAR(255) NOT NULL, 
+#             userMail VARCHAR(255) NOT NULL,
+#             userPassword VARCHAR(255) NOT NULL, 
+#             createTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)""")
+#         db.commit()
