@@ -1,7 +1,6 @@
-import { handleScroll } from "./components/AttractionsList.js";
-import { getAttractions, searchMetro, getMetro } from "./feature/ScriptIndex.js";
 import { skeletonAttractions, skeletonMetroChip } from "./components/Skeleton.js";
 import { renderHeaderAndFooter } from "./components/HeaderAndFooter.js";
+import { getAttractions, searchMetro, getMetro, handleScroll } from "./feature/ScriptIndex.js";
 import { getAttractionDetails } from "./feature/ScriptAttraction.js";
 
 document.addEventListener('DOMContentLoaded',async () => {
