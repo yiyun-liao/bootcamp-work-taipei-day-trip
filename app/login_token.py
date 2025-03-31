@@ -29,20 +29,18 @@ def verify_jwt_token(token:str):
         payload = jwt.decode(token, SECRET_KEY, algorithms=ALGORITHM)
         return payload
     except jwt.ExpiredSignatureError:
-        print('Token has expired')
         raise HTTPException(
             status_code= 401,
-            content={"data": None}
+            detail={"data": "Token has expired"}
         )
     except jwt.InvalidTokenError:
-        print('Invalid token')
         raise HTTPException(
             status_code= 401,
-            content={"data": None}
+            detail={"data": "Invalid token"}
         )
     except Exception as e:
         print(f"Error: {e}")
         raise HTTPException(
             status_code=500,
-            detail={e}
+            detail={"data": None}
         )
