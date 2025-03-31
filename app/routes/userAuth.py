@@ -97,6 +97,9 @@ async def get_user_auth(token:str = Depends(oauth2_scheme)):
         }
         if user_data:
             return {"data":data}
+    except HTTPException as http_exc:
+        # 讓 FastAPI 正確回傳 401 錯誤
+        raise http_exc
     except Exception as e:
         print(f"Error: {e}")
         raise HTTPException(
