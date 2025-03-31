@@ -1,6 +1,8 @@
 from fastapi import APIRouter,  HTTPException, Request, Depends
 from fastapi.responses import JSONResponse
 import mysql.connector
+from fastapi.security import OAuth2PasswordBearer
+
 from app.database import get_db_connection
 
 router = APIRouter()
@@ -46,7 +48,7 @@ async def sign_out(request:Request):
 @router.put("/api/user/auth")
 async def sign_in(request:Request):
     from app.login_token import create_jwt_token
-    
+
     body = await request.json(); 
     print(body)
     mail = body.get('email')
@@ -69,10 +71,7 @@ async def sign_in(request:Request):
                     "name":userData['userName'],
                     "id":userData['id']
                 })
-        return JSONResponse(
-            status_code=200,
-            content={"token":token}
-        )
+        return {"token":token}
     except Exception as e:
         print(f"Error: {e}")
         raise HTTPException(
@@ -83,11 +82,21 @@ async def sign_in(request:Request):
             }
         )
 
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
 @router.get("/api/user/auth")
-async def get_user_auth():
+async def get_user_auth(token:str = Depends(oauth2_scheme)):
+    from app.login_token import verify_jwt_token
     try:
-        user_detail = []
-        return {"data" : user_detail}
+        user_data = verify_jwt_token(token)
+        data ={
+            "id":user_data['id'],
+            "name":user_data['name'],
+            "email":user_data['sub']
+        }
+        if user_data:
+            return {"data":data}
     except Exception as e:
         print(f"Error: {e}")
         raise HTTPException(
