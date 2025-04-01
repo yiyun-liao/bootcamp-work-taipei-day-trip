@@ -191,6 +191,10 @@ nav div{
     align-items: center;
 }
 
+#login-and-signup-btn, #logout-btn{
+    display: none;
+}
+
 main{
     padding-top: 54px;
 }

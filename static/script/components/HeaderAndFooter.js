@@ -1,12 +1,13 @@
 import { login } from "./LoginAndSignup.js";
 
-export async function renderHeaderAndFooter(){
+export async function renderHeaderAndFooter(userState= null){
     try{
         const response = await fetch("/static/header.html")
         const html = await response.text();
         document.body.insertAdjacentHTML('afterbegin', html);
-        setHeaderAction();
-        loginAndSignupPop()
+        console.log(userState)
+        setHeaderAction(userState);
+    
     } catch(error){
         console.error('Error fetching data:', error);
     }
@@ -19,12 +20,23 @@ export async function renderHeaderAndFooter(){
         `;
     document.body.appendChild(footer);
     
-    }
+}
     
-function setHeaderAction(){
+function setHeaderAction(userState= null){
+    console.log(userState)
+
     document.querySelector('header nav h2').addEventListener('click', ()=>{
         window.location.href='/';
     })
+
+    const loginAndSignupBtn = document.getElementById('login-and-signup-btn');
+    const logoutBtn = document.getElementById('logout-btn');
+    if (userState){
+        logoutBtn.style.display = 'flex';
+        loginAndSignupPop()
+    }else{
+        loginAndSignupBtn.style.display = 'flex';
+    }
 }
 
 function loginAndSignupPop(){
