@@ -4,28 +4,33 @@ export function login(){
     console.log('login clear all')
     loginMail.value = '';
     loginPassword.value = '';
+
     document.getElementById('login-form').addEventListener('submit',(event)=>{
         event.preventDefault();
         console.log("login", loginMail.value, loginPassword.value)
+
         if (!loginMail.value.includes('@')){
             (alert('請輸入有效的電子信箱'))
             loginMail.value = '';
+            return
         } else if (loginPassword.value.length < 8 || loginPassword.value.length > 16){
             (alert('密碼至少 8 碼且少於 16 碼'))
             loginPassword.value = '';
+            return
         } else {
             const revertLoginData = {
                 email: escapeHTML(loginMail.value), 
                 password: escapeHTML(loginPassword.value)
             }
+
             fetchLogin(revertLoginData);
             console.log('process done', revertLoginData);
+
             loginMail.value = '';
             loginPassword.value = '';
         }
     });
 }
-
 
 async function fetchLogin(LoginData){
     const errorText = document.getElementById('login-error-hint');
@@ -36,6 +41,7 @@ async function fetchLogin(LoginData){
             headers:{"Content-Type": "application/json"},
             body: JSON.stringify(LoginData)
         })
+
         if (response.status === 400){
             errorText.style.display = 'block';
             errorText.textContent = '登入失敗，帳號或密碼錯誤';
@@ -46,8 +52,10 @@ async function fetchLogin(LoginData){
             errorText.style.display = 'block';
             errorText.textContent = '登入成功';
             errorText.style.color = 'var(--color-cyan-70)';
+
             const data = await response.json();
             console.log("login",data.token)
+
             if (data.token){
                 localStorage.setItem("token", data.token);
                 console.log("登入成功，Token: ", data.token);
@@ -127,6 +135,7 @@ async function fetchSignup(signupData){
             errorText.style.display = 'block';
             errorText.textContent = '註冊成功，登入中...';
             errorText.style.color = 'var(--color-cyan-70)';
+            
             const autoLoginData = {
                 email: signupData.email, 
                 password: signupData.password
