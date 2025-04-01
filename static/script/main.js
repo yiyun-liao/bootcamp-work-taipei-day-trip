@@ -3,8 +3,10 @@ import { renderHeaderAndFooter } from "./components/HeaderAndFooter.js";
 import { getAttractions, searchMetro, getMetro, handleScroll } from "./feature/ScriptIndex.js";
 import { getAttractionDetails } from "./feature/ScriptAttraction.js";
 import { login } from "./components/LoginAndSignup.js";
+import { checkTokenValid } from "./components/CheckTokenValid.js";
 
 document.addEventListener('DOMContentLoaded',async () => {
+    checkTokenValid();
     const path = window.location.pathname; 
     if (path === "/"){
         renderHeaderAndFooter();
