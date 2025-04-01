@@ -1,7 +1,7 @@
 export function login(){
     const loginMail = document.getElementById('login_mail');
     const loginPassword = document.getElementById('login_password');
-    console.log('clear all')
+    console.log('login clear all')
     loginMail.value = '';
     loginPassword.value = '';
     document.getElementById('login-form').addEventListener('submit',(event)=>{
@@ -14,8 +14,12 @@ export function login(){
             (alert('密碼至少 8 碼且少於 16 碼'))
             loginPassword.value = '';
         } else {
-            console.log('process done');
-            fetchLogin(loginMail.value, loginPassword.value);
+            const revertLoginData = {
+                email: escapeHTML(loginMail.value), 
+                password: escapeHTML(loginPassword.value)
+            }
+            fetchLogin(revertLoginData);
+            console.log('process done', revertLoginData);
             loginMail.value = '';
             loginPassword.value = '';
         }
@@ -23,14 +27,14 @@ export function login(){
 }
 
 
-async function fetchLogin(email, password){
+async function fetchLogin(LoginData){
     const errorText = document.querySelector('.pop-error-hint');
 
     try{
         const response = await fetch("/api/user/auth",{
             method: "PUT",
             headers:{"Content-Type": "application/json"},
-            body: JSON.stringify({email, password})
+            body: JSON.stringify(LoginData)
         })
         if (response.status === 400){
             errorText.style.display = 'block';
@@ -45,7 +49,7 @@ async function fetchLogin(email, password){
             const data = await response.json();
             console.log(data.token)
             if (data.token){
-                localStorage.setItem("token", data.token)
+                localStorage.setItem("token", data.token);
                 console.log("登入成功，Token: ", data.token);
                 location.reload();
             } else {
@@ -59,7 +63,93 @@ async function fetchLogin(email, password){
 }
 
 // signup =============================
+export function signup(){
+    const signupUsername = document.getElementById('signup_username');
+    const signupMail = document.getElementById('signup_mail');
+    const signupPassword = document.getElementById('signup_password');
+    signupUsername.value = '';
+    signupMail.value = '';
+    signupPassword.value = '';
+    console.log('signup clear all')
 
+    document.getElementById('signup-form').addEventListener('submit',(event)=>{
+        event.preventDefault();
+
+        console.log(signupUsername.value, signupMail.value, signupPassword.value)
+
+        if (!signupUsername.value){
+            (alert('請輸入有效的用戶名稱'))
+            signupUsername.value = '';
+            return            
+        }else if (!signupMail.value.includes('@')){
+            (alert('請輸入有效的電子信箱'))
+            signupMail.value = '';
+            return
+        } else if (signupPassword.value.length < 8 || signupPassword.value.length > 16){
+            (alert('密碼至少 8 碼且少於 16 碼'))
+            signupPassword.value = '';
+        } else {
+            const revertSignupData = {
+                name: escapeHTML(signupUsername.value), 
+                email: escapeHTML(signupMail.value), 
+                password: escapeHTML(signupPassword.value)
+            }
+
+            console.log('process done', revertSignupData);
+            fetchSignup(revertSignupData);
+
+            signupUsername.value = '';
+            signupMail.value = '';
+            signupPassword.value = '';
+        }
+    });
+}
+
+function escapeHTML(input) {
+    return input
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;")
+        .replace(/\//g, "&#x2F;");
+}
+
+
+async function fetchSignup(signupData){
+    const errorText = document.querySelector('.pop-error-hint');
+    console.log(signupData)
+    // try{
+    //     const response = await fetch("/api/user",{
+    //         method: "PUT",
+    //         headers:{"Content-Type": "application/json"},
+    //         body: JSON.stringify(signupData)
+    //     })
+    //     if (response.status === 400){
+    //         errorText.style.display = 'block';
+    //         errorText.textContent = '登入失敗，帳號或密碼錯誤';
+    //     } else if (response.status === 500){
+    //         errorText.style.display = 'block';
+    //         errorText.textContent = '系統連線問題，請稍後再試';
+    //     } else if (response.status === 200){
+    //         errorText.style.display = 'block';
+    //         errorText.textContent = '登入成功';
+    //         errorText.style.color = 'var(--color-cyan-70)';
+    //         const data = await response.json();
+    //         console.log(data.token)
+    //         if (data.token){
+    //             localStorage.setItem("token", data.token)
+    //             console.log("登入成功，Token: ", data.token);
+    //             location.reload();
+    //         } else {
+    //             console.log("登入失敗");
+    //         }
+    //     }
+
+    // } catch(error){
+    //     console.error('Error fetching data:', error);
+    // }
+}
 
 // logout =============================
 export function logout(){
@@ -68,29 +158,3 @@ export function logout(){
         location.reload();
     })
 }
-
-// export function signup(event){
-//     event.preventDefault();
-
-//     const name = document.getElementById('signup_name');
-//     const username = document.getElementById('signup_username');
-//     const password = document.getElementById('signup_password');
-//     const submit = document.getElementById('signup_submit');
-
-//     const nameError = document.getElementById('signup_name_error');
-//     const usernameError = document.getElementById('signup_username_error');
-//     const passwordError = document.getElementById('signup_password_error');  
-    
-//     const inputRule = /^[A-Za-z0-9]{2,}$/;
-//     function validateSignupInputs(){
-//         nameError.textContent= name.value === "" ? "姓名不得空白" 
-//             : (!inputRule.test(name.value) ? "姓名只能包含英數字，且至少 2 個字元" : "");
-//         usernameError.textContent= username.value === "" ? "帳號不得空白" 
-//             : (!inputRule.test(username.value) ? "帳號只能包含英數字，且至少 2 個字元" : "");
-//         passwordError.textContent= password.value === "" ? "密碼不得空白" 
-//             : (!inputRule.test(password.value) ? "帳號只能包含英數字，且至少 2 個字元" : "");
-//         submit.disabled = !(nameError.textContent === "" && usernameError.textContent === "" && passwordError.textContent === "");
-//     }
-
-//     document.getElementById('signup_form').addEventListener('input', validateSignupInputs());
-// }

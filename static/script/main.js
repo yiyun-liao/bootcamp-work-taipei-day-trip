@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded',async () => {
         renderHeaderAndFooter(true);
     }else{
         renderHeaderAndFooter(false);
-        // login();
     }
     const path = window.location.pathname; 
     if (path === "/"){
