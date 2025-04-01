@@ -25,7 +25,7 @@ function setHeaderAction(userState= false){
     document.querySelector('header nav h2').addEventListener('click', ()=>{
         window.location.href='/';
     })
-    console.log(userState)
+    // console.log(userState)
     const loginAndSignupBtn = document.getElementById('login-and-signup-btn');
     const logoutBtn = document.getElementById('logout-btn');
     if (userState){

@@ -10,7 +10,7 @@ router = APIRouter()
 @router.post("/api/user")
 async def sign_out(request:Request):
     body = await request.json()
-    print(body)
+    # print(body)
     name = body.get('name')
     mail = body.get('email')
     password = body.get('password')
@@ -50,7 +50,7 @@ async def sign_in(request:Request):
     from app.login_token import create_jwt_token
 
     body = await request.json(); 
-    print(body)
+    # print(body)
     mail = body.get('email')
     password = body.get('password')        
     if not mail or not password:
@@ -71,7 +71,7 @@ async def sign_in(request:Request):
                     "name":userData['userName'],
                     "id":userData['id']
                 })
-        print("token: ", token)
+        # print("token: ", token)
         return {"token":token}
     except Exception as e:
         print(f"Error: {e}")
