@@ -1,4 +1,4 @@
-import { login } from "./LoginAndSignup.js";
+import { login, logout } from "./LoginAndSignup.js";
 
 export async function renderHeaderAndFooter(userState= false){
     try{
@@ -22,18 +22,18 @@ export async function renderHeaderAndFooter(userState= false){
 }
     
 function setHeaderAction(userState= false){
-    console.log(userState)
     document.querySelector('header nav h2').addEventListener('click', ()=>{
         window.location.href='/';
     })
-
+    console.log(userState)
     const loginAndSignupBtn = document.getElementById('login-and-signup-btn');
     const logoutBtn = document.getElementById('logout-btn');
     if (userState){
         logoutBtn.style.display = 'flex';
+        logout();
     }else{
         loginAndSignupBtn.style.display = 'flex';
-        loginAndSignupPop()
+        loginAndSignupPop();
     }
 }
 
@@ -43,13 +43,13 @@ function loginAndSignupPop(){
     // open
     document.getElementById('login-and-signup-btn').addEventListener('click',function(){
         openLoginPop.style.display = 'block';
+        login(); 
     })
     // close
     document.querySelectorAll('.pop-body .mdi-close').forEach(btn=>{
         btn.addEventListener('click', function(){
             openLoginPop.style.display = 'none';
             openSignupPop.style.display = 'none';
-            login(); 
         })
     })
     // switch

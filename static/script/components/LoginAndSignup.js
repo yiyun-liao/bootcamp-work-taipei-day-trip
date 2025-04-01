@@ -1,26 +1,24 @@
 export function login(){
     const loginMail = document.getElementById('login_mail');
     const loginPassword = document.getElementById('login_password');
-    // console.log('clear all')
+    console.log('clear all')
     loginMail.value = '';
     loginPassword.value = '';
-    document.getElementById('login_submit').addEventListener('click',(event)=>{
+    document.getElementById('login-form').addEventListener('submit',(event)=>{
         event.preventDefault();
         console.log(loginMail.value, loginPassword.value)
         if (!loginMail.value.includes('@')){
             (alert('請輸入有效的電子信箱'))
             loginMail.value = '';
-            return   
-        };
-        if (loginPassword.value.length < 8 || loginPassword.value.length > 16){
+        } else if (loginPassword.value.length < 8 || loginPassword.value.length > 16){
             (alert('密碼至少 8 碼且少於 16 碼'))
             loginPassword.value = '';
-            return             
-        };
-        console.log('process done');
-        fetchLogin(loginMail.value, loginPassword.value);
-        loginMail.value = '';
-        loginPassword.value = '';
+        } else {
+            console.log('process done');
+            fetchLogin(loginMail.value, loginPassword.value);
+            loginMail.value = '';
+            loginPassword.value = '';
+        }
     });
 }
 
@@ -44,20 +42,31 @@ async function fetchLogin(email, password){
             errorText.style.display = 'block';
             errorText.textContent = '登入成功';
             errorText.style.color = 'var(--color-cyan-70)';
+            const data = await response.json();
+            console.log(data.token)
+            if (data.token){
+                localStorage.setItem("token", data.token)
+                console.log("登入成功，Token: ", data.token);
+                location.reload();
+            } else {
+                console.log("登入失敗");
+            }
         }
 
-        const data = await response.json();
-        console.log(data)
-        console.log(data.token)
-        if (data.token){
-            localStorage.setItem("token", data.token)
-            console.log("登入成功，Token: ", data.token);
-        } else {
-            console.log("登入失敗");
-        }
     } catch(error){
         console.error('Error fetching data:', error);
     }
+}
+
+// signup =============================
+
+
+// logout =============================
+export function logout(){
+    document.getElementById('logout-btn').addEventListener('click', () => {
+        localStorage.removeItem('token');
+        location.reload();
+    })
 }
 
 // export function signup(event){
