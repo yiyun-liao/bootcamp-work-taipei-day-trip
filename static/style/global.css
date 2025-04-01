@@ -374,7 +374,8 @@ footer > div{
     align-items: center;
 }
 
-.pop-error-hint{
+#login-error-hint, 
+#signup-error-hint{
     display: none;
     color: red;
 }
