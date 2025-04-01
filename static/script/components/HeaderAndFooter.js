@@ -30,12 +30,10 @@ function setHeaderAction(userState= false){
     const logoutBtn = document.getElementById('logout-btn');
     if (userState){
         logoutBtn.style.display = 'flex';
-        // logout();
         document.getElementById('logout-btn').addEventListener('click', logout);
         // console.log('add logout event listening')
     }else{
         loginAndSignupBtn.style.display = 'flex';
-        // loginAndSignupPop();
         document.getElementById('login-and-signup-btn').addEventListener('click',loginAndSignupPop);
         // console.log('add login/signup event listening')
     }
