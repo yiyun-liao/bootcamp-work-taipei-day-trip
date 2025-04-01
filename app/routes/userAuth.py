@@ -71,6 +71,7 @@ async def sign_in(request:Request):
                     "name":userData['userName'],
                     "id":userData['id']
                 })
+        print("token: ", token)
         return {"token":token}
     except Exception as e:
         print(f"Error: {e}")

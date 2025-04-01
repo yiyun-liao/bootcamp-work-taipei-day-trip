@@ -19,17 +19,42 @@ export function login(){
         };
         console.log('process done');
         fetchLogin(loginMail.value, loginPassword.value);
+        loginMail.value = '';
+        loginPassword.value = '';
     });
 }
 
 
-async function fetchLogin(mail, password){
+async function fetchLogin(email, password){
+    const errorText = document.querySelector('.pop-error-hint');
+
     try{
-        const response = await fetch("/api/user/auth")
-        if(!response.ok){
-            throw new Error("Could not fetch resource");
+        const response = await fetch("/api/user/auth",{
+            method: "PUT",
+            headers:{"Content-Type": "application/json"},
+            body: JSON.stringify({email, password})
+        })
+        if (response.status === 400){
+            errorText.style.display = 'block';
+            errorText.textContent = '登入失敗，帳號或密碼錯誤';
+        } else if (response.status === 500){
+            errorText.style.display = 'block';
+            errorText.textContent = '系統連線問題，請稍後再試';
+        } else if (response.status === 200){
+            errorText.style.display = 'block';
+            errorText.textContent = '登入成功';
+            errorText.style.color = 'var(--color-cyan-70)';
         }
-        return await response.json();
+
+        const data = await response.json();
+        console.log(data)
+        console.log(data.token)
+        if (data.token){
+            localStorage.setItem("token", data.token)
+            console.log("登入成功，Token: ", data.token);
+        } else {
+            console.log("登入失敗");
+        }
     } catch(error){
         console.error('Error fetching data:', error);
     }
