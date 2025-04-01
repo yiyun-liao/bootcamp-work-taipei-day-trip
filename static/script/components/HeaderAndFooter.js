@@ -1,13 +1,12 @@
 import { login } from "./LoginAndSignup.js";
 
-export async function renderHeaderAndFooter(userState= null){
+export async function renderHeaderAndFooter(userState= false){
     try{
         const response = await fetch("/static/header.html")
         const html = await response.text();
         document.body.insertAdjacentHTML('afterbegin', html);
-        console.log(userState)
         setHeaderAction(userState);
-    
+ 
     } catch(error){
         console.error('Error fetching data:', error);
     }
@@ -22,9 +21,8 @@ export async function renderHeaderAndFooter(userState= null){
     
 }
     
-function setHeaderAction(userState= null){
+function setHeaderAction(userState= false){
     console.log(userState)
-
     document.querySelector('header nav h2').addEventListener('click', ()=>{
         window.location.href='/';
     })
@@ -33,9 +31,9 @@ function setHeaderAction(userState= null){
     const logoutBtn = document.getElementById('logout-btn');
     if (userState){
         logoutBtn.style.display = 'flex';
-        loginAndSignupPop()
     }else{
         loginAndSignupBtn.style.display = 'flex';
+        loginAndSignupPop()
     }
 }
 
@@ -43,7 +41,7 @@ function loginAndSignupPop(){
     const openLoginPop = document.getElementById('login-pop')
     const openSignupPop = document.getElementById('signup-pop')
     // open
-    document.getElementById('login-and-signup').addEventListener('click',function(){
+    document.getElementById('login-and-signup-btn').addEventListener('click',function(){
         openLoginPop.style.display = 'block';
     })
     // close
