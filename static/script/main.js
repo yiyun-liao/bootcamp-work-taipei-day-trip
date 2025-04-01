@@ -2,6 +2,7 @@ import { skeletonAttractions, skeletonMetroChip } from "./components/Skeleton.js
 import { renderHeaderAndFooter } from "./components/HeaderAndFooter.js";
 import { getAttractions, searchMetro, getMetro, handleScroll } from "./feature/ScriptIndex.js";
 import { getAttractionDetails } from "./feature/ScriptAttraction.js";
+import { login } from "./components/LoginAndSignup.js";
 
 document.addEventListener('DOMContentLoaded',async () => {
     const path = window.location.pathname; 
@@ -22,4 +23,6 @@ document.addEventListener('DOMContentLoaded',async () => {
         console.log(`Attraction ID: ${id}`); 
         await getAttractionDetails(id);
     }
+
+    login();
 });
