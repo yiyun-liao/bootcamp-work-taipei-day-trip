@@ -6,10 +6,14 @@ import { login } from "./components/LoginAndSignup.js";
 import { checkTokenValid } from "./components/CheckTokenValid.js";
 
 document.addEventListener('DOMContentLoaded',async () => {
-    checkTokenValid();
+    const userData = await checkTokenValid();
+    if (userData){
+        renderHeaderAndFooter(userData);
+    }else{
+        renderHeaderAndFooter();
+    }
     const path = window.location.pathname; 
     if (path === "/"){
-        renderHeaderAndFooter();
         skeletonMetroChip();
         skeletonAttractions();
         await getAttractions();
@@ -20,7 +24,7 @@ document.addEventListener('DOMContentLoaded',async () => {
 
     const attractionPageMatch = path.match(/^\/attraction\/(\d+)$/);
     if (attractionPageMatch) {
-        renderHeaderAndFooter();
+        // renderHeaderAndFooter();
         const id = attractionPageMatch[1]; 
         console.log(`Attraction ID: ${id}`); 
         await getAttractionDetails(id);
