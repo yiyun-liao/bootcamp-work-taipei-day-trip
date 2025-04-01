@@ -1,4 +1,4 @@
-import { login, logout } from "./LoginAndSignup.js";
+import { login, signup, logout } from "./LoginAndSignup.js";
 
 export async function renderHeaderAndFooter(userState= false){
     try{
@@ -56,12 +56,13 @@ function loginAndSignupPop(){
     document.querySelectorAll('.pop-more .btn-med-plain').forEach(btn=>{
         btn.addEventListener('click', function(){
             if(btn.textContent === '點此登入'){
-                openLoginPop.style.display = 'none';
-                openSignupPop.style.display = 'block';                            
-            }else{
                 openLoginPop.style.display = 'block';
                 openSignupPop.style.display = 'none'; 
                 login();                 
+            }else{
+                openLoginPop.style.display = 'none';
+                openSignupPop.style.display = 'block';
+                signup();                            
             }
         })
     })
