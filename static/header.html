@@ -1,18 +1,18 @@
-<div id="login-pop" style="display: none;">
+<div id="login-pop">
     <div class="pop-container">
         <div class="gradient-style"></div>
         <div class="pop-body">
             <i class="mdi mdi-close"></i>
             <p class="pop-title h3">登入會員系統</p>
-            <div class="pop-input">
-                <input class="body-med" type="text" name="login_mail" id="login_mail" placeholder="輸入電子信箱" autocomplete="username">
-                <input class="body-med" type="text" name="login_password" id="login_password" placeholder="輸入密碼" autocomplete="new-password">
+            <form class="pop-input">
+                <input class="body-med" type="email" name="login_mail" id="login_mail" placeholder="輸入電子信箱" autocomplete="username">
+                <input class="body-med" type="password" name="login_password" id="login_password" placeholder="輸入密碼" autocomplete="current-password">
                 <button class="btn-med-solid">登入帳戶</button>
                 <div class="pop-more">
                     <p>還沒有帳戶？</p>
-                    <p class="btn-med-plain">點此註冊</p>
+                    <p class="btn-med-plain">點此登入</p>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -21,17 +21,17 @@
         <div class="gradient-style"></div>
         <div class="pop-body">
             <i class="mdi mdi-close"></i>
-            <p class="pop-title h3">登入會員系統</p>
-            <div class="pop-input">
+            <p class="pop-title h3">註冊會員系統</p>
+            <form class="pop-input">
                 <input class="body-med" type="text" name="signup_username" id="signup_username" placeholder="輸入姓名">
-                <input class="body-med" type="text" name="signup_mail" id="signup_mail" placeholder="輸入電子郵件" autocomplete="username">
-                <input class="body-med" type="text" name="signup_password" id="signup_password" placeholder="輸入密碼" autocomplete="new-password">
+                <input class="body-med" type="email" name="signup_mail" id="signup_mail" placeholder="輸入電子郵件" autocomplete="username">
+                <input class="body-med" type="password" name="signup_password" id="signup_password" placeholder="輸入密碼" autocomplete="new-password">
                 <button class="btn-med-solid">註冊新帳戶</button>
                 <div class="pop-more">
                     <p>已經有帳戶了？</p>
-                    <p class="btn-med-plain">點此登入</p>
+                    <p class="btn-med-plain">點此註冊</p>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -40,7 +40,7 @@
         <h2>台北一日遊</h2>
         <div>
             <button class="body-med btn-med-plain">預定行程</button>
-            <button class="body-med btn-med-plain">登入/註冊</button>
+            <button class="body-med btn-med-plain" id="login-and-signup">登入/註冊</button>
         </div>
     </nav>
 </header>
