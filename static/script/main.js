@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded',async () => {
 
     const attractionPageMatch = path.match(/^\/attraction\/(\d+)$/);
     if (attractionPageMatch) {
-        // renderHeaderAndFooter();
         const id = attractionPageMatch[1]; 
         console.log(`Attraction ID: ${id}`); 
         await getAttractionDetails(id);

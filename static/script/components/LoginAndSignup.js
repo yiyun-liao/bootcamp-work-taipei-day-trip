@@ -1,33 +1,28 @@
-export function login(){
+export function login(event){
+    event.preventDefault();
     const loginMail = document.getElementById('login_mail');
     const loginPassword = document.getElementById('login_password');
-    // console.log('login clear all')
-    loginMail.value = '';
-    loginPassword.value = '';
+    // console.log('監聽 login, login clear all')
 
-    document.getElementById('login-form').addEventListener('submit',(event)=>{
-        event.preventDefault();
-
-        if (!loginMail.value.includes('@')){
-            (alert('請輸入有效的電子信箱'))
-            loginMail.value = '';
-            return
-        } else if (loginPassword.value.length < 8 || loginPassword.value.length > 16){
-            (alert('密碼至少 8 碼且少於 16 碼'))
-            loginPassword.value = '';
-            return
-        } else {
-            const revertLoginData = {
-                email: escapeHTML(loginMail.value), 
-                password: escapeHTML(loginPassword.value)
-            }
-
-            fetchLogin(revertLoginData);
-
-            loginMail.value = '';
-            loginPassword.value = '';
+    if (!loginMail.value.includes('@')){
+        (alert('請輸入有效的電子信箱'))
+        loginMail.value = '';
+        return
+    } else if (loginPassword.value.length < 8 || loginPassword.value.length > 16){
+        (alert('密碼至少 8 碼且少於 16 碼'))
+        loginPassword.value = '';
+        return
+    } else {
+        const revertLoginData = {
+            email: escapeHTML(loginMail.value), 
+            password: escapeHTML(loginPassword.value)
         }
-    });
+
+        fetchLogin(revertLoginData);
+
+        loginMail.value = '';
+        loginPassword.value = '';
+    }
 }
 
 async function fetchLogin(LoginData){
@@ -68,43 +63,38 @@ async function fetchLogin(LoginData){
 }
 
 // signup =============================
-export function signup(){
+export function signup(event){
+    event.preventDefault();
+
     const signupUsername = document.getElementById('signup_username');
     const signupMail = document.getElementById('signup_mail');
     const signupPassword = document.getElementById('signup_password');
-    signupUsername.value = '';
-    signupMail.value = '';
-    signupPassword.value = '';
-    // console.log('signup clear all')
+    console.log('監聽, signup clear all')
 
-    document.getElementById('signup-form').addEventListener('submit',(event)=>{
-        event.preventDefault();
-
-        if (!signupUsername.value){
-            (alert('請輸入有效的用戶名稱'))
-            signupUsername.value = '';
-            return            
-        }else if (!signupMail.value.includes('@')){
-            (alert('請輸入有效的電子信箱'))
-            signupMail.value = '';
-            return
-        } else if (signupPassword.value.length < 8 || signupPassword.value.length > 16){
-            (alert('密碼至少 8 碼且少於 16 碼'))
-            signupPassword.value = '';
-        } else {
-            const revertSignupData = {
-                name: escapeHTML(signupUsername.value), 
-                email: escapeHTML(signupMail.value), 
-                password: escapeHTML(signupPassword.value)
-            }
-
-            fetchSignup(revertSignupData);
-
-            signupUsername.value = '';
-            signupMail.value = '';
-            signupPassword.value = '';
+    if (!signupUsername.value){
+        (alert('請輸入有效的用戶名稱'))
+        signupUsername.value = '';
+        return            
+    }else if (!signupMail.value.includes('@')){
+        (alert('請輸入有效的電子信箱'))
+        signupMail.value = '';
+        return
+    } else if (signupPassword.value.length < 8 || signupPassword.value.length > 16){
+        (alert('密碼至少 8 碼且少於 16 碼'))
+        signupPassword.value = '';
+    } else {
+        const revertSignupData = {
+            name: escapeHTML(signupUsername.value), 
+            email: escapeHTML(signupMail.value), 
+            password: escapeHTML(signupPassword.value)
         }
-    });
+
+        fetchSignup(revertSignupData);
+
+        signupUsername.value = '';
+        signupMail.value = '';
+        signupPassword.value = '';
+    }
 }
 
 async function fetchSignup(signupData){
@@ -153,8 +143,6 @@ function escapeHTML(input) {
 
 // logout =============================
 export function logout(){
-    document.getElementById('logout-btn').addEventListener('click', () => {
-        localStorage.removeItem('token');
-        location.reload();
-    })
+    localStorage.removeItem('token');
+    location.reload();
 }

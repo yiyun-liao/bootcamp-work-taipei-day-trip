@@ -18,7 +18,7 @@ export async function renderHeaderAndFooter(userState= false){
         </div>
         `;
     document.body.appendChild(footer);
-    
+    // console.log('render header')
 }
     
 function setHeaderAction(userState= false){
@@ -30,10 +30,14 @@ function setHeaderAction(userState= false){
     const logoutBtn = document.getElementById('logout-btn');
     if (userState){
         logoutBtn.style.display = 'flex';
-        logout();
+        // logout();
+        document.getElementById('logout-btn').addEventListener('click', logout);
+        // console.log('add logout event listening')
     }else{
         loginAndSignupBtn.style.display = 'flex';
-        loginAndSignupPop();
+        // loginAndSignupPop();
+        document.getElementById('login-and-signup-btn').addEventListener('click',loginAndSignupPop);
+        // console.log('add login/signup event listening')
     }
 }
 
@@ -41,10 +45,8 @@ function loginAndSignupPop(){
     const openLoginPop = document.getElementById('login-pop')
     const openSignupPop = document.getElementById('signup-pop')
     // open
-    document.getElementById('login-and-signup-btn').addEventListener('click',function(){
-        openLoginPop.style.display = 'block';
-        login(); 
-    })
+    openLoginPop.style.display = 'block';
+
     // close
     document.querySelectorAll('.pop-body .mdi-close').forEach(btn=>{
         btn.addEventListener('click', function(){
@@ -58,12 +60,14 @@ function loginAndSignupPop(){
             if(btn.textContent === '點此登入'){
                 openLoginPop.style.display = 'block';
                 openSignupPop.style.display = 'none'; 
-                login();                 
             }else{
                 openLoginPop.style.display = 'none';
                 openSignupPop.style.display = 'block';
-                signup();                            
             }
         })
     })
+
+    document.getElementById('login-form').addEventListener('submit',login);
+    document.getElementById('signup-form').addEventListener('submit',signup);
+    // console.log('切換畫面')
 }
