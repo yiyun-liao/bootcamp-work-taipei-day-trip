@@ -6,7 +6,7 @@ export function login(){
     loginPassword.value = '';
     document.getElementById('login-form').addEventListener('submit',(event)=>{
         event.preventDefault();
-        console.log(loginMail.value, loginPassword.value)
+        console.log("login", loginMail.value, loginPassword.value)
         if (!loginMail.value.includes('@')){
             (alert('請輸入有效的電子信箱'))
             loginMail.value = '';
@@ -28,7 +28,7 @@ export function login(){
 
 
 async function fetchLogin(LoginData){
-    const errorText = document.querySelector('.pop-error-hint');
+    const errorText = document.getElementById('login-error-hint');
 
     try{
         const response = await fetch("/api/user/auth",{
@@ -47,7 +47,7 @@ async function fetchLogin(LoginData){
             errorText.textContent = '登入成功';
             errorText.style.color = 'var(--color-cyan-70)';
             const data = await response.json();
-            console.log(data.token)
+            console.log("login",data.token)
             if (data.token){
                 localStorage.setItem("token", data.token);
                 console.log("登入成功，Token: ", data.token);
@@ -75,7 +75,7 @@ export function signup(){
     document.getElementById('signup-form').addEventListener('submit',(event)=>{
         event.preventDefault();
 
-        console.log(signupUsername.value, signupMail.value, signupPassword.value)
+        console.log("signup", signupUsername.value, signupMail.value, signupPassword.value)
 
         if (!signupUsername.value){
             (alert('請輸入有效的用戶名稱'))
@@ -95,7 +95,7 @@ export function signup(){
                 password: escapeHTML(signupPassword.value)
             }
 
-            console.log('process done', revertSignupData);
+            console.log('signup process done', revertSignupData);
             fetchSignup(revertSignupData);
 
             signupUsername.value = '';
@@ -104,6 +104,41 @@ export function signup(){
         }
     });
 }
+
+async function fetchSignup(signupData){
+    const errorText = document.getElementById('signup-error-hint');
+    console.log("signup", signupData)
+    try{
+        const response = await fetch("/api/user",{
+            method: "POST",
+            headers:{"Content-Type": "application/json"},
+            body: JSON.stringify(signupData)
+        })
+        const data = await response.json();
+        console.log(data)
+        if (response.status === 400){
+            console.log('重複註冊')
+            errorText.style.display = 'block';
+            errorText.textContent = '註冊失敗，請提供正確資料';
+        } else if (response.status === 500){
+            errorText.style.display = 'block';
+            errorText.textContent = '系統連線問題，請稍後再試';
+        } else if (response.status === 200){
+            errorText.style.display = 'block';
+            errorText.textContent = '註冊成功，登入中...';
+            errorText.style.color = 'var(--color-cyan-70)';
+            const autoLoginData = {
+                email: signupData.email, 
+                password: signupData.password
+            }
+            fetchLogin(autoLoginData)
+        }
+
+    } catch(error){
+        console.error('Error fetching data:', error);
+    }
+}
+
 
 function escapeHTML(input) {
     return input
@@ -115,41 +150,6 @@ function escapeHTML(input) {
         .replace(/\//g, "&#x2F;");
 }
 
-
-async function fetchSignup(signupData){
-    const errorText = document.querySelector('.pop-error-hint');
-    console.log(signupData)
-    // try{
-    //     const response = await fetch("/api/user",{
-    //         method: "PUT",
-    //         headers:{"Content-Type": "application/json"},
-    //         body: JSON.stringify(signupData)
-    //     })
-    //     if (response.status === 400){
-    //         errorText.style.display = 'block';
-    //         errorText.textContent = '登入失敗，帳號或密碼錯誤';
-    //     } else if (response.status === 500){
-    //         errorText.style.display = 'block';
-    //         errorText.textContent = '系統連線問題，請稍後再試';
-    //     } else if (response.status === 200){
-    //         errorText.style.display = 'block';
-    //         errorText.textContent = '登入成功';
-    //         errorText.style.color = 'var(--color-cyan-70)';
-    //         const data = await response.json();
-    //         console.log(data.token)
-    //         if (data.token){
-    //             localStorage.setItem("token", data.token)
-    //             console.log("登入成功，Token: ", data.token);
-    //             location.reload();
-    //         } else {
-    //             console.log("登入失敗");
-    //         }
-    //     }
-
-    // } catch(error){
-    //     console.error('Error fetching data:', error);
-    // }
-}
 
 // logout =============================
 export function logout(){
