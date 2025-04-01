@@ -1,13 +1,12 @@
 export function login(){
     const loginMail = document.getElementById('login_mail');
     const loginPassword = document.getElementById('login_password');
-    console.log('login clear all')
+    // console.log('login clear all')
     loginMail.value = '';
     loginPassword.value = '';
 
     document.getElementById('login-form').addEventListener('submit',(event)=>{
         event.preventDefault();
-        console.log("login", loginMail.value, loginPassword.value)
 
         if (!loginMail.value.includes('@')){
             (alert('請輸入有效的電子信箱'))
@@ -24,7 +23,6 @@ export function login(){
             }
 
             fetchLogin(revertLoginData);
-            console.log('process done', revertLoginData);
 
             loginMail.value = '';
             loginPassword.value = '';
@@ -54,14 +52,13 @@ async function fetchLogin(LoginData){
             errorText.style.color = 'var(--color-cyan-70)';
 
             const data = await response.json();
-            console.log("login",data.token)
 
             if (data.token){
                 localStorage.setItem("token", data.token);
-                console.log("登入成功，Token: ", data.token);
+                // console.log("登入成功");
                 location.reload();
             } else {
-                console.log("登入失敗");
+                // console.log("登入失敗");
             }
         }
 
@@ -78,12 +75,10 @@ export function signup(){
     signupUsername.value = '';
     signupMail.value = '';
     signupPassword.value = '';
-    console.log('signup clear all')
+    // console.log('signup clear all')
 
     document.getElementById('signup-form').addEventListener('submit',(event)=>{
         event.preventDefault();
-
-        console.log("signup", signupUsername.value, signupMail.value, signupPassword.value)
 
         if (!signupUsername.value){
             (alert('請輸入有效的用戶名稱'))
@@ -103,7 +98,6 @@ export function signup(){
                 password: escapeHTML(signupPassword.value)
             }
 
-            console.log('signup process done', revertSignupData);
             fetchSignup(revertSignupData);
 
             signupUsername.value = '';
@@ -115,7 +109,6 @@ export function signup(){
 
 async function fetchSignup(signupData){
     const errorText = document.getElementById('signup-error-hint');
-    console.log("signup", signupData)
     try{
         const response = await fetch("/api/user",{
             method: "POST",
@@ -123,9 +116,7 @@ async function fetchSignup(signupData){
             body: JSON.stringify(signupData)
         })
         const data = await response.json();
-        console.log(data)
         if (response.status === 400){
-            console.log('重複註冊')
             errorText.style.display = 'block';
             errorText.textContent = '註冊失敗，請提供正確資料';
         } else if (response.status === 500){
@@ -135,7 +126,7 @@ async function fetchSignup(signupData){
             errorText.style.display = 'block';
             errorText.textContent = '註冊成功，登入中...';
             errorText.style.color = 'var(--color-cyan-70)';
-            
+
             const autoLoginData = {
                 email: signupData.email, 
                 password: signupData.password
