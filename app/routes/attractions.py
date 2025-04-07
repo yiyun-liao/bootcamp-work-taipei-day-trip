@@ -1,7 +1,7 @@
 from fastapi import *
 from typing import Annotated, Optional
 
-from app.model.attractions import Attractions
+from app.model.attractionsCRUD import Attractions
 router = APIRouter()
 
 @router.get("/api/attractions")

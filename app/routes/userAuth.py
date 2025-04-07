@@ -4,7 +4,7 @@ import mysql.connector
 from fastapi.security import OAuth2PasswordBearer
 
 from app.database import get_db_connection
-from app.model.auth import Auth
+from app.model.authCRUD import Auth
 from app.model.auth_token import AuthToken
 
 
