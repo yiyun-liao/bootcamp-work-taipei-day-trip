@@ -1,6 +1,6 @@
 from fastapi import *
 
-from app.model.attractions import Attractions
+from app.model.attractionsCRUD import Attractions
 
 router = APIRouter()
 
