@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Request, Depends
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
+from fastapi.security.utils import get_authorization_scheme_param
 
 from app.model.bookingCRUD import Booking
 from app.model.auth_token import AuthToken
@@ -9,11 +10,20 @@ router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 @router.get("/api/booking")
-def get_booking_state(token:str=Depends(oauth2_scheme)):
+def get_booking_state(request:Request):
+    authorization:str = request.headers.get("Authorization")
+    scheme, token = get_authorization_scheme_param(authorization)
+    if not token:
+        return JSONResponse(
+            status_code = 403,
+            content={"error": True, "message": "未登入系統"}
+        )
+    print(token)
     try:
         user_data = AuthToken.verify_jwt_token(token)
         userId = user_data['id']
         print(userId)
+
         current_booking_data = Booking.show_current_booking_data(userId)
         return{
             "data":current_booking_data
@@ -29,7 +39,16 @@ def get_booking_state(token:str=Depends(oauth2_scheme)):
         )
 
 @router.post("/api/booking")
-async def create_booking_state(request:Request, token:str=Depends(oauth2_scheme)):
+async def create_booking_state(request:Request):
+    authorization:str = request.headers.get("Authorization")
+    scheme, token = get_authorization_scheme_param(authorization)
+    if not token:
+        return JSONResponse(
+            status_code = 403,
+            content={"error": True, "message": "未登入系統"}
+        )
+    print(token)
+    
     body = await request.json()
     attractionId, date, time, price = (body.get(item) for item in ("attractionId", "date", "time", "price"))
     if not all([attractionId, date, time, price]):
@@ -37,15 +56,8 @@ async def create_booking_state(request:Request, token:str=Depends(oauth2_scheme)
             status_code = 400,
             content={"error":True, "message":"提供資料有少"}
         )
+    
     try:
-        user_data = AuthToken.verify_jwt_token(token)
-        userId = user_data['id']
-        print(userId, attractionId, date, time, price)
-        if not all([attractionId, date, time, price]):
-            return JSONResponse(
-                status_code = 403,
-                content={"error":True, "message":"未登入系統"}
-            )
         add_is_success = Booking.add_new_booking_data(userId, attractionId, date, time, price)
         
         if add_is_success:
