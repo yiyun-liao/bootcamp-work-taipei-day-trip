@@ -15,6 +15,7 @@
 
     --color-neutral-500:#AABBCC;
 
+    --color-black-200:#00000033;
     --color-black-600: #00000099;
     --color-black-900: #000000;
 
@@ -190,6 +191,10 @@ nav div{
     align-items: center;
 }
 
+#login-and-signup-btn, #logout-btn{
+    display: none;
+}
+
 main{
     padding-top: 54px;
 }
@@ -211,6 +216,7 @@ footer > div{
 /* button med-solid */
 .btn-med-solid{
     padding: 10px 20px;
+    height: 46px;
     border-radius: 5px;
     color: var(--color-white-900);
     background-color: var(--color-cyan-70);
@@ -258,4 +264,118 @@ footer > div{
 .btn-med-plain:active{
     background-color: var(--color-cyan-20);
     color: var(--color-cyan-70);   
+}
+
+/* login and signup pop-up */
+#login-pop, #signup-pop{
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--color-black-200);
+    position: fixed;
+    z-index: 101;
+    left: 0;
+    top: 0;
+    display: none;
+}
+
+.pop-container{
+    max-width: 340px;
+    background-color: var(--color-white-900);
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 80px auto 0 auto;
+}
+
+.gradient-style{
+    background: var(--color-gradient-cyan-500);
+    height: 10px;
+}
+
+.pop-body{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 15px;
+}
+
+.pop-body > i{
+    position: absolute;
+    top:10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.pop-title{
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+
+.pop-body i.mdi{
+    font-size: 23px; 
+    width: 23px;
+    height: 23px;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: var(--color-gray-70);
+}
+
+.pop-body i.mdi:hover{
+    border: 1px solid var(--color-cyan-50);
+    color: var(--color-cyan-70);   
+}
+
+.pop-body i.mdi:active{
+    border: 1px solid var(--color-gray-70);
+    color: var(--color-gray-70);   
+}
+
+.pop-input{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;    
+}
+
+.pop-input .btn-med-solid{
+    width: 100%;
+}
+
+.pop-input input{
+    width: 100%;
+    height: 46px;
+    padding: 15px;
+    color: var(--color-black-900);
+    border-radius: 5px;
+    border: 1px solid var(--color-gray-50);
+    outline: none;
+}
+
+.pop-input input::placeholder{
+    color: var(--color-gray-50);
+}
+
+.pop-input input:hover{
+    border: 1px solid var(--color-cyan-50);
+}
+
+.pop-input input:focus{
+    border: 1px solid var(--color-cyan-70);
+    color: var(--color-black-900);
+}
+
+.pop-more{
+    margin: auto;
+    display: flex;
+    gap: 0;
+    color: var(--color-gray-70);
+    min-height: 22px;
+    align-items: center;
+}
+
+#login-error-hint, 
+#signup-error-hint{
+    display: none;
+    color: red;
 }

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVC(model view controller)</title>
+</head>
+<body>
+    <h3>計數器</h3>
+    <div id="counter0">5</div>
+    <button onclick="add()">+</button>
+    <button onclick="minus()">-</button>
+    <script>
+        // 一般寫法
+        function add(){
+            let counter0 = document.querySelector('#counter0');
+            counter0.textContent = parseInt(counter0.textContent)+1;
+        }
+        function minus(){
+            let counter0 = document.querySelector('#counter0');
+            counter0.textContent = parseInt(counter0.textContent)-1;
+        }
+    </script>
+
+
+    <div id="counter1">5</div>
+    <button onclick="counter1.add()">+</button>
+    <button onclick="counter1.minus()">-</button>
+    <script>
+        // MVC
+        function Counter1(container){
+            let model = {
+                data:null,
+                init:function(data){
+                    this.data = data;
+                },
+                add:function(){
+                    this.data ++;
+                },
+                minus:function(){
+                    this.data --;
+                }
+            };
+            let view = {
+                render:function(data){
+                    container.textContent = data;
+                }
+            }
+            let controller = {
+                init:function(data){
+                    model.init(data);
+                    view.render(model.data);
+                },
+                add:function(){
+                    model.add();
+                    view.render(model.data);
+                },
+                minus:function(){
+                    model.minus();
+                    view.render(model.data);
+                }
+            };
+            return controller
+        }
+        let counter1 = Counter1(document.querySelector('#counter1'));
+        counter1.init(5);
+    </script>
+
+
+    <h3>列表的處理</h3>
+    <ul id="list1"></ul>
+    <div>
+        <input type="text" name="" id="input1">
+        <button onclick="addText1()">Add</button>
+        <button onclick="removeText1()">Remove</button>
+    </div>
+    <script>
+        // 一般寫法
+        function addText1(){
+            let text = document.querySelector('#input1').value;
+            let list1 = document.querySelector('#list1');
+            let item = document.createElement('li');
+            item.textContent = text;
+            list1.appendChild(item);
+        }
+        function removeText1(){
+            let list1 = document.querySelector('#list1');
+            if (list1.lastChild){
+                list1.lastChild.remove();
+            }
+        }
+    </script>
+
+
+    <h3>列表的處理</h3>
+    <ul id="list2"></ul>
+    <div>
+        <input type="text" name="" id="input2">
+        <button onclick="list.add()">Add</button>
+        <button onclick="list.remove()">Remove</button>
+    </div>
+    <script>
+        // MVC
+        function textList(container){
+            let model = {
+                data:null, //["文字", "文字",...]
+                init: function(data){
+                    this.data = data
+                },
+                add: function(text){
+                    this.data.push(text);
+                },
+                remove: function(text){
+                    this.data.pop(text);
+                }
+            };
+            let view = {
+                render:function(data){
+                    let list = document.querySelector('#list2');
+                    list.innerHTML='';
+                    for(let i=0 ; i<data.length ; i++){
+                        let item = document.createElement('li');
+                        item.textContent=data[i];
+                        list.appendChild(item);
+                    }
+                }
+            };
+            let controller = {
+                init: function(data){
+                    model.init(data);
+                    view.render(model.data);
+                },
+                add: function(){
+                    let text = document.querySelector('#input2').value;
+                    model.add(text);
+                    view.render(model.data);
+                },
+                remove: function(){
+                    model.remove();
+                    view.render(model.data);
+                }
+            }
+            return controller;
+        }
+        const list = textList(document.querySelector('#list2'))
+        list.init(['text', 'ok'])
+    </script>
+</body>
+</html>

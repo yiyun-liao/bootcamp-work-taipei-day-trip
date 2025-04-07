@@ -1,0 +1,49 @@
+<div id="login-pop">
+    <div class="pop-container">
+        <div class="gradient-style"></div>
+        <div class="pop-body">
+            <i class="mdi mdi-close"></i>
+            <p class="pop-title h3">登入會員系統</p>
+            <form class="pop-input" id="login-form">
+                <input class="body-med" type="email" name="login_mail" id="login_mail" placeholder="輸入電子信箱" autocomplete="username">
+                <input class="body-med" type="password" name="login_password" id="login_password" placeholder="輸入密碼" autocomplete="current-password">
+                <button id="login_submit" class="btn-med-solid">登入帳戶</button>
+                <div class="pop-more body-bold" id="login-error-hint"></div>
+                <div class="pop-more">
+                    <p>還沒有帳戶？</p>
+                    <p class="btn-med-plain">點此註冊</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="signup-pop">
+    <div class="pop-container">
+        <div class="gradient-style"></div>
+        <div class="pop-body">
+            <i class="mdi mdi-close"></i>
+            <p class="pop-title h3">註冊會員系統</p>
+            <form class="pop-input" id="signup-form">
+                <input class="body-med" type="text" name="signup_username" id="signup_username" placeholder="輸入姓名">
+                <input class="body-med" type="email" name="signup_mail" id="signup_mail" placeholder="輸入電子郵件" autocomplete="username">
+                <input class="body-med" type="password" name="signup_password" id="signup_password" placeholder="輸入密碼" autocomplete="new-password">
+                <button id="signup_submit" class="btn-med-solid">註冊新帳戶</button>
+                <div class="pop-more body-bold" id="signup-error-hint"></div>
+                <div class="pop-more">
+                    <p>已經有帳戶了？</p>
+                    <p class="btn-med-plain">點此登入</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<header>
+    <nav>
+        <h2>台北一日遊</h2>
+        <div>
+            <button class="body-med btn-med-plain">預定行程</button>
+            <button class="body-med btn-med-plain" id="login-and-signup-btn">登入/註冊</button>
+            <button class="body-med btn-med-plain" id="logout-btn">登出</button>
+        </div>
+    </nav>
+</header>
