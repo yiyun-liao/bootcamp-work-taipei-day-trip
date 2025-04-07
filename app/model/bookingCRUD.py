@@ -20,10 +20,10 @@ class Booking:
     def show_current_booking_data(userId):
         search = """
             SELECT 
-            booking_state.attractionId as id,
+            booking_state.attractionId,
             attractions.name, 
             attractions.address, 
-            attractions.images as image,
+            attractions.images,
             booking_state.date,
             booking_state.time,
             booking_state.price
@@ -37,8 +37,18 @@ class Booking:
                 cursor.execute(search, (userId,))
                 data = cursor.fetchone()
                 if data:
-                    image = json.loads(data["image"])
-                    data["image"] = image[0] if image else None
-                    print(data)
-                    return {"attraction": data}
+                    images = json.loads(data["images"])
+                    # print(data)
+                    newData = {
+                        "attraction":{
+                            "id":data["attractionId"],
+                            "name":data["name"],
+                            "address":data["address"],
+                            "image":images[0] if images else None
+                        },
+                        "date":data["date"],
+                        "time":data["time"],
+                        "price":data["price"]
+                    }
+                    return newData
 
