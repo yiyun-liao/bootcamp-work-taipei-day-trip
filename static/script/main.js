@@ -1,13 +1,18 @@
-import { handleScroll } from "./components/AttractionsList.js";
-import { getAttractions, searchMetro, getMetro } from "./feature/ScriptIndex.js";
 import { skeletonAttractions, skeletonMetroChip } from "./components/Skeleton.js";
 import { renderHeaderAndFooter } from "./components/HeaderAndFooter.js";
+import { getAttractions, searchMetro, getMetro, handleScroll } from "./feature/ScriptIndex.js";
 import { getAttractionDetails } from "./feature/ScriptAttraction.js";
+import { checkTokenValid } from "./components/CheckTokenValid.js";
 
 document.addEventListener('DOMContentLoaded',async () => {
+    const userData = await checkTokenValid();
+    if (userData){
+        renderHeaderAndFooter(true);
+    }else{
+        renderHeaderAndFooter(false);
+    }
     const path = window.location.pathname; 
     if (path === "/"){
-        renderHeaderAndFooter();
         skeletonMetroChip();
         skeletonAttractions();
         await getAttractions();
@@ -18,9 +23,10 @@ document.addEventListener('DOMContentLoaded',async () => {
 
     const attractionPageMatch = path.match(/^\/attraction\/(\d+)$/);
     if (attractionPageMatch) {
-        renderHeaderAndFooter();
         const id = attractionPageMatch[1]; 
         console.log(`Attraction ID: ${id}`); 
         await getAttractionDetails(id);
     }
+
+
 });
