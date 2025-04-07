@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ pageTitle }}</title>
+    <link href="{{ url_for('static', path='/style.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', path='/app.js') }}" defer></script>
+</head>
+<body>
+    <header>
+        <h1>{{ title }}</h1> 
+    </header>
+    <main>
+        <div class="main-section">
+            <h2>註冊帳號</h2>
+            <form action="/signup" method="post" id="signup_form">
+                <div class="input-section">
+                    <div class="input-style">
+                        <label for="name">姓名</label>
+                        <input type="text" name="signup_name" id="signup_name"> 
+                    </div>
+                    <div class="error" id="signup_name_error"></div>
+                </div>
+                <div class="input-section">
+                    <div class="input-style">
+                        <label for="signup_username">帳號</label>
+                        <input type="text" name="signup_username" id="signup_username" autocomplete="username"> 
+                    </div>
+                    <div class="error" id="signup_username_error"></div>
+                </div>
+                <div class="input-section">
+                    <div class="input-style">
+                        <label for="signup_password">密碼</label>
+                        <input type="password" name="signup_password" id="signup_password" autocomplete="new-password">
+                    </div>
+                    <div class="error" id="signup_password_error"></div>
+                </div>
+                <div class="input-style-submit">
+                    <input type="submit" value="註冊" id="signup_submit" disabled>
+                </div>
+            </form>
+        </div>
+        <div class="main-section">
+            <h2>登入系統</h2>
+            <form action="/signin" method="post" id="signin_form">
+                <div class="input-section">
+                    <div class="input-style">
+                        <label for="signin_username">帳號</label>
+                        <input type="text" name="signin_username" id="signin_username" autocomplete="username"> 
+                    </div>
+                    <div class="error" id="signin_username_error"></div>
+                </div>
+                <div class="input-section">
+                    <div class="input-style">
+                        <label for="signin_password">密碼</label>
+                        <input type="password" name="signin_password" id="signin_password" autocomplete="current-password">
+                    </div>
+                    <div class="error" id="signin_password_error"></div>
+                </div>
+                <div class="input-style-submit">
+                    <input type="submit" value="登入" id="signin_submit" disabled>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
