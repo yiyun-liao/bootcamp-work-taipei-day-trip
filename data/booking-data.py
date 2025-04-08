@@ -16,7 +16,16 @@ def get_db_connection():
         database="taipei_attractions"
     )
 
-# build user structure/table ===========================================================================
+
+# update userId ===========================================================================
+# with get_db_connection() as db:
+#     with db.cursor(dictionary=True) as cursor:
+#         cursor.execute("ALTER TABLE booking_state ADD UNIQUE KEY unique_user (userId);")
+#         db.commit()
+#         print('success')
+
+
+# build booking structure/table ===========================================================================
 # with get_db_connection() as db:
 #     with db.cursor(dictionary=True) as cursor:
 #         cursor.execute("""CREATE TABLE booking_state (
