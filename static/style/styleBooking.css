@@ -1,0 +1,131 @@
+section{
+    max-width: 1200px;
+    padding: 40px 110px;
+    margin: 0 auto;
+    color: var(--color-gray-70);
+    border-bottom: 1px solid var(--color-gray-20);
+}
+
+#booking-greeting{
+    padding: 6px 0 5px 0;
+    margin-bottom: 30px;
+    position: relative;
+    left: -10px;
+}
+
+.booking-info-div{
+    position: relative;
+    display: flex;
+    justify-content: start;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.booking-info-pic{
+    width: 250px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.booking-info-pic img{
+	width: 100%; 
+	height: 100%;
+    object-fit: cover; 
+}
+
+
+.booking-info-div i.mdi-trash-can{
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    font-size: 30px; 
+    width: 30px;
+    height: 30px;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    border: none;
+    color: var(--color-gray-70);
+    z-index: 10;
+}
+
+.booking-info-div i.mdi-trash-can:hover{
+    color: var(--color-cyan-70);
+}
+
+
+.booking-info-div i.mdi-trash-can:active{
+    color: var(--color-gray-70);
+}
+
+.booking-info-detail-attraction{
+    margin-bottom: 20px;
+    color: var(--color-cyan-70);
+}
+
+.booking-info-detail li{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.booking-info-detail-label{
+    min-width: 48px;
+}
+
+#booking-contract-info > .btn-text-bold, 
+#booking-credit-card-info > .btn-text-bold{
+    padding: 4px 0;
+    margin-bottom: 20px;
+}
+
+#booking-contract-info > .body-bold{
+    margin-top: 15px;
+}
+
+.input-form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+.input-form input{
+    min-width: 200px;
+    min-height: 38px;
+    padding: 10px;
+    color: var(--color-black-900);
+    border-radius: 5px;
+    border: 1px solid var(--color-gray-20);
+    outline: none;
+}
+
+.input-form input::placeholder{
+    color: var(--color-gray-50);
+}
+
+.input-form input:hover{
+    border: 1px solid var(--color-cyan-50);
+}
+
+.input-form input:focus{
+    border: 1px solid var(--color-cyan-70);
+    color: var(--color-black-900);
+}
+
+#booking-confirm{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 22px;
+}
+
+.btn-med-solid{
+    height: 36px;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+}

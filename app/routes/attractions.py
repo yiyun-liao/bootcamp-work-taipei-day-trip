@@ -27,7 +27,7 @@ def get_attraction_page(attractionId=int):
 	try:		
 		print(attractionId)
 		attraction_detail = Attractions.render_separate_attraction_page(attractionId)
-		print(attraction_detail)
+		# print(attraction_detail)
 		return{
 			"data":attraction_detail}
 	
