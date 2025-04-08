@@ -1,5 +1,6 @@
 import { fetchData } from "../components/FetchData.js"
 import { slide } from "../components/Slide.js";
+import { collectBookingData } from "./booking.js";
 
 export async function getAttractionDetails(id){
     const url = `/api/attraction/${id}`;
@@ -34,6 +35,8 @@ function renderAttractionPage (attractionPage){
     //remove skeleton
     document.querySelectorAll('.skeleton.skeleton-container').forEach(item => item.remove());
     document.querySelectorAll('.skeleton-slide-img').forEach(item => item.remove());
+
+    document.getElementById('attraction-book-btn').addEventListener('click', collectBookingData);
 
     slide(slideTotal, 'attraction-slide');
     checkAttractionPrice();
