@@ -1,13 +1,11 @@
 from fastapi import APIRouter, HTTPException, Request, Depends
 from fastapi.responses import JSONResponse
-from fastapi.security import OAuth2PasswordBearer
 from fastapi.security.utils import get_authorization_scheme_param
 
 from app.model.bookingCRUD import Booking
 from app.model.auth_token import AuthToken
 
 router = APIRouter()
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 @router.get("/api/booking")
 def get_booking_state(request:Request):
@@ -18,11 +16,11 @@ def get_booking_state(request:Request):
             status_code = 403,
             content={"error": True, "message": "未登入系統"}
         )
-    print(token)
+    # print(token)
     try:
         user_data = AuthToken.verify_jwt_token(token)
         userId = user_data['id']
-        print(userId)
+        # print(userId)
 
         current_booking_data = Booking.show_current_booking_data(userId)
         return{
@@ -58,6 +56,9 @@ async def create_booking_state(request:Request):
         )
     
     try:
+        user_data = AuthToken.verify_jwt_token(token)
+        userId = user_data['id']
+        
         add_is_success = Booking.add_new_booking_data(userId, attractionId, date, time, price)
         
         if add_is_success:
