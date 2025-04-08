@@ -49,7 +49,7 @@ function setHeaderAction(userState= false){
     }
 }
 
-function loginAndSignupPop(targetURL= false){
+export function loginAndSignupPop(targetURL= false){
     const openLoginPop = document.getElementById('login-pop')
     const openSignupPop = document.getElementById('signup-pop')
     // open
