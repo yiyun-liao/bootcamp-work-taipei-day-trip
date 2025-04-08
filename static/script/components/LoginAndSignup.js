@@ -1,4 +1,4 @@
-export function login(event){
+export function login(event, targetURL){
     event.preventDefault();
     const loginMail = document.getElementById('login_mail');
     const loginPassword = document.getElementById('login_password');
@@ -18,14 +18,14 @@ export function login(event){
             password: escapeHTML(loginPassword.value)
         }
 
-        fetchLogin(revertLoginData);
+        fetchLogin(revertLoginData, targetURL);
 
         loginMail.value = '';
         loginPassword.value = '';
     }
 }
 
-async function fetchLogin(LoginData){
+async function fetchLogin(LoginData, targetURL){
     const errorText = document.getElementById('login-error-hint');
 
     try{
@@ -51,7 +51,7 @@ async function fetchLogin(LoginData){
             if (data.token){
                 localStorage.setItem("token", data.token);
                 // console.log("登入成功");
-                location.reload();
+                window.location.href = targetURL || "/";
             } else {
                 // console.log("登入失敗");
             }
@@ -63,7 +63,7 @@ async function fetchLogin(LoginData){
 }
 
 // signup =============================
-export function signup(event){
+export function signup(event, targetURL){
     event.preventDefault();
 
     const signupUsername = document.getElementById('signup_username');
@@ -89,7 +89,7 @@ export function signup(event){
             password: escapeHTML(signupPassword.value)
         }
 
-        fetchSignup(revertSignupData);
+        fetchSignup(revertSignupData, targetURL);
 
         signupUsername.value = '';
         signupMail.value = '';
@@ -97,7 +97,7 @@ export function signup(event){
     }
 }
 
-async function fetchSignup(signupData){
+async function fetchSignup(signupData, targetURL){
     const errorText = document.getElementById('signup-error-hint');
     try{
         const response = await fetch("/api/user",{
@@ -121,7 +121,7 @@ async function fetchSignup(signupData){
                 email: signupData.email, 
                 password: signupData.password
             }
-            fetchLogin(autoLoginData)
+            fetchLogin(autoLoginData, targetURL)
         }
 
     } catch(error){

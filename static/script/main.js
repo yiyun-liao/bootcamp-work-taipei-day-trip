@@ -28,5 +28,7 @@ document.addEventListener('DOMContentLoaded',async () => {
         await getAttractionDetails(id);
     }
 
+    if (path === "/booking"){
 
+    }
 });

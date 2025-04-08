@@ -25,6 +25,13 @@ function setHeaderAction(userState= false){
     document.querySelector('header nav h2').addEventListener('click', ()=>{
         window.location.href='/';
     })
+    document.querySelector('#booking-page-btn').addEventListener('click', ()=>{
+        if(userState){
+            window.location.href='/booking';
+        }else{
+            loginAndSignupPop('/booking');
+        }
+    })
     // console.log(userState)
     const loginAndSignupBtn = document.getElementById('login-and-signup-btn');
     const logoutBtn = document.getElementById('logout-btn');
@@ -34,12 +41,15 @@ function setHeaderAction(userState= false){
         // console.log('add logout event listening')
     }else{
         loginAndSignupBtn.style.display = 'flex';
-        document.getElementById('login-and-signup-btn').addEventListener('click',loginAndSignupPop);
-        // console.log('add login/signup event listening')
+        document.getElementById('login-and-signup-btn').addEventListener('click',(e) => {
+            e.preventDefault();
+            loginAndSignupPop(window.location.href);
+            });
+        console.log('add login/signup event listening')
     }
 }
 
-function loginAndSignupPop(){
+function loginAndSignupPop(targetURL= false){
     const openLoginPop = document.getElementById('login-pop')
     const openSignupPop = document.getElementById('signup-pop')
     // open
@@ -65,7 +75,16 @@ function loginAndSignupPop(){
         })
     })
 
-    document.getElementById('login-form').addEventListener('submit',login);
-    document.getElementById('signup-form').addEventListener('submit',signup);
+    console.log("target",targetURL)
+    console.log("current",window.location.href)
+    const redirectURL = targetURL || window.location.href;
+    document.getElementById('login-form').addEventListener('submit',(e) => {
+        e.preventDefault();
+        login(e, redirectURL);
+        },{ once: true });
+    document.getElementById('signup-form').addEventListener('submit',(e) => {
+        e.preventDefault();
+        login(e, redirectURL);
+        },{ once: true });
     // console.log('切換畫面')
 }
