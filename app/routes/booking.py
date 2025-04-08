@@ -29,7 +29,13 @@ def get_booking_state(request:Request):
 @router.post("/api/booking")
 async def create_booking_state(request:Request):
     userId = AuthToken.get_current_user_id(request)
-    
+    print(userId)
+    if userId is None:
+        print("create_booking_state 403")
+        raise HTTPException(
+            status_code = 403,
+            detail={"error": True, "message": "未登入系統"}
+        )
     body = await request.json()
     attractionId, date, time, price = (body.get(item) for item in ("attractionId", "date", "time", "price"))
     if not all([attractionId, date, time, price]):

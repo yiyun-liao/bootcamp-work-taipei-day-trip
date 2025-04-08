@@ -58,6 +58,9 @@ class AuthToken:
             user_data = AuthToken.verify_jwt_token(token)
             userId = user_data['id']
             return userId
+        except HTTPException as http_exc:
+            print("get_current_user_id",http_exc)
+            return None
         except Exception as e:
             print(f"Error:{e}")
             raise HTTPException(
