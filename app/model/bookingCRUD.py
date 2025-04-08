@@ -54,3 +54,10 @@ class Booking:
                     }
                     return newData
 
+    def delete_current_booking_data(userId):
+        with get_db_connection() as db:
+            with db.cursor(dictionary=True) as cursor:
+                cursor.execute("DELETE FROM booking_state where userID = %s;", (userId,))
+                db.commit()
+                if cursor.rowcount > 0 :
+                    return True
