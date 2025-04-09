@@ -55,6 +55,9 @@ async function booking(bookData){
 
 export async function getBookingData(userData){
     const token = localStorage.getItem('token');
+    const bookingNotExist = document.getElementById('booking-not-exist')
+    const bookingExist = document.getElementById('booking-exist')
+    console.log("getBookingData",userData)
     try{
         const response = await fetch("api/booking",{
             method: "GET",
@@ -69,8 +72,15 @@ export async function getBookingData(userData){
             logout();
         };
         const data = await response.json();
-        if (data){
+        console.log("getBookingData booking data",data)
+        if (data !== null){
+            bookingNotExist.remove();
             renderBookingPage(userData, data.data);
+        }else{
+            bookingExist.style.display = "none";
+            bookingNotExist.style.display = "block";
+            const bookingGreeting = document.querySelector('.booking-greeting');
+            bookingGreeting.textContent = `您好，${userData.name}，待預訂的行程如下：`;
         }
     }    
     catch(error){
@@ -78,20 +88,25 @@ export async function getBookingData(userData){
     }
 }
 
-function renderBookingPage(userData, data){
+function renderBookingPage(userData, data=null){
     console.log(data, userData)
-    const bookingGreeting = document.getElementById('booking-greeting');
+    const bookingGreeting = document.querySelector('.booking-greeting');
+    const bookingInfoPic = document.querySelector('.booking-info-pic');
     const bookingInfoDetailAttraction = document.querySelector('.booking-info-detail-attraction');
     const bookingInfoDetailList = document.querySelectorAll('.booking-info-detail-list');
+    const bookingContractName = document.getElementById('booking-contract-name');
+    const bookingContractEmail = document.getElementById('booking-contract-email');
 
     const { attraction, date, time, price} = data;
     const timeText = time === "afternoon" ? "下午 2 點到晚上 9 點" : "早上 9 點到下午 4 點";
 
-    bookingGreeting.textContent = `您好，${userData.name}，待預訂的行程如下：`
+    bookingGreeting.textContent = `您好，${userData.name}，待預訂的行程如下：`;
+    bookingInfoPic.innerHTML = `<img src= ${attraction.image || ''} alt="${attraction.name} 圖片">`;
     bookingInfoDetailAttraction.textContent = attraction.name;
-    bookingInfoDetailList[0].textContent = date;
-    bookingInfoDetailList[1].textContent = timeText;
-    bookingInfoDetailList[2].textContent = `新台幣 ${price} 元`;
-    bookingInfoDetailList[3].textContent = attraction.address;
-
+    bookingInfoDetailList[0].textContent = date || '';
+    bookingInfoDetailList[1].textContent = timeText || '';
+    bookingInfoDetailList[2].textContent = `新台幣 ${price} 元` || '';
+    bookingInfoDetailList[3].textContent = attraction.address || '';
+    bookingContractName.value = userData.name || '';
+    bookingContractEmail.value = userData.email || '';
 }
