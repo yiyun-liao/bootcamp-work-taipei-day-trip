@@ -10,6 +10,12 @@ router = APIRouter()
 @router.get("/api/booking")
 def get_booking_state(request:Request):
     userId = AuthToken.get_current_user_id(request)
+    if userId is None:
+        print("get_booking_state 403")
+        raise HTTPException(
+            status_code = 403,
+            detail={"error": True, "message": "未登入系統"}
+        )
 
     try:
         current_booking_data = Booking.show_current_booking_data(userId)

@@ -1,4 +1,4 @@
-import { login, signup, logout } from "./LoginAndSignup.js";
+import { login, logout, signup } from "../components/LoginAndSignup.js";
 
 export async function renderHeaderAndFooter(userState= false){
     try{
@@ -17,8 +17,8 @@ export async function renderHeaderAndFooter(userState= false){
         <p class="body-bold">COPYRIGHT © 2021 台北一日遊</p>
         </div>
         `;
+    console.log('render header')
     document.body.appendChild(footer);
-    // console.log('render header')
 }
     
 function setHeaderAction(userState= false){
@@ -32,7 +32,7 @@ function setHeaderAction(userState= false){
             loginAndSignupPop('/booking');
         }
     })
-    // console.log(userState)
+    console.log(userState)
     const loginAndSignupBtn = document.getElementById('login-and-signup-btn');
     const logoutBtn = document.getElementById('logout-btn');
     if (userState){
@@ -80,11 +80,12 @@ export function loginAndSignupPop(targetURL= false){
     const redirectURL = targetURL || window.location.href;
     document.getElementById('login-form').addEventListener('submit',(e) => {
         e.preventDefault();
-        login(e, redirectURL);
-        },{ once: true });
+        console.log('判斷')
+        login(redirectURL);
+        });
     document.getElementById('signup-form').addEventListener('submit',(e) => {
         e.preventDefault();
-        login(e, redirectURL);
-        },{ once: true });
-    // console.log('切換畫面')
+        console.log('判斷')
+        signup(redirectURL);
+        });
 }

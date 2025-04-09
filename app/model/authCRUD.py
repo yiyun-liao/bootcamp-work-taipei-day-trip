@@ -19,4 +19,5 @@ class Auth:
             with db.cursor(dictionary=True) as cursor:
                 cursor.execute("SELECT * FROM userData WHERE userMail=%s AND userPassword=%s;",(mail, password))
                 userData = cursor.fetchone()
+                print(userData)
                 return userData
