@@ -1,8 +1,9 @@
 import { skeletonAttractions, skeletonMetroChip } from "./components/Skeleton.js";
-import { renderHeaderAndFooter } from "./components/HeaderAndFooter.js";
+import { renderHeaderAndFooter } from "./feature/HeaderAndFooter.js";
 import { getAttractions, searchMetro, getMetro, handleScroll } from "./feature/ScriptIndex.js";
 import { getAttractionDetails } from "./feature/ScriptAttraction.js";
 import { checkTokenValid } from "./components/CheckTokenValid.js";
+import { getBookingData } from "./feature/booking.js";
 
 document.addEventListener('DOMContentLoaded',async () => {
     const userData = await checkTokenValid();
@@ -29,6 +30,6 @@ document.addEventListener('DOMContentLoaded',async () => {
     }
 
     if (path === "/booking"){
-
+        getBookingData(userData.data.data)
     }
 });

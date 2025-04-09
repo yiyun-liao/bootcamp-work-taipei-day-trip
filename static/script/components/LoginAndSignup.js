@@ -1,15 +1,14 @@
-export function login(event, targetURL){
-    event.preventDefault();
+export function login(targetURL){
     const loginMail = document.getElementById('login_mail');
     const loginPassword = document.getElementById('login_password');
-    // console.log('監聽 login, login clear all')
+    console.log('監聽 login, login clear all')
 
     if (!loginMail.value.includes('@')){
-        (alert('請輸入有效的電子信箱'))
+        alert('請輸入有效的電子信箱');
         loginMail.value = '';
         return
     } else if (loginPassword.value.length < 8 || loginPassword.value.length > 16){
-        (alert('密碼至少 8 碼且少於 16 碼'))
+        alert('密碼至少 8 碼且少於 16 碼');
         loginPassword.value = '';
         return
     } else {
@@ -34,7 +33,7 @@ async function fetchLogin(LoginData, targetURL){
             headers:{"Content-Type": "application/json"},
             body: JSON.stringify(LoginData)
         })
-
+        console.log("fetch...")
         if (response.status === 400){
             errorText.style.display = 'block';
             errorText.textContent = '登入失敗，帳號或密碼錯誤';
@@ -50,10 +49,10 @@ async function fetchLogin(LoginData, targetURL){
 
             if (data.token){
                 localStorage.setItem("token", data.token);
-                // console.log("登入成功");
+                console.log("登入成功");
                 window.location.href = targetURL || "/";
             } else {
-                // console.log("登入失敗");
+                console.log("登入失敗");
             }
         }
 
@@ -63,24 +62,22 @@ async function fetchLogin(LoginData, targetURL){
 }
 
 // signup =============================
-export function signup(event, targetURL){
-    event.preventDefault();
-
+export function signup(targetURL){
     const signupUsername = document.getElementById('signup_username');
     const signupMail = document.getElementById('signup_mail');
     const signupPassword = document.getElementById('signup_password');
     console.log('監聽, signup clear all')
 
     if (!signupUsername.value){
-        (alert('請輸入有效的用戶名稱'))
+        alert('請輸入有效的用戶名稱')
         signupUsername.value = '';
         return            
     }else if (!signupMail.value.includes('@')){
-        (alert('請輸入有效的電子信箱'))
+        alert('請輸入有效的電子信箱')
         signupMail.value = '';
         return
     } else if (signupPassword.value.length < 8 || signupPassword.value.length > 16){
-        (alert('密碼至少 8 碼且少於 16 碼'))
+        alert('密碼至少 8 碼且少於 16 碼')
         signupPassword.value = '';
     } else {
         const revertSignupData = {
@@ -144,5 +141,6 @@ function escapeHTML(input) {
 // logout =============================
 export function logout(){
     localStorage.removeItem('token');
+    console.log('sign out')
     location.reload();
 }
