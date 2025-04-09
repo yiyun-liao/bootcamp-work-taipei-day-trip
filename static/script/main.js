@@ -7,6 +7,7 @@ import { getBookingData } from "./feature/booking.js";
 
 document.addEventListener('DOMContentLoaded',async () => {
     const userData = await checkTokenValid();
+    console.log(userData)
     if (userData){
         renderHeaderAndFooter(true);
     }else{
@@ -30,6 +31,10 @@ document.addEventListener('DOMContentLoaded',async () => {
     }
 
     if (path === "/booking"){
-        getBookingData(userData.data.data)
+        if (userData === null){
+            window.location.href = "/";
+        }else{
+            getBookingData(userData.data.data);
+        }
     }
 });
