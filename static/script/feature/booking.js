@@ -15,7 +15,6 @@ export function collectBookingData(){
         time : timeInput.value, 
         price : priceInt
     };
-    console.log(bookData);
     const token = localStorage.getItem('token');
     if (token){
         booking(bookData);
@@ -40,7 +39,6 @@ async function booking(bookData){
             alert('請重新登入');
             logout();
         } else if (response.status === 200){
-            console.log("增加成功");
             window.location.href = "/booking";
         } else {
             alert('請重新增加');
@@ -57,7 +55,6 @@ export async function getBookingData(userData){
     const token = localStorage.getItem('token');
     const bookingNotExist = document.getElementById('booking-not-exist')
     const bookingExist = document.getElementById('booking-exist')
-    console.log("getBookingData",userData)
     try{
         const response = await fetch("api/booking",{
             method: "GET",
@@ -72,7 +69,6 @@ export async function getBookingData(userData){
             logout();
         };
         const data = await response.json();
-        console.log("getBookingData booking data",data.data)
         if (data.data !== null){
             bookingNotExist.remove();
             renderBookingPage(userData, data.data);
@@ -89,7 +85,7 @@ export async function getBookingData(userData){
 }
 
 function renderBookingPage(userData, data){
-    console.log(userData, data)
+    // console.log(userData, data)
     const bookingGreeting = document.querySelector('.booking-greeting');
     const bookingInfoPic = document.querySelector('.booking-info-pic');
     const bookingInfoDetailAttraction = document.querySelector('.booking-info-detail-attraction');
@@ -112,7 +108,6 @@ function renderBookingPage(userData, data){
 
     document.querySelectorAll('.skeleton.skeleton-container').forEach(item => {
         item.classList.remove('skeleton', 'skeleton-container')
-        console.log('clear')
     });
     document.querySelectorAll('.skeleton').forEach(item  => {
         item.classList.remove('skeleton')
@@ -136,11 +131,11 @@ async function deleteCurrentBooking(){
         })
 
         if (response.status === 200){
-            console.log("刪除成功");
+            // console.log("刪除成功");
             location.reload();
         } else {
             alert('刪除失敗');
-            console.log("刪除失敗");
+            // console.log("刪除失敗");
         } 
 
     }
