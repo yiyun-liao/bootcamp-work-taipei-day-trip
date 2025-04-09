@@ -19,6 +19,7 @@ export async function renderHeaderAndFooter(userState= false){
         `;
     console.log('render header')
     document.body.appendChild(footer);
+    
 }
     
 function setHeaderAction(userState= false){

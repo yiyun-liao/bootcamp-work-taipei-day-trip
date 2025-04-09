@@ -72,8 +72,8 @@ export async function getBookingData(userData){
             logout();
         };
         const data = await response.json();
-        console.log("getBookingData booking data",data)
-        if (data !== null){
+        console.log("getBookingData booking data",data.data)
+        if (data.data !== null){
             bookingNotExist.remove();
             renderBookingPage(userData, data.data);
         }else{
@@ -88,8 +88,8 @@ export async function getBookingData(userData){
     }
 }
 
-function renderBookingPage(userData, data=null){
-    console.log(data, userData)
+function renderBookingPage(userData, data){
+    console.log(userData, data)
     const bookingGreeting = document.querySelector('.booking-greeting');
     const bookingInfoPic = document.querySelector('.booking-info-pic');
     const bookingInfoDetailAttraction = document.querySelector('.booking-info-detail-attraction');
@@ -109,4 +109,43 @@ function renderBookingPage(userData, data=null){
     bookingInfoDetailList[3].textContent = attraction.address || '';
     bookingContractName.value = userData.name || '';
     bookingContractEmail.value = userData.email || '';
+
+    document.querySelectorAll('.skeleton.skeleton-container').forEach(item => {
+        item.classList.remove('skeleton', 'skeleton-container')
+        console.log('clear')
+    });
+    document.querySelectorAll('.skeleton').forEach(item  => {
+        item.classList.remove('skeleton')
+    });
+}
+
+
+export function bookingPageController(){
+    document.querySelector('.mdi-trash-can').addEventListener('click', deleteCurrentBooking);
+};
+
+async function deleteCurrentBooking(){
+    const token = localStorage.getItem('token');
+    try{
+        const response = await fetch("/api/booking",{
+            method:"DELETE",
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        })
+
+        if (response.status === 200){
+            console.log("刪除成功");
+            location.reload();
+        } else {
+            alert('刪除失敗');
+            console.log("刪除失敗");
+        } 
+
+    }
+    catch(error){
+        console.error('Error fetching data', error);
+        alert('Error fetching data', error);
+    }    
 }
