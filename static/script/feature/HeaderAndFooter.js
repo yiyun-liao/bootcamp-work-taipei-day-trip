@@ -48,9 +48,9 @@ function setHeaderAction(userState= false){
     }
 }
 
-let loginListener = null;
-let signupListener = null;
-// console.log('what is this', loginListener)
+let isLoginListener = false;
+let isSignupListener = false;
+// console.log('what is this', isLoginListener)
 
 
 export function loginAndSignupPop(targetURL= false){
@@ -85,24 +85,22 @@ export function loginAndSignupPop(targetURL= false){
     const redirectURL = targetURL || window.location.href;
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
-    // console.log('what is this2', loginListener)
-    
-    loginForm.removeEventListener('submit', loginListener);
-    signupForm.removeEventListener('submit', signupListener);
-    // console.log('what is this3', loginListener)
 
-    loginListener = (e) => {
-        e.preventDefault();
-        login(redirectURL);
-        // console.log('監聽 submit')
+    if(!isLoginListener){
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            login(redirectURL);
+        });
+        isLoginListener = true;
+        // console.log('what is this2', isLoginListener)
     }
 
-    signupListener = (e) => {
-        e.preventDefault();
-        signup(redirectURL);
+    if(!isSignupListener){
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            signup(redirectURL);
+        });
+        isSignupListener = true;
     }
     
-    loginForm.addEventListener('submit', loginListener);
-    signupForm.addEventListener('submit', signupListener);
-    // console.log('what is this4', loginListener)
 }
