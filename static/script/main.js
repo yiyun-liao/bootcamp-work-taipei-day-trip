@@ -7,7 +7,6 @@ import { getBookingData, bookingPageController } from "./feature/booking.js";
 
 document.addEventListener('DOMContentLoaded',async () => {
     const userData = await checkTokenValid();
-    console.log(userData)
     if (userData){
         renderHeaderAndFooter(true);
     }else{

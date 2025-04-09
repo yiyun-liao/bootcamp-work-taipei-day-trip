@@ -48,6 +48,11 @@ function setHeaderAction(userState= false){
     }
 }
 
+let loginListener = null;
+let signupListener = null;
+// console.log('what is this', loginListener)
+
+
 export function loginAndSignupPop(targetURL= false){
     const openLoginPop = document.getElementById('login-pop')
     const openSignupPop = document.getElementById('signup-pop')
@@ -76,13 +81,28 @@ export function loginAndSignupPop(targetURL= false){
 
     // console.log("target",targetURL)
     // console.log("current",window.location.href)
+
     const redirectURL = targetURL || window.location.href;
-    document.getElementById('login-form').addEventListener('submit',(e) => {
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
+    // console.log('what is this2', loginListener)
+    
+    loginForm.removeEventListener('submit', loginListener);
+    signupForm.removeEventListener('submit', signupListener);
+    // console.log('what is this3', loginListener)
+
+    loginListener = (e) => {
         e.preventDefault();
         login(redirectURL);
-        });
-    document.getElementById('signup-form').addEventListener('submit',(e) => {
+        // console.log('監聽 submit')
+    }
+
+    signupListener = (e) => {
         e.preventDefault();
         signup(redirectURL);
-        });
+    }
+    
+    loginForm.addEventListener('submit', loginListener);
+    signupForm.addEventListener('submit', signupListener);
+    // console.log('what is this4', loginListener)
 }
