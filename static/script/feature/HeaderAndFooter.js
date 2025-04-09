@@ -1,4 +1,4 @@
-import { login, signup, logout } from "./LoginAndSignup.js";
+import { login, logout, signup } from "../components/LoginAndSignup.js";
 
 export async function renderHeaderAndFooter(userState= false){
     try{
@@ -18,14 +18,20 @@ export async function renderHeaderAndFooter(userState= false){
         </div>
         `;
     document.body.appendChild(footer);
-    // console.log('render header')
+
 }
     
 function setHeaderAction(userState= false){
     document.querySelector('header nav h2').addEventListener('click', ()=>{
         window.location.href='/';
     })
-    // console.log(userState)
+    document.querySelector('#booking-page-btn').addEventListener('click', ()=>{
+        if(userState){
+            window.location.href='/booking';
+        }else{
+            loginAndSignupPop('/booking');
+        }
+    })
     const loginAndSignupBtn = document.getElementById('login-and-signup-btn');
     const logoutBtn = document.getElementById('logout-btn');
     if (userState){
@@ -34,12 +40,20 @@ function setHeaderAction(userState= false){
         // console.log('add logout event listening')
     }else{
         loginAndSignupBtn.style.display = 'flex';
-        document.getElementById('login-and-signup-btn').addEventListener('click',loginAndSignupPop);
+        document.getElementById('login-and-signup-btn').addEventListener('click',(e) => {
+            e.preventDefault();
+            loginAndSignupPop(window.location.href);
+            });
         // console.log('add login/signup event listening')
     }
 }
 
-function loginAndSignupPop(){
+let isLoginListener = false;
+let isSignupListener = false;
+// console.log('what is this', isLoginListener)
+
+
+export function loginAndSignupPop(targetURL= false){
     const openLoginPop = document.getElementById('login-pop')
     const openSignupPop = document.getElementById('signup-pop')
     // open
@@ -65,7 +79,28 @@ function loginAndSignupPop(){
         })
     })
 
-    document.getElementById('login-form').addEventListener('submit',login);
-    document.getElementById('signup-form').addEventListener('submit',signup);
-    // console.log('切換畫面')
+    // console.log("target",targetURL)
+    // console.log("current",window.location.href)
+
+    const redirectURL = targetURL || window.location.href;
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
+
+    if(!isLoginListener){
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            login(redirectURL);
+        });
+        isLoginListener = true;
+        // console.log('what is this2', isLoginListener)
+    }
+
+    if(!isSignupListener){
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            signup(redirectURL);
+        });
+        isSignupListener = true;
+    }
+    
 }

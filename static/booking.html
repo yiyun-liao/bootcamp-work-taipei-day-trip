@@ -3,9 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300..700&family=Noto+Sans+TC:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  <script type="module" src="/static/script/main.js" defer></script>
+  <link rel="stylesheet" href="/static/style/global.css">
+  <link rel="stylesheet" href="/static/style/styleBooking.css">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
   <title>Booking</title>
 </head>
 <body>
-  
+  <!-- <header></header> -->
+  <main id="booking-not-exist">
+    <section>
+      <p class="btn-text-bold booking-greeting">您好</p>
+      <p>目前沒有任何待預訂的行程</p>
+    </section>
+  </main>
+  <main id="booking-exist">    
+    <section id="booking-info">
+      <p class="btn-text-bold booking-greeting">您好</p>
+      <div class="booking-info-div">
+        <div class="booking-info-pic skeleton"><img class="skeleton"></div>
+        <div>
+          <div class="skeleton">
+            <p class="body-bold booking-info-detail-attraction skeleton"></p>
+          </div>
+          <ol class="booking-info-detail">
+            <li>
+              <p class="body-bold booking-info-detail-label">日期：</p>
+              <p class="booking-info-detail-list skeleton skeleton-container"></p>
+            </li>
+            <li>
+              <p class="body-bold booking-info-detail-label">時間：</p>
+              <p class="booking-info-detail-list skeleton skeleton-container"></p>
+            </li>
+            <li>
+              <p class="body-bold booking-info-detail-label">費用：</p>
+              <p class="booking-info-detail-list skeleton skeleton-container"></p>
+            </li>
+            <li>
+              <p class="body-bold booking-info-detail-label">地點：</p>
+              <p class="booking-info-detail-list skeleton skeleton-container"></p>
+            </li>
+          </ol>
+        </div>
+        <i class="mdi mdi-trash-can"></i>
+      </div>
+    </section>
+    <section id="booking-contract-info">
+      <p class="btn-text-bold">您的聯絡資訊</p>
+      <form id="booking-contract-form" class="input-form" >
+        <label for="booking-contract-name">
+          聯絡姓名：
+          <input type="text" id="booking-contract-name" name="booking-contract-name">
+        </label>
+        <label for="booking-contract-email">
+          連絡信箱：
+          <input type="text" id="booking-contract-email" name="booking-contract-email">
+        </label>
+        <label for="booking-contract-phone">
+          手機號碼：
+          <input type="text" id="booking-contract-phone" name="booking-contract-phone">
+        </label>
+      </form>
+      <p class="body-bold">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</p>
+    </section>
+    <section id="booking-credit-card-info">
+      <p class="btn-text-bold">信用卡付款資訊</p>
+      <form id="booking-credit-card-form" class="input-form" >
+        <label for="booking-credit-card-number">
+          卡片號碼：
+          <input type="text" id="booking-credit-card-number" name="booking-credit-card-number" placeholder="**** **** **** ****">
+        </label>
+        <label for="booking-credit-card-exp">
+          過期時間：
+          <input type="text" id="booking-credit-card-exp" name="booking-credit-card-exp" placeholder="MM/YY">
+        </label>
+        <label for="booking-credit-card-cvv">
+          驗證密碼：
+          <input type="text" id="booking-credit-card-cvv" name="booking-credit-card-cvv" placeholder="CVV">
+        </label>
+      </form>
+    </section>
+    <section id="booking-confirm">
+      <p class="body-bold">總價：新台幣 2000 元</p>
+      <button class="btn-med-solid btn-text-med">確認訂購並付款</button>
+    </section>
+  </main>
+  <!-- <footer></footer> -->
 </body>
 </html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asynchronous 非同步程式的流程處理</title>
+</head>
+<body>
+    <script>
+        const productSrc="https://cwpeng.github.io/live-records-samples/data/products.json";
+        const reviewSrc="https://cwpeng.github.io/live-records-samples/data/reviews.json";
+
+        // 使用 Promise.all (Promise 陣列)================================================
+        function getData4(src){
+            return fetch(src).then((response) => {
+                return response.json();
+            })
+        }
+
+        Promise.all([getData4(productSrc), getData4(reviewSrc)]).then((data)=>{
+            console.log(data);
+            let productData4 = data[0];
+            let reviewData4 = data[1];
+            combine4(productData4, reviewData4)
+        })
+        
+        function combine4(products, reviews){
+            products.forEach((product) => {
+                product.reviews = [];
+            });
+            reviews.forEach((review) => {
+                for (let i=0 ; i<products.length ; i++){
+                    if(products[i].number === review.productName){
+                        products[i].review.push(review);
+                        break;
+                    }
+                }                
+            });
+            console.log("combine3", products)
+        }
+
+        // 使用 async,await ================================================
+        function getData3(src){
+            return fetch(src).then((response) => {
+                return response.json();
+            })
+        }
+
+        async function fetchAllData() {
+            let productData3 = await getData3(productSrc); // await 後面必須是一個 promise 物件
+            console.log("product data 3", productData3);
+            let reviewData3 = await getData3(reviewSrc);
+            console.log("review data 3", reviewData3);
+            combine3(productData3, reviewData3);            
+        } 
+        
+        function combine3(products, reviews){
+            products.forEach((product) => {
+                product.reviews = [];
+            });
+            reviews.forEach((review) => {
+                for (let i=0 ; i<products.length ; i++){
+                    if(products[i].number === review.productName){
+                        products[i].review.push(review);
+                        break;
+                    }
+                }                
+            });
+            console.log("combine3", products)
+        }
+
+        // 使用 promise 讓資料順序清晰及明確 ================================================
+        let productData2, reviewData2;
+        function getData2(src){
+            // return 一個 promise 物件
+            return fetch(src).then((response) => {
+                return response.json();
+            })
+        }
+        getData2(productSrc).then((data)=>{
+            console.log("product data 2", productData2);
+            productData2 = data;
+            return getData2(reviewSrc);
+        }).then((data)=>{
+            console.log("review data 2", reviewData2);
+            reviewData2 = data;
+            combine2(productData2, reviewData2);            
+        })
+        
+        function combine2(products, reviews){
+            products.forEach((product) => {
+                product.reviews = [];
+            });
+            reviews.forEach((review) => {
+                for (let i=0 ; i<products.length ; i++){
+                    if(products[i].number === review.productName){
+                        products[i].review.push(review);
+                        break;
+                    }
+                }                
+            });
+            console.log("combine2", products)
+        }
+
+        // callback 寫法，也是等第一個資料完成才會進行下一個 ================================================       
+        function getData16(src, callback){
+            return fetch(src).then((response) => {
+                return response.json();
+            }).then((data)=>{
+                callback(data);
+            })
+        }
+
+        getData16(productSrc, function(productData16){
+            console.log("product data 16", productData16);
+            getData16(reviewSrc, function(reviewData16){
+                console.log("review data 16", reviewData16);
+                combine16(productData16, reviewData16)
+            })
+        })
+
+        function combine16(products, reviews){
+            products.forEach((product) => {
+                product.reviews = [];
+            });
+            reviews.forEach((review) => {
+                for (let i=0 ; i<products.length ; i++){
+                    if(products[i].number === review.productName){
+                        products[i].review.push(review);
+                        break;
+                    }
+                }                
+            });
+            console.log("combine15", products)
+        }
+
+        // 微調下方做法 ================================================        
+        let allData={};
+        let loaded = 0 ; total = 2;
+
+        fetch(productSrc).then((response) => {
+            return response.json();
+        }).then((data)=>{
+            console.log("product data 15", data);
+            allData["product"] = data;
+            checkLoaded();
+        });
+
+        fetch(reviewSrc).then((response) => {
+            return response.json();
+        }).then((data)=>{
+            console.log("review data 15", data);
+            allData["review"] = data;
+            checkLoaded();
+        });
+
+        function checkLoaded(){
+            loaded ++;
+            if (loaded >= total){
+                combine15(allData["product"], allData["review"]);
+            }
+        }
+
+        function combine15(products, reviews){
+            products.forEach((product) => {
+                product.reviews = [];
+            });
+            reviews.forEach((review) => {
+                for (let i=0 ; i<products.length ; i++){
+                    if(products[i].number === review.productName){
+                        products[i].review.push(review);
+                        break;
+                    }
+                }                
+            });
+            console.log("combine15", products)
+        }
+
+
+        // 說明資料非同步導致 productData or reviewData is undefined ================================================
+        let productData1, reviewData1;
+        
+        fetch(productSrc).then((response) => {
+            return response.json();
+        }).then((data)=>{
+            console.log("product data 1", data);
+            productData1 = data;
+            if (reviewData1){
+                combine1(productData1, reviewData1)
+            }
+        });
+
+        fetch(reviewSrc).then((response) => {
+            return response.json();
+        }).then((data)=>{
+            console.log("review data 1", data);
+            reviewData1 = data;
+            if (productData1){
+                combine1(productData1, reviewData1)
+            }
+        });
+
+        function combine1(products, reviews){
+            products.forEach((product) => {
+                product.reviews = [];
+            });
+            reviews.forEach((review) => {
+                for (let i=0 ; i<products.length ; i++){
+                    if(products[i].number === review.productName){
+                        products[i].review.push(review);
+                        break;
+                    }
+                }                
+            });
+            console.log("combine1", products)
+        }
+    </script>
+</body>
+</html>
