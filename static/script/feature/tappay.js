@@ -1,10 +1,17 @@
 import { logout } from "../components/LoginAndSignup.js";
+import { getOrderAttraction } from "./booking.js";
+
+let bookAttractionData = {};
+window.addEventListener("orderDataReady", (event) => {
+    bookAttractionData = event.detail;
+    console.log("從 event 拿到 orderAttraction:", bookAttractionData);
+});
 
 export function createOrderController(){
     TPDirect.setupSDK(
-        159915,           // 從 TapPay Dashboard 取得
-        'app_DU3Gn2IFwnyTAaUzJVjNWAtcQLy1cemI0qIrWLAtvJUkHDaUr2x7NJuemylb',        // 前端用的 App Key
-        'sandbox'              // 或 'production'
+        159915,
+        'app_DU3Gn2IFwnyTAaUzJVjNWAtcQLy1cemI0qIrWLAtvJUkHDaUr2x7NJuemylb',
+        'sandbox'
     );
     TPDirect.card.setup({
         fields: {
@@ -27,30 +34,52 @@ export function createOrderController(){
             endIndex: 11
         }
     });
-    document.querySelector('#submit-button').addEventListener('click', function (event) {
-        event.preventDefault()
-      
-        // 檢查輸入欄位是否填寫正確
-        const tappayStatus = TPDirect.card.getTappayFieldsStatus()
-        if (tappayStatus.canGetPrime === false) {
-          alert('請確認信用卡資料填寫正確')
-          return
-        }
-      
-        // 取得 prime
-        TPDirect.card.getPrime(function (result) {
-            if (result.status !== 0) {
+}
+
+export function createOrder(){
+    // 檢查輸入欄位是否填寫正確
+    const tappayStatus = TPDirect.card.getTappayFieldsStatus()
+    if (tappayStatus.canGetPrime === false) {
+      alert('請確認信用卡資料填寫正確')
+      return
+    }
+    
+    // 取得 prime
+    TPDirect.card.getPrime(function (result) {
+        if (result.status !== 0) {
             alert('取得 prime 失敗：' + result.msg)
             return
         }
-        
-        const prime = result.card.prime
-        console.log('Get Prime:', prime)
-        // 接下來把 prime 傳送給後端進行付款請求
-        // 完成 api 需求
-        // createOrder(prime)
-        })
     })
+    
+    const prime = result.card.prime
+    console.log('Get Prime:', prime)
+    
+    const bookingContractName = document.getElementById('booking-contract-name');
+    const bookingContractEmail = document.getElementById('booking-contract-email');
+    const orderDetail = {
+        "prime": prime,
+        "order": {
+            "price": 2000,
+            "trip": {
+                "attraction": {
+                "id": 10,
+                "name": "平安鐘",
+                "address": "臺北市大安區忠孝東路 4 段",
+                "image": "https://yourdomain.com/images/attraction/10.jpg"
+                },
+                "date": "2022-01-31",
+                "time": "afternoon"
+            },
+            "contact": {
+                "name": "彭彭彭",
+                "email": "ply@ply.com",
+                "phone": "0912345678"
+            }
+        }
+    }
+    console.log(orderDetail)
+    // createOrder(prime)
 }
 
 // async function createOrder(){
