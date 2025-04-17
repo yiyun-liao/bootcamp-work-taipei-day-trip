@@ -115,11 +115,7 @@ function renderBookingPage(userData, data){
 }
 
 
-export function bookingPageController(){
-    document.querySelector('.mdi-trash-can').addEventListener('click', deleteCurrentBooking);
-};
-
-async function deleteCurrentBooking(){
+export async function deleteCurrentBooking(){
     const token = localStorage.getItem('token');
     try{
         const response = await fetch("/api/booking",{

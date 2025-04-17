@@ -3,7 +3,8 @@ import { renderHeaderAndFooter } from "./feature/HeaderAndFooter.js";
 import { getAttractions, searchMetro, getMetro, handleScroll } from "./feature/ScriptIndex.js";
 import { getAttractionDetails } from "./feature/ScriptAttraction.js";
 import { checkTokenValid } from "./components/CheckTokenValid.js";
-import { getBookingData, bookingPageController } from "./feature/booking.js";
+import { getBookingData, deleteCurrentBooking } from "./feature/booking.js";
+import { createOrderController } from "./feature/tappay.js";
 
 document.addEventListener('DOMContentLoaded',async () => {
     const userData = await checkTokenValid();
@@ -29,12 +30,14 @@ document.addEventListener('DOMContentLoaded',async () => {
         await getAttractionDetails(id);
     }
 
+    console.log(userData)
     if (path === "/booking"){
         if (userData === null){
             window.location.href = "/";
         }else{
             getBookingData(userData.data.data);
-            bookingPageController();
+            document.querySelector('.mdi-trash-can').addEventListener('click', deleteCurrentBooking);
+            createOrderController();
         }
     }
 });
