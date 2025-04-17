@@ -1,0 +1,16 @@
+section{
+    max-width: 1200px;
+    padding: 40px 110px;
+    margin: 0 auto;
+    color: var(--color-gray-70);
+    border-bottom: 1px solid var(--color-gray-20);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.order-id{
+    color: var(--color-cyan-70);
+}
