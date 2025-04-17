@@ -1,3 +1,5 @@
+import { logout } from "../components/LoginAndSignup.js";
+
 export function createOrderController(){
     TPDirect.setupSDK(
         159915,           // 從 TapPay Dashboard 取得
@@ -19,17 +21,11 @@ export function createOrderController(){
             placeholder: 'ccv'
             }
         },
-        // styles: {
-        //     'input': {
-        //       'min-width': '200px',
-        //       'min-height': '38px',
-        //       'padding': '10px',
-        //       'color': 'var(--color-black-900)',
-        //       'border-radius': '5px',
-        //       'border': '1px solid var(--color-gray-20)',
-        //       'outline': 'none',
-        //     },
-        // }
+        isMaskCreditCardNumber: true,
+        maskCreditCardNumberRange: {
+            beginIndex: 6,
+            endIndex: 11
+        }
     });
     document.querySelector('#submit-button').addEventListener('click', function (event) {
         event.preventDefault()
@@ -50,30 +46,44 @@ export function createOrderController(){
         
         const prime = result.card.prime
         console.log('Get Prime:', prime)
-      
         // 接下來把 prime 傳送給後端進行付款請求
-        // fetch('/api/pay', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         prime: prime,
-        //         order: {
-        //         // 可以附上訂單內容
-        //         price: 2000,
-        //         trip: { /* 旅程資訊 */ },
-        //         contact: { /* 聯絡人資訊 */ }
-        //         }
-        //     })
-        //     }).then(res => res.json())
-        //     .then(data => {
-        //         if (data.success) {
-        //         alert('付款成功')
-        //         } else {
-        //         alert('付款失敗')
-        //         }
-        //     })
+        createOrder(prime)
         })
     })
+}
+
+async function createOrder(){
+    const token = localStorage.getItem('token');
+    try{
+        const response = fetch('/api/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                prime: prime,
+                order: {
+                // 可以附上訂單內容
+                price: 2000,
+                trip: { /* 旅程資訊 */ },
+                contact: { /* 聯絡人資訊 */ }
+                }
+            })
+        })
+
+        if (response.status === 403){
+            alert('請重新登入');
+            logout();
+        } else if (response.status === 200){
+            console.log("付款成功");
+            window.location.href = "/thankyou";
+        } else {
+            alert('請重新預約');
+        } 
+
+    }
+    catch(error){
+        console.error('Error fetching data', error);
+        alert('Error fetching data', error);
+    }    
 }
