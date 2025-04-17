@@ -144,10 +144,20 @@ section{
     gap: 15px;
 }
 
+.input-form-detail{
+    display: flex;
+    align-items: center;
+}
 
-.input-form input{
-    min-width: 200px;
-    min-height: 38px;
+.input-form > label,
+.input-form-label{
+    min-width: 84px;
+}
+
+.input-form input,
+.input-form-tappay {
+    width: 200px;
+    height: 38px;
     padding: 10px;
     color: var(--color-black-900);
     border-radius: 5px;
@@ -155,15 +165,18 @@ section{
     outline: none;
 }
 
-.input-form input::placeholder{
+.input-form input::placeholder,
+.input-form-tappay::placeholder{
     color: var(--color-gray-50);
 }
 
-.input-form input:hover{
+.input-form input:hover,
+.input-form-tappay:hover{
     border: 1px solid var(--color-cyan-50);
 }
 
-.input-form input:focus{
+.input-form input:focus,
+.input-form-tappay:focus{
     border: 1px solid var(--color-cyan-70);
     color: var(--color-black-900);
 }
