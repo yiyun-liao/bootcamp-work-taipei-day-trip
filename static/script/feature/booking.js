@@ -146,7 +146,7 @@ export async function deleteCurrentBooking(){
 
 function setOrderAttraction(data) {
     orderAttraction = data;
-    console.log("set", orderAttraction)
+    // console.log("set", orderAttraction)
     const event = new CustomEvent("orderDataReady", { detail: orderAttraction });
     window.dispatchEvent(event);
 }

@@ -50,36 +50,37 @@ export function createOrder(){
             alert('取得 prime 失敗：' + result.msg)
             return
         }
-    })
-    
-    const prime = result.card.prime
-    console.log('Get Prime:', prime)
-    
-    const bookingContractName = document.getElementById('booking-contract-name');
-    const bookingContractEmail = document.getElementById('booking-contract-email');
-    const orderDetail = {
-        "prime": prime,
-        "order": {
-            "price": 2000,
-            "trip": {
-                "attraction": {
-                "id": 10,
-                "name": "平安鐘",
-                "address": "臺北市大安區忠孝東路 4 段",
-                "image": "https://yourdomain.com/images/attraction/10.jpg"
+        
+        const prime = result.card.prime
+        console.log('Get Prime:', prime)
+        
+        const bookingContractName = document.getElementById('booking-contract-name');
+        const bookingContractEmail = document.getElementById('booking-contract-email');
+        const bookingContractPhone = document.getElementById('booking-contract-phone');
+        const orderDetail = {
+            "prime": prime,
+            "order": {
+                "price": bookAttractionData.price,
+                "trip": {
+                    "attraction": {
+                    "id": bookAttractionData.attraction.id,
+                    "name": bookAttractionData.attraction.name,
+                    "address": bookAttractionData.attraction.address,
+                    "image": bookAttractionData.attraction.image
+                    },
+                    "date": bookAttractionData.date,
+                    "time": bookAttractionData.time
                 },
-                "date": "2022-01-31",
-                "time": "afternoon"
-            },
-            "contact": {
-                "name": "彭彭彭",
-                "email": "ply@ply.com",
-                "phone": "0912345678"
+                "contact": {
+                    "name": bookingContractName.value,
+                    "email": bookingContractEmail.value,
+                    "phone": bookingContractPhone.value
+                }
             }
         }
-    }
-    console.log(orderDetail)
-    // createOrder(prime)
+        // console.log(orderDetail)
+        // createOrder(orderDetail)
+    })
 }
 
 // async function createOrder(){
