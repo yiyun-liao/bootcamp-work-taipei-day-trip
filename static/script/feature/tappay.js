@@ -47,43 +47,44 @@ export function createOrderController(){
         const prime = result.card.prime
         console.log('Get Prime:', prime)
         // 接下來把 prime 傳送給後端進行付款請求
-        createOrder(prime)
+        // 完成 api 需求
+        // createOrder(prime)
         })
     })
 }
 
-async function createOrder(){
-    const token = localStorage.getItem('token');
-    try{
-        const response = fetch('/api/orders', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                prime: prime,
-                order: {
-                // 可以附上訂單內容
-                price: 2000,
-                trip: { /* 旅程資訊 */ },
-                contact: { /* 聯絡人資訊 */ }
-                }
-            })
-        })
+// async function createOrder(){
+//     const token = localStorage.getItem('token');
+//     try{
+//         const response = fetch('/api/orders', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({
+//                 prime: prime,
+//                 order: {
+//                 // 可以附上訂單內容
+//                 price: 2000,
+//                 trip: { /* 旅程資訊 */ },
+//                 contact: { /* 聯絡人資訊 */ }
+//                 }
+//             })
+//         })
 
-        if (response.status === 403){
-            alert('請重新登入');
-            logout();
-        } else if (response.status === 200){
-            console.log("付款成功");
-            window.location.href = "/thankyou";
-        } else {
-            alert('請重新預約');
-        } 
+//         if (response.status === 403){
+//             alert('請重新登入');
+//             logout();
+//         } else if (response.status === 200){
+//             console.log("付款成功");
+//             window.location.href = "/thankyou";
+//         } else {
+//             alert('請重新預約');
+//         } 
 
-    }
-    catch(error){
-        console.error('Error fetching data', error);
-        alert('Error fetching data', error);
-    }    
-}
+//     }
+//     catch(error){
+//         console.error('Error fetching data', error);
+//         alert('Error fetching data', error);
+//     }    
+// }

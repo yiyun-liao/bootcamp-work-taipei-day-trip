@@ -40,4 +40,10 @@ document.addEventListener('DOMContentLoaded',async () => {
             createOrderController();
         }
     }
+
+    const orderIdPageMatch = path.match(/^\/thankyou?=number\/(\d+)$/);
+    if (orderIdPageMatch) {
+        const id = orderIdPageMatch[1]; 
+        console.log(`Order ID: ${id}`); 
+    }
 });
