@@ -4,7 +4,7 @@ import { getAttractions, searchMetro, getMetro, handleScroll } from "./feature/S
 import { getAttractionDetails } from "./feature/ScriptAttraction.js";
 import { checkTokenValid } from "./components/CheckTokenValid.js";
 import { getBookingData, deleteCurrentBooking } from "./feature/booking.js";
-import { createOrderController } from "./feature/tappay.js";
+import { createOrderController, createOrder} from "./feature/tappay.js";
 
 document.addEventListener('DOMContentLoaded',async () => {
     const userData = await checkTokenValid();
@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded',async () => {
         await getAttractionDetails(id);
     }
 
-    console.log(userData)
     if (path === "/booking"){
         if (userData === null){
             window.location.href = "/";
@@ -38,6 +37,10 @@ document.addEventListener('DOMContentLoaded',async () => {
             getBookingData(userData.data.data);
             document.querySelector('.mdi-trash-can').addEventListener('click', deleteCurrentBooking);
             createOrderController();
+            document.querySelector('#submit-button').addEventListener('click',(e) => {
+                e.preventDefault();
+                createOrder();
+            });
         }
     }
 
