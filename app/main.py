@@ -2,7 +2,7 @@ from fastapi import *
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.routes import attractions, metros, userAuth, booking
+from app.routes import attractions, metros, userAuth, booking, order
 
 app=FastAPI()
 
@@ -10,6 +10,7 @@ app.include_router(attractions.router)
 app.include_router(metros.router)
 app.include_router(userAuth.router)
 app.include_router(booking.router)
+app.include_router(order.router)
 
 
 # Static Pages (Never Modify Code in this Block)
