@@ -1,10 +1,41 @@
-from fastapi import APIRouter, Request, Depends, HTTPException, status
+from fastapi import *
 from fastapi.responses import JSONResponse
+from typing import Annotated, Optional
+
 
 from app.model.auth_token import AuthToken
 from app.model.orderCRUD import Order
 
 router = APIRouter()
+
+@router.get("/api/order/{orderNumber}")
+def get_attractions(
+    request:Request,
+	orderNumber:str,
+	):
+    print(orderNumber)
+    userId = AuthToken.get_current_user_id(request)
+    print(userId)
+    if userId is None:
+        print("create_order_state 403")
+        raise HTTPException(
+            status_code = 403,
+            detail={"error": True, "message": "未登入系統"}
+        )
+    try:
+        order_detail = Order.get_order_data(orderNumber)
+        return order_detail
+    except Exception as e:
+        print(f"Error: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "error": True,
+                "message": "請按照情境提供對應的錯誤訊息"
+            }
+        )
+    
+
 
 @router.post("/api/orders")
 async def create_order_state(request:Request):

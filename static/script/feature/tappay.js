@@ -1,5 +1,6 @@
 import { logout } from "../components/LoginAndSignup.js";
 import { getOrderAttraction } from "./booking.js";
+import { fetchData } from "../components/FetchData.js"
 
 let bookAttractionData = {};
 window.addEventListener("orderDataReady", (event) => {
@@ -108,7 +109,7 @@ async function fetchCreateOrder(order){
             if (paymentStatus === 0) {
                 const orderNumber = result.data?.number;
                 console.log("付款成功", orderNumber);
-                window.location.href = `/thankyou?number=${orderNumber}`;
+                window.location.href = `/thankyou/${orderNumber}`;
             } else {
                 alert(paymentMessage); // 顯示後端傳回來的錯誤訊息（如 IP mismatch）
             }
@@ -122,3 +123,27 @@ async function fetchCreateOrder(order){
         alert('Error fetching data', error);
     }    
 }
+
+
+
+export async function getOrderDetails(orderNumber){
+    const url = `/api/order/${orderNumber}`;
+    try{
+        const response = await fetch(url)
+        if(!response.ok){
+            throw new Error("Could not fetch resource");
+        }
+        const data = await response.json();
+        console.log(data)
+        if (data.status === 403){
+            alert('請重新登入');
+            logout();
+        } else if (data.status === 200){
+            console.log(data)  
+        } else {
+            window.location.href = "/";
+        } 
+    } catch(error){
+        console.error('Error fetching data:', error);
+    }
+};
