@@ -12,7 +12,7 @@ class Order:
         add_unpaid_order= """
             INSERT INTO order_table (
                 order_number, userId, status, 
-                attractionId, attraction_name, attraction_address, attraction_image,
+                a_Id, a_name, a_address, a_image,
                 order_date, order_time, order_price, 
                 contact_name, contact_email, contact_phone) 
             VALUES (%s, %s, "UNPAID", %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) 
@@ -27,6 +27,21 @@ class Order:
             with db.cursor(dictionary=True) as cursor:
                 cursor.execute(add_unpaid_order,params)
                 db.commit()
-                if cursor.rowcount > 0:
-                    print("add order success")
-                    return True
+                print("add order success")
+                cursor.execute("SELECT id FROM order_table WHERE order_number=%s", (order_number,))
+                order_id = cursor.fetchall()
+                return order_id
+    
+    def renew_paid_order_data(order_id):
+        with get_db_connection() as db:
+            with db.cursor(dictionary=True) as cursor:
+                cursor.execute("UPDATE order_table SET status='PAID' WHERE id=%s", (order_id,))
+                db.commit()
+                print("order status='PAID'")
+    
+    def check_paid_order_data(order_id):
+        with get_db_connection() as db:
+            with db.cursor(dictionary=True) as cursor:
+                cursor.execute("SELECT order_number, status FROM order_table WHERE id=%s", (order_id,))
+                order_status = cursor.fetchall()
+                return order_status
