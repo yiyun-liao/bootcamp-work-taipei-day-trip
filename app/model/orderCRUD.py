@@ -16,6 +16,7 @@ TAPPAY_MERCHANT_ID = os.getenv("TAPPAY_MERCHANT_ID")
 
 class Order:
     def add_unpaid_order_data(order, userId):
+            print(TAPPAY_MERCHANT_ID, TAPPAY_PARTNER_KEY)
             try:
                 order_number = f"{datetime.now().strftime('%Y%m%d')}-{userId}-{str(uuid.uuid4()).replace('-', '')[:20]}"
                 query = """
