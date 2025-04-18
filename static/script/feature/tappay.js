@@ -108,7 +108,7 @@ async function fetchCreateOrder(order){
             if (paymentStatus === 0) {
                 const orderNumber = result.data?.number;
                 console.log("付款成功", orderNumber);
-                // window.location.href = `/thankyou?number=${orderNumber}`;
+                window.location.href = `/thankyou?number=${orderNumber}`;
             } else {
                 alert(paymentMessage); // 顯示後端傳回來的錯誤訊息（如 IP mismatch）
             }
