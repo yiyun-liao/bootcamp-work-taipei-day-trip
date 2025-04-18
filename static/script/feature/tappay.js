@@ -79,14 +79,14 @@ export function createOrder(){
             }
         }
         // console.log(orderDetail)
-        createOrder(orderDetail)
+        fetchCreateOrder(orderDetail)
     })
 }
 
-async function createOrder(order){
+async function fetchCreateOrder(order){
     const token = localStorage.getItem('token');
     try{
-        const response = fetch('/api/orders', {
+        const response = await fetch('/api/orders', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -95,16 +95,26 @@ async function createOrder(order){
             body: JSON.stringify(order)
         })
 
-        if (response.status === 403){
+        const result = await response.json(); 
+        console.log("Response Status:", response.status);
+        console.log("Response Body:", result);
+        if (response.status === 403) {
             alert('請重新登入');
             logout();
-        } else if (response.status === 200){
-            console.log("付款成功");
-            window.location.href = "/thankyou";
-            // 補上 response 的 order id
+        } else if (response.status === 200) {
+            const paymentStatus = result.data?.payment?.status;
+            const paymentMessage = result.data?.payment?.message || "付款結果未知";
+
+            if (paymentStatus === 0) {
+                const orderNumber = result.data?.number;
+                console.log("付款成功", orderNumber);
+                // window.location.href = `/thankyou?number=${orderNumber}`;
+            } else {
+                alert(paymentMessage); // 顯示後端傳回來的錯誤訊息（如 IP mismatch）
+            }
         } else {
             alert('請重新預約');
-        } 
+        }
 
     }
     catch(error){
