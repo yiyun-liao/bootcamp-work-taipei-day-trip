@@ -4,7 +4,7 @@ import { getAttractions, searchMetro, getMetro, handleScroll } from "./feature/S
 import { getAttractionDetails } from "./feature/ScriptAttraction.js";
 import { checkTokenValid } from "./components/CheckTokenValid.js";
 import { getBookingData, deleteCurrentBooking } from "./feature/booking.js";
-import { createOrderController, createOrder} from "./feature/tappay.js";
+import { createOrderController, createOrder, getOrderDetails} from "./feature/tappay.js";
 
 document.addEventListener('DOMContentLoaded',async () => {
     const userData = await checkTokenValid();
@@ -43,10 +43,12 @@ document.addEventListener('DOMContentLoaded',async () => {
             });
         }
     }
-
-    const orderIdPageMatch = path.match(/^\/thankyou?=number\/(\d+)$/);
+    console.log(path)
+    const orderIdPageMatch = path.match(/^\/thankyou\/(.+)$/);
+    console.log(orderIdPageMatch)
     if (orderIdPageMatch) {
-        const id = orderIdPageMatch[1]; 
-        console.log(`Order ID: ${id}`); 
+        const orderNumber = orderIdPageMatch[1]; 
+        console.log(`Order ID: ${orderNumber}`); 
+        await getOrderDetails(orderNumber);
     }
 });

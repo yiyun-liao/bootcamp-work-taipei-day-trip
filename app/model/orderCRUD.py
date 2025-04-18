@@ -90,3 +90,9 @@ class Order:
             with db.cursor(dictionary=True) as cursor:
                 cursor.execute("SELECT order_number, status FROM order_table WHERE id=%s", (order_id,))
                 return cursor.fetchone() 
+    
+    def get_order_data(order_number):
+        with get_db_connection() as db:
+            with db.cursor(dictionary=True) as cursor:
+                cursor.execute("SELECT * FROM order_table WHERE order_number=%s", (order_number,))
+                return cursor.fetchone() 
