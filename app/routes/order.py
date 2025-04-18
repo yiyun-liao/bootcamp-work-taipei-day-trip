@@ -1,7 +1,5 @@
 from fastapi import APIRouter, Request, Depends, HTTPException, status
 from fastapi.responses import JSONResponse
-from fastapi.security.utils import get_authorization_scheme_param
-from pydantic import BaseModel, EmailStr
 
 from app.model.auth_token import AuthToken
 from app.model.orderCRUD import Order
@@ -28,20 +26,39 @@ async def create_order_state(request:Request):
     
     try:
         #建立未付款訂單
-        order_id = Order.add_unpaid_order_data(order, userId)
-        if order_id is None:
+        order_result = Order.add_unpaid_order_data(order, userId)
+        order_result_id = order_result[0]['id']
+        order_result_number = order_result[0]['order_number']
+
+        if order_result_id is None:
             return JSONResponse(
                 status_code = 400,
                 content={"error":True, "message":"訂單建立失敗"}
             )
-        #呼叫 TapPay
-        result = null
-        print("TapPay 回傳：", result)
-        #儲存付款紀錄
-        if result["status"] == 0:
-            Order.renew_paid_order_data()
+        print(f"建立訂單成功，訂單 ID：{order_result_id}")
         
-        order_status = Order.check_paid_order_data()
+        #呼叫 TapPay
+        taypay_result = Order.tappay_payment(prime, order)
+        print("TapPay 回傳：", taypay_result)
+        #儲存付款紀錄
+
+        if taypay_result["status"] != 0:
+            print(f"訂單號：{order_result_number}，TapPay 回傳狀態：{taypay_result['status']}，訊息：{taypay_result.get('msg')}")
+            return JSONResponse(
+                status_code=200,
+                content={
+                    "data": {
+                        "number": order_result_number,
+                        "payment": {
+                            "status": taypay_result["status"],
+                            "message": f"付款失敗：{taypay_result.get('msg')}"
+                        }
+                    }
+                }
+            )
+        Order.renew_paid_order_data(order_result_id)
+        
+        order_status = Order.check_paid_order_data(order_result_id)
         if order_status['status'] == "PAID":
             return JSONResponse(
                 status_code=200, 
@@ -49,21 +66,8 @@ async def create_order_state(request:Request):
                     "data": {
                         "number": order_status['order_number'],
                         "payment": {
-                        "status": result["status"],
+                        "status": taypay_result["status"],
                         "message": "付款成功"
-                        }
-                    }
-                }
-            )
-        else:
-            return JSONResponse(
-                status_code=200, 
-                content={
-                    "data": {
-                        "number": order_status['order_number'],
-                        "payment": {
-                        "status": result["status"],
-                        "message": "付款失敗"
                         }
                     }
                 }
