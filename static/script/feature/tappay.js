@@ -1,6 +1,7 @@
 import { logout } from "../components/LoginAndSignup.js";
 import { getOrderAttraction } from "./booking.js";
-import { fetchData } from "../components/FetchData.js"
+import { fetchData } from "../components/FetchData.js";
+import { renderOrderNumber } from "./ScriptThankYou.js";
 
 let bookAttractionData = {};
 window.addEventListener("orderDataReady", (event) => {
@@ -153,9 +154,11 @@ export async function getOrderDetails(){
             alert('請重新登入');
             logout();
         } else {
-            if (data === null){
-                console.log("without data")  
+            if (data.data === null){
+                alert("找不到訂單編號");
+                window.location.href = "/";
             } else{
+                renderOrderNumber(orderNumber);
                 console.log(data)  
             }
         }
