@@ -12,10 +12,6 @@ app.include_router(userAuth.router)
 app.include_router(booking.router)
 app.include_router(order.router)
 
-@app.get("/thankyou/{orderNumber}", include_in_schema=False)
-async def thankyou_with_order(request: Request, orderNumber: str):
-    return FileResponse("./static/thankyou.html", media_type="text/html")
-
 # Static Pages (Never Modify Code in this Block)
 @app.get("/", include_in_schema=False)
 async def index(request: Request):

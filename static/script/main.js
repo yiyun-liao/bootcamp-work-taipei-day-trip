@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded',async () => {
     }else{
         renderHeaderAndFooter(false);
     }
+
     const path = window.location.pathname; 
     if (path === "/"){
         skeletonMetroChip();
@@ -43,12 +44,12 @@ document.addEventListener('DOMContentLoaded',async () => {
             });
         }
     }
-    console.log(path)
-    const orderIdPageMatch = path.match(/^\/thankyou\/(.+)$/);
-    console.log(orderIdPageMatch)
-    if (orderIdPageMatch) {
-        const orderNumber = orderIdPageMatch[1]; 
-        console.log(`Order ID: ${orderNumber}`); 
-        await getOrderDetails(orderNumber);
+    if (path === "/thankyou") {
+        if (userData === null){
+            window.location.href = "/";
+        }else{
+            await getOrderDetails();
+        }
     }
+    console.log(path)
 });

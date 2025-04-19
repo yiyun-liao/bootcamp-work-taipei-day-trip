@@ -95,4 +95,8 @@ class Order:
         with get_db_connection() as db:
             with db.cursor(dictionary=True) as cursor:
                 cursor.execute("SELECT * FROM order_table WHERE order_number=%s", (order_number,))
-                return cursor.fetchone() 
+                data_detail = cursor.fetchone() 
+                if data_detail:
+                    return data_detail
+                else: 
+                    return None
