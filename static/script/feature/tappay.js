@@ -109,7 +109,7 @@ async function fetchCreateOrder(order){
             if (paymentStatus === 0) {
                 const orderNumber = result.data?.number;
                 console.log("付款成功", orderNumber);
-                window.location.href = `/thankyou/${orderNumber}`;
+                window.location.href = `/thankyou?number=${orderNumber}`;
             } else {
                 alert(paymentMessage); // 顯示後端傳回來的錯誤訊息（如 IP mismatch）
             }
@@ -126,23 +126,39 @@ async function fetchCreateOrder(order){
 
 
 
-export async function getOrderDetails(orderNumber){
-    const url = `/api/order/${orderNumber}`;
+export async function getOrderDetails(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderNumber = urlParams.get("number");
+    const token = localStorage.getItem('token');
+
+    if (!orderNumber) {
+        alert("找不到訂單編號");
+        window.location.href = "/";
+        return;
+    }
+
     try{
-        const response = await fetch(url)
+        const response = await fetch(`/api/order/${orderNumber}`,{
+            method:"GET",
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        })
         if(!response.ok){
             throw new Error("Could not fetch resource");
         }
         const data = await response.json();
-        console.log(data)
         if (data.status === 403){
             alert('請重新登入');
             logout();
-        } else if (data.status === 200){
-            console.log(data)  
         } else {
-            window.location.href = "/";
-        } 
+            if (data === null){
+                console.log("without data")  
+            } else{
+                console.log(data)  
+            }
+        }
     } catch(error){
         console.error('Error fetching data:', error);
     }

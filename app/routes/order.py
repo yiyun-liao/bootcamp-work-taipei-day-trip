@@ -24,7 +24,36 @@ def get_attractions(
         )
     try:
         order_detail = Order.get_order_data(orderNumber)
-        return order_detail
+        print(order_detail)
+        if order_detail == None:
+            return JSONResponse(
+                status_code=200,
+                content={"data": None}
+            )
+        else: 
+            response = {
+                "data": {
+                    "number": order_detail["order_number"],
+                    "price": order_detail["order_price"],
+                    "trip": {
+                        "attraction": {
+                            "id": order_detail["a_Id"],
+                            "name": order_detail["a_name"],
+                            "address": order_detail["a_address"],
+                            "image": order_detail["a_image"]
+                        },
+                        "date": order_detail["order_date"],
+                        "time": order_detail["order_time"]
+                    },
+                    "contact": {
+                        "name": order_detail["contact_name"],
+                        "email": order_detail["contact_email"],
+                        "phone": order_detail["contact_phone"]
+                    },
+                    "status": 1 if order_detail["status"] == "PAID" else 0
+                }
+            }
+            return response
     except Exception as e:
         print(f"Error: {e}")
         raise HTTPException(
