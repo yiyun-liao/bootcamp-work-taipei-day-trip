@@ -49,6 +49,8 @@ class Order:
                 return None
     
     def tappay_payment(prime, order):
+        print(TAPPAY_MERCHANT_ID, TAPPAY_PARTNER_KEY)
+
         tappay_url = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
         tappay_payload = {
             "prime": prime,
