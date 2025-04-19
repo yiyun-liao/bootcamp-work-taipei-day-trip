@@ -3,7 +3,8 @@ import { renderHeaderAndFooter } from "./feature/HeaderAndFooter.js";
 import { getAttractions, searchMetro, getMetro, handleScroll } from "./feature/ScriptIndex.js";
 import { getAttractionDetails } from "./feature/ScriptAttraction.js";
 import { checkTokenValid } from "./components/CheckTokenValid.js";
-import { getBookingData, bookingPageController } from "./feature/booking.js";
+import { getBookingData, deleteCurrentBooking } from "./feature/booking.js";
+import { createOrderController, createOrder, getOrderDetails} from "./feature/tappay.js";
 
 document.addEventListener('DOMContentLoaded',async () => {
     const userData = await checkTokenValid();
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded',async () => {
     }else{
         renderHeaderAndFooter(false);
     }
+
     const path = window.location.pathname; 
     if (path === "/"){
         skeletonMetroChip();
@@ -34,7 +36,20 @@ document.addEventListener('DOMContentLoaded',async () => {
             window.location.href = "/";
         }else{
             getBookingData(userData.data.data);
-            bookingPageController();
+            document.querySelector('.mdi-trash-can').addEventListener('click', deleteCurrentBooking);
+            createOrderController();
+            document.querySelector('#submit-button').addEventListener('click', function(e) {
+                e.preventDefault();
+                this.textContent = "付款確認中...";
+                createOrder();
+            });
+        }
+    }
+    if (path === "/thankyou") {
+        if (userData === null){
+            window.location.href = "/";
+        }else{
+            await getOrderDetails();
         }
     }
 });

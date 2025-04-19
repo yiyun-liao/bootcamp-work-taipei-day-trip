@@ -1,0 +1,51 @@
+section{
+    max-width: 1200px;
+    padding: 40px 110px;
+    margin: 0 auto;
+    color: var(--color-gray-70);
+    border-bottom: 1px solid var(--color-gray-20);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.order-id{
+    color: var(--color-cyan-70);
+}
+
+.order_success{
+    display: none;
+}
+
+/* loading */
+.skeleton{
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    opacity: 0.8;
+}
+
+.skeleton-container {
+    width: 100%;
+    height: 16px;
+    border-radius: 2px;
+    margin-bottom: 4px;
+}
+
+.skeleton-container:last-child{
+    width: 80%;
+    margin-bottom: 0;
+}
+
+
+/* 讓骨架動畫流動 */
+@keyframes loading {
+0% {
+    background-position: -100% 0;
+}
+100% {
+    background-position: 100% 0;
+}
+}
