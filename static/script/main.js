@@ -38,8 +38,9 @@ document.addEventListener('DOMContentLoaded',async () => {
             getBookingData(userData.data.data);
             document.querySelector('.mdi-trash-can').addEventListener('click', deleteCurrentBooking);
             createOrderController();
-            document.querySelector('#submit-button').addEventListener('click',(e) => {
+            document.querySelector('#submit-button').addEventListener('click', function(e) {
                 e.preventDefault();
+                this.textContent = "付款確認中...";
                 createOrder();
             });
         }
@@ -51,5 +52,4 @@ document.addEventListener('DOMContentLoaded',async () => {
             await getOrderDetails();
         }
     }
-    console.log(path)
 });

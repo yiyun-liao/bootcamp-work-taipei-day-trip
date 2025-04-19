@@ -16,7 +16,6 @@ TAPPAY_MERCHANT_ID = os.getenv("TAPPAY_MERCHANT_ID")
 
 class Order:
     def add_unpaid_order_data(order, userId):
-            print(TAPPAY_MERCHANT_ID, TAPPAY_PARTNER_KEY)
             try:
                 order_number = f"{datetime.now().strftime('%Y%m%d')}-{userId}-{str(uuid.uuid4()).replace('-', '')[:20]}"
                 query = """
@@ -40,7 +39,7 @@ class Order:
                     with db.cursor(dictionary=True) as cursor:
                         cursor.execute(query, params)
                         db.commit()
-                        print("新增訂單成功，訂單號：", order_number)
+                        # print("新增訂單成功，訂單號：", order_number)
 
                         cursor.execute("SELECT * FROM order_table WHERE order_number=%s", (order_number,))
                         result = cursor.fetchall()
@@ -72,7 +71,7 @@ class Order:
         try:
             res = requests.post(tappay_url, json=tappay_payload, headers=headers)
             result = res.json()
-            print("TapPay 回傳：", result)
+            # print("TapPay 回傳：", result)
             return result
         except Exception as e:
             print("呼叫 TapPay 失敗：", e)

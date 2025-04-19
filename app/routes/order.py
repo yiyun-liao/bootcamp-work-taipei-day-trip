@@ -14,9 +14,8 @@ def get_attractions(
     request:Request,
 	orderNumber:str,
 	):
-    print(orderNumber)
+    # print(orderNumber, userId)
     userId = AuthToken.get_current_user_id(request)
-    print(userId)
     if userId is None:
         print("create_order_state 403")
         raise HTTPException(
@@ -25,7 +24,7 @@ def get_attractions(
         )
     try:
         order_detail = Order.get_order_data(orderNumber)
-        print(order_detail)
+        # print(order_detail)
         if order_detail == None:
             return JSONResponse(
                 status_code=200,
@@ -70,7 +69,7 @@ def get_attractions(
 @router.post("/api/orders")
 async def create_order_state(request:Request):
     userId = AuthToken.get_current_user_id(request)
-    print(userId)
+    # print(userId)
     if userId is None:
         print("create_order_state 403")
         raise HTTPException(
@@ -101,7 +100,7 @@ async def create_order_state(request:Request):
         
         #呼叫 TapPay
         taypay_result = Order.tappay_payment(prime, order)
-        print("TapPay 回傳：", taypay_result)
+        # print("TapPay 回傳：", taypay_result)
         #儲存付款紀錄
 
         if taypay_result["status"] != 0:

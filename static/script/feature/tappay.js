@@ -6,7 +6,7 @@ import { renderOrderNumber } from "./ScriptThankYou.js";
 let bookAttractionData = {};
 window.addEventListener("orderDataReady", (event) => {
     bookAttractionData = event.detail;
-    console.log("從 event 拿到 orderAttraction:", bookAttractionData);
+    // console.log("從 event 拿到 orderAttraction:", bookAttractionData);
 });
 
 export function createOrderController(){
@@ -54,7 +54,7 @@ export function createOrder(){
         }
         
         const prime = result.card.prime
-        console.log('Get Prime:', prime)
+        // console.log('Get Prime:', prime)
         
         const bookingContractName = document.getElementById('booking-contract-name');
         const bookingContractEmail = document.getElementById('booking-contract-email');
@@ -87,6 +87,7 @@ export function createOrder(){
 
 async function fetchCreateOrder(order){
     const token = localStorage.getItem('token');
+
     try{
         const response = await fetch('/api/orders', {
             method: 'POST',
@@ -98,8 +99,8 @@ async function fetchCreateOrder(order){
         })
 
         const result = await response.json(); 
-        console.log("Response Status:", response.status);
-        console.log("Response Body:", result);
+        // console.log("Response Status:", response.status);
+        // console.log("Response Body:", result);
         if (response.status === 403) {
             alert('請重新登入');
             logout();
@@ -159,7 +160,7 @@ export async function getOrderDetails(){
                 window.location.href = "/";
             } else{
                 renderOrderNumber(orderNumber);
-                console.log(data)  
+                // console.log(data)  
             }
         }
     } catch(error){
