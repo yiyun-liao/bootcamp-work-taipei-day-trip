@@ -5,6 +5,7 @@ from typing import Annotated, Optional
 
 from app.model.auth_token import AuthToken
 from app.model.orderCRUD import Order
+from app.model.bookingCRUD import Booking
 
 router = APIRouter()
 
@@ -89,6 +90,7 @@ async def create_order_state(request:Request):
         order_result = Order.add_unpaid_order_data(order, userId)
         order_result_id = order_result[0]['id']
         order_result_number = order_result[0]['order_number']
+        order_user_id = order_result[0]['userId']
 
         if order_result_id is None:
             return JSONResponse(
@@ -117,7 +119,8 @@ async def create_order_state(request:Request):
                 }
             )
         Order.renew_paid_order_data(order_result_id)
-        
+        Booking.delete_current_booking_data(order_user_id)
+
         order_status = Order.check_paid_order_data(order_result_id)
         if order_status['status'] == "PAID":
             return JSONResponse(
