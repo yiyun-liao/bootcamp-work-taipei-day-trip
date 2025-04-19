@@ -16,14 +16,6 @@ def get_db_connection():
     )
 
 
-# add order ===========================================================================
-# with get_db_connection() as db:
-#     with db.cursor(dictionary=True) as cursor:
-#         cursor.execute("ALTER TABLE booking_state ADD UNIQUE KEY unique_user (userId);")
-#         db.commit()
-#         print('success')
-
-
 # show order ===========================================================================
 
 
