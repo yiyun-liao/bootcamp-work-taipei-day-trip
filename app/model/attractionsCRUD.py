@@ -89,14 +89,6 @@ class Attractions:
         cursor.close()
         db.close()
 
-        if not data:
-            return JSONResponse(content={
-                "error": True,
-                "message": "請按照情境提供對應的錯誤訊息"
-            }, status_code=400)
-
-        data["images"] = json.loads(data["images"])
-
         return data
 
     def filter_by_metros():

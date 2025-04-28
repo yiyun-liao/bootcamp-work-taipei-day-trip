@@ -1,6 +1,8 @@
 import { loginAndSignupPop } from "./HeaderAndFooter.js";
 import { logout } from "../components/LoginAndSignup.js";
 
+let orderAttraction = {}; //for order
+
 export function collectBookingData(){
     const dateInput = document.getElementById('attraction-dateInput');
     const timeInput = document.querySelector('input[name="attraction-time-selection"]:checked')
@@ -72,6 +74,7 @@ export async function getBookingData(userData){
         if (data.data !== null){
             bookingNotExist.remove();
             renderBookingPage(userData, data.data);
+            setOrderAttraction(data.data); //for order
         }else{
             bookingExist.style.display = "none";
             bookingNotExist.style.display = "block";
@@ -85,7 +88,6 @@ export async function getBookingData(userData){
 }
 
 function renderBookingPage(userData, data){
-    // console.log(userData, data)
     const bookingGreeting = document.querySelector('.booking-greeting');
     const bookingInfoPic = document.querySelector('.booking-info-pic');
     const bookingInfoDetailAttraction = document.querySelector('.booking-info-detail-attraction');
@@ -115,11 +117,7 @@ function renderBookingPage(userData, data){
 }
 
 
-export function bookingPageController(){
-    document.querySelector('.mdi-trash-can').addEventListener('click', deleteCurrentBooking);
-};
-
-async function deleteCurrentBooking(){
+export async function deleteCurrentBooking(){
     const token = localStorage.getItem('token');
     try{
         const response = await fetch("/api/booking",{
@@ -143,4 +141,16 @@ async function deleteCurrentBooking(){
         console.error('Error fetching data', error);
         alert('Error fetching data', error);
     }    
+}
+
+
+function setOrderAttraction(data) {
+    orderAttraction = data;
+    // console.log("set", orderAttraction)
+    const event = new CustomEvent("orderDataReady", { detail: orderAttraction });
+    window.dispatchEvent(event);
+}
+
+export function getOrderAttraction() {
+    return orderAttraction;
 }
