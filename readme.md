@@ -1,6 +1,6 @@
 # Taipei Travel Search
+# Taipei Travel Search
 ### http://35.75.244.94:8000/
-
 > Helping you quickly find Taipei’s attractions and plan your trip using real-time transit and points-of-interest data
 
 ### Tech Stack
@@ -50,7 +50,6 @@
 - Modular Header & Footer components
 - Auto-login immediately after sign-up
 - Redirect to specified page on success 
-
 ```javascript
 function loginAndSignupPop(targetURL = false) { … }
 ```
@@ -62,6 +61,7 @@ function loginAndSignupPop(targetURL = false) { … }
     /> 
 </p>
 
+
 ### Booking Flow
 - TapPay payment integration
 <p align="center"> 
@@ -71,6 +71,7 @@ function loginAndSignupPop(targetURL = false) { … }
         alt="Booking Flow" 
     /> 
 </p>
+
 
 #### Tech
 - Architecture Diagrams
@@ -88,6 +89,13 @@ function loginAndSignupPop(targetURL = false) { … }
         alt="Backend MVC Diagram" /> 
 </p>
 
+
 ### References
 - [Taipei Metro API](https://www.metro.taipei/cp.aspx?n=BDEB860F2BE3E249)
 - Taipei attractions data provided by WeHelp
+
+### Contact
+- mail: yiyun.bian.design@gmail.com
+- phone: +886-975498468
+- linkedIn: https://www.linkedin.com/in/liao-yi-yun-119534221/
+- github: https://github.com/yiyun-liao/
