@@ -1,5 +1,4 @@
 # Taipei Travel Search
-# Taipei Travel Search
 ### http://35.75.244.94:8000/
 > Helping you quickly find Taipei’s attractions and plan your trip using real-time transit and points-of-interest data
 
