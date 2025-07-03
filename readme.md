@@ -2,7 +2,7 @@
 ### http://35.75.244.94:8000/
 > Helping you quickly find Taipei’s attractions and plan your trip using real-time transit and points-of-interest data
 
-### Tech Stack
+### Tech
 <p align="center">
   <img 
     src="readme/bootcamp%20project.jpg" 
@@ -11,6 +11,13 @@
   />
 </p>
 
+- Adopted a Front-End/Back-End MVC architecture and deployed to AWS EC2.
+- Secured user registration and login with JWT middleware.
+- Implemented real-time, fuzzy keyword search for attractions near MRT stations.
+- Optimized performance and UX with lazy loading and skeleton-loading animations within a fully responsive component and interface design system.
+- Built a complete booking flow featuring TapPay payment integration, auto-login post-registration, and redirect handling to specified pages upon successful signup.
+
+### Tech Stack
 - Frontend / Backend Separation (MVC)
 - Backend: FastAPI
 - Database Design: MySQL
